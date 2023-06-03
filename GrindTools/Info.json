@@ -1,0 +1,11 @@
+{
+    "Id": "GrindTools",
+    "DisplayName": "GrindTools",
+    "Author": "Guru",
+    "Version": "0.0.6",
+    "ManagerVersion": "0.22.5.0",
+    "Requirements": [],
+    "LoadAfter": [],
+    "AssemblyName": "GrindTools.dll",
+    "EntryMethod": "GrindTools.Main.Load"
+}
