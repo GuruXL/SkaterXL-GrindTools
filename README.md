@@ -1,2 +1,2 @@
-# SkaterXL-GrindTools
-Enables the ability to use the SkaterXL grind spline tool and wax tool.
+# SkaterXL-GrindTools for XL 1.2.2.8
+Enables the use of SkaterXL grindspline tool and wax tool.
