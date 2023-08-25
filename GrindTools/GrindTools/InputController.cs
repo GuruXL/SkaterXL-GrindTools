@@ -1,17 +1,20 @@
 ﻿using UnityEngine;
 using MapEditor;
+using RapidGUI;
+using UnityEngine.SceneManagement;
 using GameManagement;
+using UnityEngine.UI;
 using ModIO.UI;
 
 namespace GrindTools
 {
-    
     public class InputController : MonoBehaviour
     {
+        public static InputController Instance { get; private set; }
 
         public void Update()
         {
-            if (GameStateMachine.Instance.CurrentState.GetType() == typeof(MapEditorGameState) || 
+            if (GameStateMachine.Instance.CurrentState.GetType() == typeof(MapEditorGameState) ||
                 GameStateMachine.Instance.CurrentState.GetType() == typeof(GrindSplineToolState) ||
                 GameStateMachine.Instance.CurrentState.GetType() == typeof(WaxToolState))
             {
@@ -28,7 +31,7 @@ namespace GrindTools
         void ToggleEditorState()
         {
             if (GameStateMachine.Instance.CurrentState.GetType() != typeof(MapEditorGameState) ||
-                GameStateMachine.Instance.CurrentState.GetType() != typeof(GrindSplineToolState)||
+                GameStateMachine.Instance.CurrentState.GetType() != typeof(GrindSplineToolState) ||
                 GameStateMachine.Instance.CurrentState.GetType() != typeof(WaxToolState))
             {
                 if (PlayerController.Instance.inputController.player.GetButtonLongPressDown("Y"))
@@ -41,8 +44,7 @@ namespace GrindTools
                 GameStateMachine.Instance.CurrentState.GetType() == typeof(GrindSplineToolState) ||
                 GameStateMachine.Instance.CurrentState.GetType() == typeof(WaxToolState))
             {
-                //PlayerController.Instances[0].gameplay.inputController.rewiredPlayer.GetButtonDown("B")
-                if (PlayerController.Instance.inputController.player.GetButtonLongPressDown("B"))
+                if (PlayerController.Instance.inputController.player.GetButtonDown("B"))
                 {
                     Deactive();
                 }
@@ -51,8 +53,7 @@ namespace GrindTools
 
         void ToggleActiveState()
         {
-            //PlayerController.Instances[0].gameplay.inputController.rewiredPlayer.GetButtonLongPressDown(13)
-            if (PlayerController.Instance.inputController.player.GetButtonShortPressDown("Y"))
+            if (PlayerController.Instance.inputController.player.GetButtonLongPressDown(13))
             {
                 Main.Controller.ToggleTool("Grind");
                 MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $" Grind Tool Active", 2f);
@@ -60,20 +61,17 @@ namespace GrindTools
 
             if (Main.Controller.EditorController.CurrentState.GetType() == typeof(GrindSplineToolState))
             {
-                //PlayerController.Instances[0].gameplay.inputController.rewiredPlayer.GetButtonDown("Y")
-                if (PlayerController.Instance.inputController.player.GetButtonShortPressDown("Y"))
+                if (PlayerController.Instance.inputController.player.GetButtonDown("Y"))
                 {
                     Main.Controller.ToggleTool("Wax");
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $" Wax Tool Active", 2f);
                 }
 
-                //PlayerController.Instances[0].gameplay.inputController.rewiredPlayer.GetButtonShortPressDown(70)
                 if (PlayerController.Instance.inputController.player.GetButtonShortPressDown(70)) // Undo
                 {
                     Main.Controller.GrindToolState.mapEditor.Undo();
                 }
 
-                //PlayerController.Instances[0].gameplay.inputController.rewiredPlayer.GetButtonShortPressDown(69)
                 if (PlayerController.Instance.inputController.player.GetButtonShortPressDown(69)) // Redo
                 {
                     Main.Controller.GrindToolState.mapEditor.Redo();
@@ -81,8 +79,7 @@ namespace GrindTools
             }
             else if (Main.Controller.EditorController.CurrentState.GetType() == typeof(WaxToolState))
             {
-                //PlayerController.Instances[0].gameplay.inputController.rewiredPlayer.GetButtonDown("Y")
-                if (PlayerController.Instance.inputController.player.GetButtonShortPressDown("Y"))
+                if (PlayerController.Instance.inputController.player.GetButtonDown("Y"))
                 {
                     Main.Controller.ToggleTool("Grind");
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $" Grind Tool Active", 2f);
@@ -104,5 +101,4 @@ namespace GrindTools
             Main.Controller.RestStates();
         }
     }
-    
 }

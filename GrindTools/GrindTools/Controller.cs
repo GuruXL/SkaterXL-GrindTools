@@ -1,39 +1,53 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using HarmonyLib;
+using System.Reflection;
+using RapidGUI;
 using UnityEngine;
+using Rewired;
+using UnityModManagerNet;
+using ModIO.UI;
+using SkaterXL;
+using SkaterXL.Data;
+using SkaterXL.Core;
 using MapEditor;
+using System.Collections;
 using GameManagement;
+using UnityEngine.SceneManagement;
+
 
 namespace GrindTools
 {
     class Controller : MonoBehaviour
-    {     
+    {
         private Transform MasterPrefab;
-        //private Transform Gameplay;
-        //private Transform MapEditor;
+        private Transform Gameplay;
+        private Transform MapEditor;
         private Transform States;
         private Transform Grindtool;
         private Transform WaxTool;
         private Transform PlaceTool;
         private Transform grindCam;
         private Transform waxCam;
-        //private Transform Node;
+        private Transform Node;
 
         private bool objectsFound;
         List<Transform> ObjectList = new List<Transform>();
 
         public MapEditorController EditorController;
-        public MapEditorGameState EditorState;
+        //public MapEditorState EditorState;
         public GrindSplineToolState GrindToolState;
         public WaxToolState WaxToolState;
         //private MultiplayerMenuController menuController;
-        //MeshRenderer NodeRenderer;
-        //GameplayController GamePlayCtrl;
+        MeshRenderer NodeRenderer;
 
 
         public void Start()
         {
             MasterPrefab = PlayerController.Instance.skaterController.transform.parent.transform.parent;
-            //MasterPrefab = PlayerController.Instances[0].transform.parent;
             if (MasterPrefab != null)
             {
                 GetObjects();
@@ -52,8 +66,6 @@ namespace GrindTools
                 GetToolComponents();
             }
 
-            SwapToMapState();
-
             //UpdateMenu();
         }
 
@@ -64,7 +76,7 @@ namespace GrindTools
             //    UpdateSettings();
             //}
 
-            //OutlineSpines();
+            OutlineSpines();
         }
 
         public bool CheckObjectsFound(List<Transform> List)
@@ -90,46 +102,46 @@ namespace GrindTools
 
         private void GetObjects()
         {
-            //Gameplay = MasterPrefab.Find("GamePlay");
-            //Gameplay = MasterPrefab.FindChildRecursively("GamePlayNew");
-            //MapEditor = MasterPrefab.Find("MapEditor");
-            States = GameStateMachine.Instance.MapEditorObject.transform.Find("States");
+            Gameplay = MasterPrefab.Find("GamePlay");
+            MapEditor = MasterPrefab.Find("MapEditor");
+            States = MapEditor.Find("States");
             Grindtool = States.Find("GrindSpline Tool");
             grindCam = Grindtool.Find("FreeLookCamera");
-            //Node = Grindtool.Find("CurrentNodeVisualization");
+            Node = Grindtool.Find("CurrentNodeVisualization");
             WaxTool = States.Find("Wax Tool");
             waxCam = WaxTool.Find("FreeLookCamera");
             PlaceTool = States.Find("Simple Place");
 
-            //ObjectList.Add(Gameplay);
-            //ObjectList.Add(MapEditor);
+            ObjectList.Add(Gameplay);
+            ObjectList.Add(MapEditor);
             ObjectList.Add(States);
             ObjectList.Add(Grindtool);
             ObjectList.Add(grindCam);
-            //ObjectList.Add(Node);
+            ObjectList.Add(Node);
             ObjectList.Add(WaxTool);
             ObjectList.Add(waxCam);
             ObjectList.Add(PlaceTool);
         }
 
-        public void GetToolComponents()
+        void GetToolComponents()
         {
-            EditorController = GameStateMachine.Instance.MapEditorObject.GetComponent<MapEditorController>();
-            EditorState = GameStateMachine.Instance.MapEditorObject.GetComponent<MapEditorGameState>();
+            EditorController = MapEditor.GetComponent<MapEditorController>();
             GrindToolState = Grindtool.GetComponent<GrindSplineToolState>();
             WaxToolState = WaxTool.GetComponent<WaxToolState>();
+
+            NodeRenderer = Node.GetComponent<MeshRenderer>();
         }
 
         public bool IsPlayState()
         {
-            
-            if (GameStateMachine.Instance.CurrentState.GetType() == typeof(PlayState))
+
+            if (GameStateMachine.Instance.CurrentState.GetType() != typeof(PlayState))
             {
-                return true;
+                return false;
             }
             else
             {
-                return false;
+                return true;
             }
         }
         public void AllowRespawn(int options)
@@ -153,11 +165,6 @@ namespace GrindTools
 
         }
 
-        void SwapToMapState()
-        {
-
-        }
-
         //---------- Map Editor ----------
         public void ToggleMapEditor(int options)
         {
@@ -166,28 +173,21 @@ namespace GrindTools
                 case 1: // toggle On
                     if (objectsFound)
                     {
-                        //GameStateMachine.Instance.RequestMapEditorState();
-                        //GameStateMachine.Instance.RequestTransitionTo(typeof(MapEditorGameState), false, null);
-                        GameStateMachine.Instance.RequestTransitionTo<MapEditorGameState>();
                         GameStateMachine.Instance.RequestMapEditorState();
                         AllowRespawn(2);
                         GameStateMachine.Instance.MapEditorObject.SetActive(true);
-                        GameStateMachine.Instance.PlayObject.gameObject.SetActive(false);
-                        PlayerController.Instance.DisableGameplay();
+                        GameStateMachine.Instance.PlayObject.SetActive(false);
                     }
                     break;
 
                 case 2: // toggle Off
                     if (objectsFound)
                     {
-                        AllowRespawn(1);
                         GameStateMachine.Instance.MapEditorObject.SetActive(false);
-                        GameStateMachine.Instance.PlayObject.gameObject.SetActive(false);
-                        PlayerController.Instance.EnableGameplay();
+                        GameStateMachine.Instance.PlayObject.SetActive(true);
+                        AllowRespawn(1);
                         GameStateMachine.Instance.RequestPlayState();
-                        EditorController.ExitMapEditor();
-                        PlayerController.Instance.respawn.DoRespawn();
-
+                        PlayerController.Instance.skaterController.respawn.DoRespawn();
                     }
                     break;
             }
@@ -201,26 +201,22 @@ namespace GrindTools
                 case "Grind": // Grind tool
                     if (objectsFound)
                     {
-                        //EditorController.ChangeState(GrindToolState);
-                        MapEditorController.Instance.ChangeState<GrindSplineToolState>();
+                        EditorController.ChangeState(GrindToolState);
                         Grindtool.gameObject.SetActive(true);
                         PlaceTool.gameObject.SetActive(false);
                         WaxTool.gameObject.SetActive(false);
-                        //grindCam.position = PlayerController.Instance.skaterController.respawn.spawnPoint.position + new Vector3(0, 4, 0);
-                        grindCam.position = PlayerController.Instance.cameraController.transform.position  + new Vector3(0, 4, 0);
+                        grindCam.position = PlayerController.Instance.skaterController.respawn.spawnPoint.position + new Vector3(0, 4, 0);
                     }
                     break;
 
                 case "Wax": // Wax Tool
                     if (objectsFound)
                     {
-                        //EditorController.ChangeState(WaxToolState);
-                        MapEditorController.Instance.ChangeState<WaxToolState>();
+                        EditorController.ChangeState(WaxToolState);
                         WaxTool.gameObject.SetActive(true);
                         PlaceTool.gameObject.SetActive(false);
                         Grindtool.gameObject.SetActive(false);
-                        //waxCam.position = PlayerController.Instance.skaterController.respawn.spawnPoint.position + new Vector3(0, 4, 0);
-                        waxCam.position = PlayerController.Instance.cameraController.transform.position + new Vector3(0, 4, 0);
+                        waxCam.position = PlayerController.Instance.skaterController.respawn.spawnPoint.position + new Vector3(0, 4, 0);
                     }
                     break;
             }
@@ -229,9 +225,27 @@ namespace GrindTools
         public void RestStates()
         {
             PlaceTool.gameObject.SetActive(true);
-            Grindtool.gameObject.SetActive(false);     
+            Grindtool.gameObject.SetActive(false);
             WaxTool.gameObject.SetActive(false);
-            MapEditorController.Instance.ChangeState<SimpleMode>();
-        }      
+        }
+
+        //---------- Settings ----------
+
+        void OutlineSpines()
+        {
+
+            List<Transform> list = Main.settings.GetChildren(GrindToolState.mapEditor.placedObjectsParent, true);
+
+            if (list != null)
+            {
+                foreach (Transform obj in list)
+                {
+                    if (obj.name.Equals("Spline Prefab(Clone)"))
+                    {
+                        OutlineManager.Instance.AddOutlineTo(obj.gameObject, true);
+                    }
+                }
+            }
+        }
     }
 }
