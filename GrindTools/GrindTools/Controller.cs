@@ -2,8 +2,6 @@
 using UnityEngine;
 using MapEditor;
 using GameManagement;
-using SkaterXL.Gameplay;
-using SkaterXL.Map;
 
 namespace GrindTools
 {
@@ -30,13 +28,12 @@ namespace GrindTools
         //private MultiplayerMenuController menuController;
         //MeshRenderer NodeRenderer;
         //GameplayController GamePlayCtrl;
-        RespawnController Respawn;
 
 
         public void Start()
         {
-            //MasterPrefab = PlayerController.Instance.skaterController.transform.parent.transform.parent;
-            MasterPrefab = PlayerController.Instances[0].transform.parent;
+            MasterPrefab = PlayerController.Instance.skaterController.transform.parent.transform.parent;
+            //MasterPrefab = PlayerController.Instances[0].transform.parent;
             if (MasterPrefab != null)
             {
                 GetObjects();
@@ -67,7 +64,7 @@ namespace GrindTools
             //    UpdateSettings();
             //}
 
-            OutlineSpines();
+            //OutlineSpines();
         }
 
         public bool CheckObjectsFound(List<Transform> List)
@@ -121,12 +118,6 @@ namespace GrindTools
             EditorState = GameStateMachine.Instance.MapEditorObject.GetComponent<MapEditorGameState>();
             GrindToolState = Grindtool.GetComponent<GrindSplineToolState>();
             WaxToolState = WaxTool.GetComponent<WaxToolState>();
-
-            //GamePlayCtrl = Gameplay.GetComponent<GameplayController>();
-            Respawn = GameStateMachine.Instance.MainPlayer.gameplay.GetComponent<RespawnController>();
-            //Main.Inputctrl.Input = Gameplay.GetComponent<InputController>();
-
-            //NodeRenderer = Node.GetComponent<MeshRenderer>();
         }
 
         public bool IsPlayState()
@@ -181,8 +172,8 @@ namespace GrindTools
                         GameStateMachine.Instance.RequestMapEditorState();
                         AllowRespawn(2);
                         GameStateMachine.Instance.MapEditorObject.SetActive(true);
-                        GameStateMachine.Instance.MainPlayer.gameObject.SetActive(false);
-                        GameStateMachine.Instance.MainPlayer.DisableGameplay();
+                        GameStateMachine.Instance.PlayObject.gameObject.SetActive(false);
+                        PlayerController.Instance.DisableGameplay();
                     }
                     break;
 
@@ -191,11 +182,11 @@ namespace GrindTools
                     {
                         AllowRespawn(1);
                         GameStateMachine.Instance.MapEditorObject.SetActive(false);
-                        GameStateMachine.Instance.MainPlayer.gameObject.SetActive(true);
-                        GameStateMachine.Instance.MainPlayer.EnableGameplay();
+                        GameStateMachine.Instance.PlayObject.gameObject.SetActive(false);
+                        PlayerController.Instance.EnableGameplay();
                         GameStateMachine.Instance.RequestPlayState();
                         EditorController.ExitMapEditor();
-                        Respawn.Respawn();
+                        PlayerController.Instance.respawn.DoRespawn();
 
                     }
                     break;
@@ -216,7 +207,7 @@ namespace GrindTools
                         PlaceTool.gameObject.SetActive(false);
                         WaxTool.gameObject.SetActive(false);
                         //grindCam.position = PlayerController.Instance.skaterController.respawn.spawnPoint.position + new Vector3(0, 4, 0);
-                        grindCam.position = Respawn.spawnPoint.position + new Vector3(0, 4, 0);
+                        grindCam.position = PlayerController.Instance.cameraController.transform.position  + new Vector3(0, 4, 0);
                     }
                     break;
 
@@ -229,7 +220,7 @@ namespace GrindTools
                         PlaceTool.gameObject.SetActive(false);
                         Grindtool.gameObject.SetActive(false);
                         //waxCam.position = PlayerController.Instance.skaterController.respawn.spawnPoint.position + new Vector3(0, 4, 0);
-                        waxCam.position = Respawn.spawnPoint.position + new Vector3(0, 4, 0);
+                        waxCam.position = PlayerController.Instance.cameraController.transform.position + new Vector3(0, 4, 0);
                     }
                     break;
             }
@@ -241,24 +232,6 @@ namespace GrindTools
             Grindtool.gameObject.SetActive(false);     
             WaxTool.gameObject.SetActive(false);
             MapEditorController.Instance.ChangeState<SimpleMode>();
-        }
-
-        //---------- Settings ----------
-        void OutlineSpines()
-        {
-
-            List<Transform> list = Main.settings.GetChildren(GrindToolState.mapEditor.placedObjectsParent, true);
-
-            if (list != null)
-            {
-                foreach (Transform obj in list)
-                {
-                    if (obj.name.Equals("Spline Prefab(Clone)"))
-                    {
-                        OutlineManager.Instance.AddOutlineTo(obj.gameObject, true);
-                    }
-                }
-            }
-        }
+        }      
     }
 }

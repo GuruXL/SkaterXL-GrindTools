@@ -8,34 +8,35 @@ namespace RapidGUI
         static GUILayoutOption fieldWidthMin = GUILayout.MinWidth(50f);
 
         static object StandardField(object v, Type type) => StandardField(v, type, null);
-
-        static object StandardField(object v, Type type, GUILayoutOption option)
+        private static object StandardField(object v, Type type, GUILayoutOption option)
         {
-            object ret = v;
-
-            var unparsedStr = UnparsedStr.Create();
-            var color = GUI.color;
-
-            using (new ColorScope(color))
+            object obj = v;
+            UnparsedStr unparsedStr = UnparsedStr.Create();
+            using (new ColorScope((unparsedStr.hasStr && !unparsedStr.CanParse(type)) ? Color.red : GUI.color))
             {
-                var text = string.Format("{0:0.00}", v);
-                var displayStr = GUILayout.TextField(text, GUILayout.Height(21f), option ?? fieldWidthMin);
-                if (displayStr != text)
+                string text = unparsedStr.Get() ?? ((v != null) ? string.Format("{0:0.000}", v) : "");
+                string text2 = GUILayout.TextField(text, new GUILayoutOption[]
+                {
+            GUILayout.Height(21f),
+            option ?? fieldWidthMin
+                });
+                if (text2 != text)
                 {
                     try
                     {
-                        ret = Convert.ChangeType(displayStr, type);
-                        if (ret.ToString() == displayStr)
+                        obj = Convert.ChangeType(text2, type);
+                        if (obj.ToString() == text2)
                         {
-                            displayStr = null;
+                            text2 = null;
                         }
                     }
-                    catch { }
-
-                    unparsedStr.Set(displayStr);
+                    catch
+                    {
+                    }
+                    unparsedStr.Set(text2);
                 }
             }
-            return ret;
+            return obj;
         }
     }
 }

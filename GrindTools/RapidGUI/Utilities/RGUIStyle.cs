@@ -95,7 +95,7 @@ namespace RapidGUI
             style.hover.textColor = toggle.hover.textColor;
 
             flatButtonTex = new Texture2D(1, 1);
-            flatButtonTex.SetPixels(new[] { new Color(1, 1, 1, 1f) });
+            flatButtonTex.SetPixels(new[] { new Color(0, 1, 1, 1f) }); // Sets Pop up Hover Color
             flatButtonTex.Apply();
             style.hover.background = flatButtonTex;
             style.hover.textColor = Color.white;
@@ -111,8 +111,10 @@ namespace RapidGUI
                 alignment = GUI.skin.label.alignment,
                 padding = new RectOffset(4, 4, 4, 6),
                 name = nameof(popupFlatButton)
+                
             };
 
+            style.hover.textColor = Color.black; // changes color of PopUp Text
             popupFlatButton = style;
         }
 
@@ -124,7 +126,7 @@ namespace RapidGUI
             };
 
             popupTex = new Texture2D(1, 1);
-            popupTex.SetPixels(new[] { new Color(44f / 255f, 62f / 255f, 80f / 255f, 1f) });
+            popupTex.SetPixels(new[] { new Color(0f / 255f, 0f / 255f, 0f / 255f, 1f) });  //changes color of pop up background
             popupTex.Apply();
 
             style.normal.background =

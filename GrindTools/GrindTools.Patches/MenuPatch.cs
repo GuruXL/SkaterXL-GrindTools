@@ -15,8 +15,8 @@ namespace GrindTools.Patches
 			__instance.MapEditorButton.GreyedOut = false;
 			__instance.MapEditorButton.enabled = true;
 			__instance.MapEditorButton.interactable = true;
-			GameStateMachine.Instance.PauseObject.SetActive(false);
-			GameStateMachine.Instance.PauseObject.SetActive(true);
+			__instance.StateMachine.PauseObject.SetActive(false);
+			__instance.StateMachine.PauseObject.SetActive(true);
 		}
 	}
 }

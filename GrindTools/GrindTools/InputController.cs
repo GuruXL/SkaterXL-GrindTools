@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
 using MapEditor;
-using RapidGUI;
-using UnityEngine.SceneManagement;
 using GameManagement;
-using UnityEngine.UI;
 using ModIO.UI;
 
 namespace GrindTools
 {
+    
     public class InputController : MonoBehaviour
     {
 
@@ -33,8 +31,7 @@ namespace GrindTools
                 GameStateMachine.Instance.CurrentState.GetType() != typeof(GrindSplineToolState)||
                 GameStateMachine.Instance.CurrentState.GetType() != typeof(WaxToolState))
             {
-                //PlayerController.Instances[0].gameplay.inputController.rewiredPlayer.GetButtonLongPressDown("Y")
-                if (GameStateMachine.Instance.MainPlayer.input.GetButtonLongPressDown("Y"))
+                if (PlayerController.Instance.inputController.player.GetButtonLongPressDown("Y"))
                 {
                     Active();
                 }
@@ -45,7 +42,7 @@ namespace GrindTools
                 GameStateMachine.Instance.CurrentState.GetType() == typeof(WaxToolState))
             {
                 //PlayerController.Instances[0].gameplay.inputController.rewiredPlayer.GetButtonDown("B")
-                if (GameStateMachine.Instance.MainPlayer.input.GetButtonLongPressDown("B"))
+                if (PlayerController.Instance.inputController.player.GetButtonLongPressDown("B"))
                 {
                     Deactive();
                 }
@@ -55,7 +52,7 @@ namespace GrindTools
         void ToggleActiveState()
         {
             //PlayerController.Instances[0].gameplay.inputController.rewiredPlayer.GetButtonLongPressDown(13)
-            if (GameStateMachine.Instance.MainPlayer.input.GetButtonShortPressDown("Y"))
+            if (PlayerController.Instance.inputController.player.GetButtonShortPressDown("Y"))
             {
                 Main.Controller.ToggleTool("Grind");
                 MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $" Grind Tool Active", 2f);
@@ -64,20 +61,20 @@ namespace GrindTools
             if (Main.Controller.EditorController.CurrentState.GetType() == typeof(GrindSplineToolState))
             {
                 //PlayerController.Instances[0].gameplay.inputController.rewiredPlayer.GetButtonDown("Y")
-                if (GameStateMachine.Instance.MainPlayer.input.GetButtonShortPressDown("Y"))
+                if (PlayerController.Instance.inputController.player.GetButtonShortPressDown("Y"))
                 {
                     Main.Controller.ToggleTool("Wax");
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $" Wax Tool Active", 2f);
                 }
 
                 //PlayerController.Instances[0].gameplay.inputController.rewiredPlayer.GetButtonShortPressDown(70)
-                if (GameStateMachine.Instance.MainPlayer.input.GetButtonShortPressDown(70)) // Undo
+                if (PlayerController.Instance.inputController.player.GetButtonShortPressDown(70)) // Undo
                 {
                     Main.Controller.GrindToolState.mapEditor.Undo();
                 }
 
                 //PlayerController.Instances[0].gameplay.inputController.rewiredPlayer.GetButtonShortPressDown(69)
-                if (GameStateMachine.Instance.MainPlayer.input.GetButtonShortPressDown(69)) // Redo
+                if (PlayerController.Instance.inputController.player.GetButtonShortPressDown(69)) // Redo
                 {
                     Main.Controller.GrindToolState.mapEditor.Redo();
                 }
@@ -85,7 +82,7 @@ namespace GrindTools
             else if (Main.Controller.EditorController.CurrentState.GetType() == typeof(WaxToolState))
             {
                 //PlayerController.Instances[0].gameplay.inputController.rewiredPlayer.GetButtonDown("Y")
-                if (GameStateMachine.Instance.MainPlayer.input.GetButtonShortPressDown("Y"))
+                if (PlayerController.Instance.inputController.player.GetButtonShortPressDown("Y"))
                 {
                     Main.Controller.ToggleTool("Grind");
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $" Grind Tool Active", 2f);
@@ -107,4 +104,5 @@ namespace GrindTools
             Main.Controller.RestStates();
         }
     }
+    
 }
