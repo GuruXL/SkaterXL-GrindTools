@@ -1,5 +1,4 @@
-﻿using System;
-using GameManagement;
+﻿using GameManagement;
 using HarmonyLib;
 
 namespace GrindTools.Patches

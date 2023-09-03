@@ -1,8 +1,8 @@
 {
     "Id": "GrindTools",
-    "DisplayName": "GrindTools_sxl_1.2.2.8",
+    "DisplayName": "GrindTools sxl 1.2.2.8",
     "Author": "Guru",
-    "Version": "0.1.0",
+    "Version": "0.1.1",
     "ManagerVersion": "0.22.5.0",
     "Requirements": [],
     "LoadAfter": [],

@@ -149,6 +149,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GrindTools.Patches\AvailableStatePatch.cs" />
     <Compile Include="GrindTools\Controller.cs" />
     <Compile Include="GrindTools.Patches\AllowMapEditorPatch.cs" />
     <Compile Include="GrindTools.Patches\MenuPatch.cs" />

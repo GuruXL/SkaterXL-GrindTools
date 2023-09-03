@@ -17,8 +17,8 @@ namespace GrindTools
         public static UnityModManager.ModEntry modEntry;
         public static GameObject ScriptManager;
         //public static UI UIctrl;
-        public static InputController Inputctrl;
-        public static Controller Controller;
+        public static InputController inputctrl;
+        public static Controller controller;
 
         public static bool Load(UnityModManager.ModEntry modEntry)
         {
@@ -38,7 +38,7 @@ namespace GrindTools
             GUILayout.BeginVertical(GUILayout.Width(256));
             if (GUILayout.Button("Delete All Placed Objects", RGUIStyle.button, GUILayout.Width(256)))
             {
-                Controller.EditorController.DeleteAllObstacles();
+                controller.EditorController.DeleteAllObstacles();
             }
             GUILayout.EndVertical();
         }
@@ -62,8 +62,8 @@ namespace GrindTools
                     harmonyInstance.PatchAll(Assembly.GetExecutingAssembly());
                     ScriptManager = new GameObject("GrindTools");
                     //UIctrl = ScriptManager.AddComponent<UI>();
-                    Inputctrl = ScriptManager.AddComponent<InputController>();
-                    Controller = ScriptManager.AddComponent<Controller>();
+                    inputctrl = ScriptManager.AddComponent<InputController>();
+                    controller = ScriptManager.AddComponent<Controller>();
                     Object.DontDestroyOnLoad(ScriptManager);
                 }
                 else
