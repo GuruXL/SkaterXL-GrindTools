@@ -37,21 +37,7 @@ namespace GrindTools
             return null;
         }
 
-        // Gets children of an object (true for recursive)
-        public List<Transform> GetChildren(Transform parent, bool recursive)
-        {
-            List<Transform> children = new List<Transform>();
-            foreach (Transform child in parent)
-            {
-                children.Add(child);
-                if (recursive)
-                {
-                    children.AddRange(GetChildren(child, true));
-                }
-            }
-            return children;
-        }
-
+       
         // ----- End Set KeyBindings ------
 
         public Color BGColor = new Color(0.0f, 0.0f, 0.0f);
@@ -60,7 +46,7 @@ namespace GrindTools
         public bool HotKeyToggle = false;
 
         //------floats---------
-        public float MoveSpeed = 25f;
+        //public float MoveSpeed = 25f;
 
         public void resetToggles()
         {

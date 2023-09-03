@@ -4,6 +4,7 @@ using RapidGUI;
 using UnityEngine;
 using UnityModManagerNet;
 using ModIO.UI;
+using GrindTools.UI;
 
 namespace GrindTools
 {
@@ -16,7 +17,7 @@ namespace GrindTools
         public static string modId = "GrindTools";
         public static UnityModManager.ModEntry modEntry;
         public static GameObject ScriptManager;
-        //public static UI UIctrl;
+        public static UIManager uiManager;
         public static InputController inputctrl;
         public static Controller controller;
 
@@ -61,9 +62,9 @@ namespace GrindTools
                     harmonyInstance = new Harmony((modEntry.Info).Id);
                     harmonyInstance.PatchAll(Assembly.GetExecutingAssembly());
                     ScriptManager = new GameObject("GrindTools");
-                    //UIctrl = ScriptManager.AddComponent<UI>();
-                    inputctrl = ScriptManager.AddComponent<InputController>();
                     controller = ScriptManager.AddComponent<Controller>();
+                    inputctrl = ScriptManager.AddComponent<InputController>();
+                    uiManager = ScriptManager.AddComponent<UIManager>();
                     Object.DontDestroyOnLoad(ScriptManager);
                 }
                 else

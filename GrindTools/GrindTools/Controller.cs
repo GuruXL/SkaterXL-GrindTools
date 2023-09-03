@@ -6,24 +6,14 @@ namespace GrindTools
 {
     public class Controller : MonoBehaviour
     {
-        //private Transform Gameplay;
-        //private Transform MapEditor;
         private Transform StatesObj;
         private Transform GrindtoolObj;
         private Transform WaxToolObj;
-        //private Transform PlaceTool;
-        //private Transform grindCam;
-        //private Transform waxCam;
-        //private Transform Node;
-
-        //private bool objectsFound;
-        //List<Transform> ObjectList = new List<Transform>();
 
         public MapEditorController EditorController;
         public MapEditorGameState EditorGameState;
         public GrindSplineToolState GrindToolState;
         public WaxToolState WaxToolState;
-        //private MultiplayerMenuController menuController;
         //public MeshRenderer NodeRenderer;
 
         public void Awake()
@@ -71,17 +61,7 @@ namespace GrindTools
             }
         }
 
-        /*
-        public void EnableMapEditorState()
-        {
-            if (!Main.controller.IsPlayState())
-            {
-                GameStateMachine.Instance.RequestPlayState();
-            }
-            GameStateMachine.Instance.RequestMapEditorState();
-        }
-        */
-
+     
         public void ToggleState(string options)
         {
             switch (options)
@@ -96,14 +76,6 @@ namespace GrindTools
             }
         } 
 
-        /*
-        public void RestStates()
-        {
-            PlaceTool.gameObject.SetActive(true);
-            Grindtool.gameObject.SetActive(false);
-            WaxTool.gameObject.SetActive(false);
-        }
-        */
-        //---------- Settings ----------
+       
     }
 }

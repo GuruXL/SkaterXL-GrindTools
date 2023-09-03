@@ -23,16 +23,6 @@ namespace GrindTools
             }
         }
 
-        /*
-        void ToggleEditorState()
-        {
-            if (PlayerController.Instance.inputController.player.GetButtonLongPressDown("Y"))
-            {
-                Main.controller.EnableMapEditorState();
-            }
-        }
-        */
-
         private void WaitForInput()
         {
             if (PlayerController.Instance.inputController.player.GetButtonLongPressDown(13))
@@ -49,17 +39,6 @@ namespace GrindTools
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $" Wax Tool Active", 2f);
                 }
 
-                /*
-                if (PlayerController.Instance.inputController.player.GetButtonShortPressDown(70)) // Undo
-                {
-                    Main.controller.GrindToolState.mapEditor.Undo();
-                }
-
-                if (PlayerController.Instance.inputController.player.GetButtonShortPressDown(69)) // Redo
-                {
-                    Main.controller.GrindToolState.mapEditor.Redo();
-                }
-                */
             }
             else if (Main.controller.EditorController.CurrentState.GetType() == typeof(WaxToolState))
             {
