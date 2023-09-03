@@ -71,55 +71,31 @@ namespace GrindTools
             }
         }
 
-        //---------- Map Editor ----------
         /*
-        public void ToggleMapEditor(int options)
+        public void EnableMapEditorState()
         {
-            switch (options)
+            if (!Main.controller.IsPlayState())
             {
-                case 1: // toggle On
-                    GameStateMachine.Instance.RequestMapEditorState();
-                    AllowRespawn(2);
-                    GameStateMachine.Instance.MapEditorObject.SetActive(true);
-                    GameStateMachine.Instance.PlayObject.SetActive(false);
-                    break;
-
-                case 2: // toggle Off
-                    GameStateMachine.Instance.MapEditorObject.SetActive(false);
-                    GameStateMachine.Instance.PlayObject.SetActive(true);
-                    AllowRespawn(1);
-                    GameStateMachine.Instance.RequestPlayState();
-                    PlayerController.Instance.skaterController.respawn.DoRespawn();
-                    break;
+                GameStateMachine.Instance.RequestPlayState();
             }
+            GameStateMachine.Instance.RequestMapEditorState();
         }
         */
 
-        //---------- Grind Tool ----------
-
-        /*
-        public void ToggleTool(string options)
+        public void ToggleState(string options)
         {
             switch (options)
             {
                 case "Grind": // Grind tool
                     EditorController.ChangeState(GrindToolState);
-                    Grindtool.gameObject.SetActive(true);
-                    PlaceTool.gameObject.SetActive(false);
-                    WaxTool.gameObject.SetActive(false);
-                    grindCam.position = PlayerController.Instance.skaterController.respawn.spawnPoint.position + new Vector3(0, 4, 0);
                     break;
 
                 case "Wax": // Wax Tool
                     EditorController.ChangeState(WaxToolState);
-                    WaxTool.gameObject.SetActive(true);
-                    PlaceTool.gameObject.SetActive(false);
-                    Grindtool.gameObject.SetActive(false);
-                    waxCam.position = PlayerController.Instance.skaterController.respawn.spawnPoint.position + new Vector3(0, 4, 0);
                     break;
             }
-        }
-        */
+        } 
+
         /*
         public void RestStates()
         {
