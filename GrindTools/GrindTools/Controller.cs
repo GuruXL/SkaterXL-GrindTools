@@ -29,9 +29,14 @@ namespace GrindTools
             GetComponents();
         }
 
+        private float delay = 0.2f;
+        private float lastDelay = 0f;
         public void Update()
         {
-            SetCamFov();
+            if (Time.time - lastDelay >= delay)
+            {
+                SetCamFov();
+            }
         }
 
         private void GetObjects()

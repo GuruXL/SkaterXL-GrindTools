@@ -10,7 +10,9 @@ namespace GrindTools
 {
     public class InputController : MonoBehaviour
     {
-        Player player;
+        private Player player;
+        private float delay = 0.2f;
+        private float lastDelay = 0f;
 
         public void Awake()
         {
@@ -19,14 +21,18 @@ namespace GrindTools
 
         public void Update()
         {
-            if (Main.controller.EditorController.CurrentState.GetType() == typeof(GrindSplineToolState) ||
-                Main.controller.EditorController.CurrentState.GetType() == typeof(WaxToolState))
+            // Check if enough time has passed since the last input check
+            if (Time.time - lastDelay >= delay)
             {
-                SwapToolStates();
-            }
-            else
-            {
-                CheckForInput();
+                if (Main.controller.EditorController.CurrentState.GetType() == typeof(GrindSplineToolState) ||
+                    Main.controller.EditorController.CurrentState.GetType() == typeof(WaxToolState))
+                {
+                    SwapToolStates();
+                }
+                else
+                {
+                    CheckForInput();
+                }
             }
         }
 
@@ -34,6 +40,8 @@ namespace GrindTools
         {
             if (GameStateMachine.Instance.CurrentState.GetType() != typeof(MapEditorGameState))
                 return;
+
+            Main.Logger.Log("*** Entered Map Editor State ***"); // debug test, remove before final.
 
             if (player.GetButtonUp(13))
             {
@@ -78,8 +86,7 @@ namespace GrindTools
                     break;
             }
         }
-
-        void ResetToPlayState()
+        private void ResetToPlayState()
         {
             Main.controller.AllowRespawn(true);
             GameStateMachine.Instance.RequestPlayState();

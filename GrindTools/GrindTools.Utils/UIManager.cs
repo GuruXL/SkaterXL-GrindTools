@@ -3,12 +3,12 @@ using MapEditor;
 using GameManagement;
 using TMPro;
 
-namespace GrindTools.UI
+namespace GrindTools.utils
 {
     public class UIManager : MonoBehaviour
     {
         Transform mapEditorUI;
-        Transform speedFactorText;
+        TMP_Text speedFactorText;
         Transform grind_ControlsUI;
         Transform wax_ControlsUI;
 
@@ -32,53 +32,69 @@ namespace GrindTools.UI
         {
             GetUIObjects();
             CreateIndicatorClone();
+            SetSpeedTextValues();
             DisableUIObjects();
         }
         private void GetUIObjects()
         {
-            mapEditorUI = GameStateMachine.Instance.MapEditorObject.transform.Find("MapEditorUI");
+            //mapEditorUI = GameStateMachine.Instance.MapEditorObject.transform.Find("MapEditorUI");
+            mapEditorUI = Main.controller.EditorController.ModeSelectionUI.transform.parent;
             indicatorsObj = mapEditorUI.transform.Find("Indicators");
-            speedFactorText = mapEditorUI.transform.Find("Speed Factor Canvas");
+            speedFactorText = Main.controller.EditorController.speedFactorText;
 
             grind_ControlsUI = Main.controller.GrindtoolObj.Find("Controls UI");
             wax_ControlsUI = Main.controller.WaxToolObj.Find("Controls UI");
         }
-
         private void CreateIndicatorClone()
         {
             if (indicators_Clone == null)
             {
+                // create indicator clone and set as child of MapEditorUI
                 indicators_Clone = Instantiate(indicatorsObj);
                 indicators_Clone.SetParent(mapEditorUI);
 
+                // find UI child objects
                 indicator_Panel = indicators_Clone.transform.Find("Panel");
                 indicator_Label = indicators_Clone.transform.Find("Space Label");
 
+                //create a clone of the main label object
                 indicator_Label2 = Instantiate(indicator_Label);
                 indicator_Label2.SetParent(indicators_Clone);
                 indicator_Label2.localScale = new Vector3(1, 1, 1);
 
+                //find X, Y, and A button labels
                 panel_x = indicator_Panel.Find("X");
                 panel_y = indicator_Panel.Find("Y");
                 panel_a = indicator_Panel.Find("Z");
 
+                // toggle off Y label
                 panel_y.gameObject.SetActive(false);
 
-                indicator_Panel_Rect = indicator_Panel.GetComponent<RectTransform>();
-                indicator_Label_Rect = indicator_Label.GetComponent<RectTransform>();
-                indicator_Label_Rect2 = indicator_Label2.GetComponent<RectTransform>();
+                // Get Components for UI objects
+                GetUIComponents();
 
-                label1_text = indicator_Label.gameObject.GetComponent<TextMeshProUGUI>();
-                label1_text.autoSizeTextContainer = true;
-                label2_text = indicator_Label2.gameObject.GetComponent<TextMeshProUGUI>();
-                label2_text.autoSizeTextContainer = true;
+                // Set the new anchored position of the UI objects and labels
+                SetIndicatorsPos();
 
-                PosIndicators();
+                // Change the default label text
                 SetLabelText(label1_text, "Apply Spline");
                 SetLabelText(label2_text, "Add Spline Points");
             }
         }
-        private void PosIndicators()
+        private void GetUIComponents()
+        {
+            // Get the RectTrasform components to allow anchor position change
+            indicator_Panel_Rect = indicator_Panel.GetComponent<RectTransform>();
+            indicator_Label_Rect = indicator_Label.GetComponent<RectTransform>();
+            indicator_Label_Rect2 = indicator_Label2.GetComponent<RectTransform>();
+
+            // Get the TMP component for the labels and allow auto size
+            label1_text = indicator_Label.gameObject.GetComponent<TextMeshProUGUI>();
+            label1_text.autoSizeTextContainer = true;
+            label2_text = indicator_Label2.gameObject.GetComponent<TextMeshProUGUI>();
+            label2_text.autoSizeTextContainer = true;
+        }
+        private void SetIndicatorsPos()
         {
             if (indicator_Panel_Rect != null && indicator_Label_Rect != null)
             {
@@ -86,6 +102,11 @@ namespace GrindTools.UI
                 indicator_Label_Rect.anchoredPosition = new Vector2(1420, -460);
                 indicator_Label_Rect2.anchoredPosition = new Vector2(1420, -520);
             }
+        }
+        private void SetSpeedTextValues()
+        {
+            speedFactorText.alpha = 0.45f;
+            speedFactorText.fontSize = 28;
         }
         public void ToggleSpeedText(bool state)
         {
