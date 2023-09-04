@@ -42,6 +42,9 @@ namespace GrindTools
                 controller.EditorController.DeleteAllObstacles();
             }
             GUILayout.EndVertical();
+            GUILayout.BeginVertical(GUILayout.Width(256));
+            settings.CamFOV = RGUI.SliderFloat(settings.CamFOV, 40f, 120f, 80f, "Cam Fov");
+            GUILayout.EndVertical();
         }
         private static void OnSaveGUI(UnityModManager.ModEntry modEntry)
         {

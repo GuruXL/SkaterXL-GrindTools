@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using MapEditor;
 using GameManagement;
+using Cinemachine;
 
 namespace GrindTools
 {
     public class Controller : MonoBehaviour
     {
-        private Transform StatesObj;
-        private Transform GrindtoolObj;
-        private Transform WaxToolObj;
+        public Transform StatesObj;
+        public Transform GrindtoolObj;
+        public Transform WaxToolObj;
 
         public MapEditorController EditorController;
         public MapEditorGameState EditorGameState;
@@ -16,15 +17,21 @@ namespace GrindTools
         public WaxToolState WaxToolState;
         //public MeshRenderer NodeRenderer;
 
+        public CinemachineVirtualCamera grindToolCam;
+        public CinemachineVirtualCamera waxToolCam;
+
         public void Awake()
         {
-            GetObjects();
-
             EditorController = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<MapEditorController>();
             EditorGameState = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<MapEditorGameState>();
 
-            GrindToolState = GrindtoolObj.GetComponent<GrindSplineToolState>();
-            WaxToolState = WaxToolObj.GetComponent<WaxToolState>();
+            GetObjects();
+            GetComponents();
+        }
+
+        public void Update()
+        {
+            SetCamFov();
         }
 
         private void GetObjects()
@@ -32,20 +39,16 @@ namespace GrindTools
             StatesObj = GameStateMachine.Instance.MapEditorObject.transform.Find("States");
             GrindtoolObj = StatesObj.Find("GrindSpline Tool");
             WaxToolObj = StatesObj.Find("Wax Tool");
-        }
-        
-        public bool IsPlayState()
+        }      
+        private void GetComponents()
         {
+            GrindToolState = GrindtoolObj.GetComponent<GrindSplineToolState>();
+            WaxToolState = WaxToolObj.GetComponent<WaxToolState>();
 
-            if (GameStateMachine.Instance.CurrentState.GetType() != typeof(PlayState))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            grindToolCam = GrindtoolObj.GetComponentInChildren<CinemachineVirtualCamera>();
+            waxToolCam = WaxToolObj.GetComponentInChildren<CinemachineVirtualCamera>();
         }
+
         public void AllowRespawn(bool state)
         {
             switch (state)
@@ -59,9 +62,7 @@ namespace GrindTools
                     GameStateMachine.Instance.allowPinMovement = false;
                     break;
             }
-        }
-
-     
+        }  
         public void ToggleState(string options)
         {
             switch (options)
@@ -74,8 +75,14 @@ namespace GrindTools
                     EditorController.ChangeState(WaxToolState);
                     break;
             }
-        } 
+        }
+        public void SetCamFov()
+        {
+            if (Main.settings.CamFOV == grindToolCam.m_Lens.FieldOfView)
+                return;
 
-       
+            grindToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
+            waxToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
+        }
     }
 }

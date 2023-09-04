@@ -46,7 +46,7 @@ namespace GrindTools
         public bool HotKeyToggle = false;
 
         //------floats---------
-        //public float MoveSpeed = 25f;
+        public float CamFOV = 70f;
 
         public void resetToggles()
         {

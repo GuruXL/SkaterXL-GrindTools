@@ -10,17 +10,17 @@ namespace GrindTools.Patches
     {
         public static void Postfix(MapEditorController __instance)
         {
-            // Use reflection to get the private field
+            //gets the private field
             FieldInfo field = __instance.GetType().GetField("availableMapEditorStates", BindingFlags.NonPublic | BindingFlags.Instance);
 
-            // Get the current list from the private field
+            // Gets the current list
             List<MapEditorState> availableMapEditorStates = (List<MapEditorState>)field.GetValue(__instance);
 
-            // Modify the list
+            // Modifys the list
             availableMapEditorStates.Add(Main.controller.GrindToolState);
             availableMapEditorStates.Add(Main.controller.WaxToolState);
 
-            // set the modified list back to the private field
+            // sets the modified list back to the private field
             field.SetValue(__instance, availableMapEditorStates);
         }
     }
