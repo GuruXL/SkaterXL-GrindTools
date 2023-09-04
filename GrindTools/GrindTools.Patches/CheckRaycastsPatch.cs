@@ -6,7 +6,7 @@ using GrindTools.Utils;
 namespace GrindTools.Patches
 {
     [HarmonyPatch(typeof(GrindSplineToolState), "CheckRaycasts")]
-    public static class GrindSplineToolStatePatch
+    public static class CheckRaycastsPatch
     {
         public static void Postfix(GrindSplineToolState __instance)
         {
