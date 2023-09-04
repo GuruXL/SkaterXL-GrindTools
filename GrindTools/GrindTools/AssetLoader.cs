@@ -9,7 +9,9 @@ namespace GrindTools
 {
     public static class AssetLoader
     {
-        public static Material materialFromBundle;
+        public static Material RedMatfrombundle;
+        public static Material BlueMatfrombundle;
+        public static Material GreenMatfrombundle;
         public static AssetBundle assetBundle;
 
         public static void LoadBundles()
@@ -37,7 +39,7 @@ namespace GrindTools
         }
         private static IEnumerator LoadAssetBundle()
         {
-            byte[] assetBundleData = ExtractResources("GrindTools.Resources.______________");
+            byte[] assetBundleData = ExtractResources("GrindTools.Resources.mats");
             if (assetBundleData == null)
             {
                 MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Failed to EXTRACT GrindTools Asset Bundle", 2.5f);
@@ -58,15 +60,21 @@ namespace GrindTools
         {
             if (assetBundle == null)
             {
-                MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"ClothEditor Asset bundles are not loaded!", 2.5f);
+                MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"GrindTools Asset bundles are not loaded!", 2.5f);
                 yield break;
             }
             yield return PlayerController.Instance.StartCoroutine(LoadAssetFromBundle());
         }
         private static IEnumerator LoadAssetFromBundle()
         {
-            //load objects here
-            materialFromBundle = assetBundle.LoadAsset<Material>("_____________");
+            RedMatfrombundle = assetBundle.LoadAsset<Material>("RedMat");
+            BlueMatfrombundle = assetBundle.LoadAsset<Material>("BlueMat");
+            GreenMatfrombundle = assetBundle.LoadAsset<Material>("GreenMat");
+
+            if (RedMatfrombundle != null) MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"RedMat Loaded From Bundle", 2.5f);
+            if (BlueMatfrombundle != null) MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"BlueMat Loaded From Bundle", 2.5f);
+            if (GreenMatfrombundle != null) MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"GreenMat Loaded From Bundle", 2.5f);
+
             yield return null;
         }
         public static void UnloadAssetBundle()

@@ -66,15 +66,18 @@ namespace GrindTools
                     harmonyInstance = new Harmony((modEntry.Info).Id);
                     harmonyInstance.PatchAll(Assembly.GetExecutingAssembly());
                     ScriptManager = new GameObject("GrindTools");
+                    Object.DontDestroyOnLoad(ScriptManager);
                     controller = ScriptManager.AddComponent<Controller>();
                     inputctrl = ScriptManager.AddComponent<InputController>();
                     uiManager = ScriptManager.AddComponent<UIManager>();
                     matUtil = ScriptManager.AddComponent<MatUtil>();
-                    Object.DontDestroyOnLoad(ScriptManager);
+
+                    AssetLoader.LoadBundles();
                 }
                 else
                 {
                     harmonyInstance.UnpatchAll(harmonyInstance.Id);
+                    AssetLoader.UnloadAssetBundle();
                     Object.Destroy(ScriptManager);
                 }
                 flag = true;
@@ -83,6 +86,9 @@ namespace GrindTools
         }
         public static bool Unload(UnityModManager.ModEntry modEntry)
         {
+            harmonyInstance.UnpatchAll(harmonyInstance.Id);
+            AssetLoader.UnloadAssetBundle();
+            Object.Destroy(ScriptManager);
             Logger.Log(nameof(Unload));
             return true;
         }
