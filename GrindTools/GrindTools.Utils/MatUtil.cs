@@ -1,16 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-namespace GrindTools.utils
+namespace GrindTools.Utils
 {
-    public class MatUtil : MonoBehaviour
+    public class MatUtil
     {
-        public MeshRenderer VisualNode;
+        public static MatUtil __instance { get; private set; }
+        public static MatUtil Instance => __instance ?? (__instance = new MatUtil());
 
-        private void Start()
-        {
-            VisualNode = Main.controller.GrindToolState.visualisationMR;
-        }
         private void ApplyMaterials(MeshRenderer visualisationMR, Material mat)
         {
             if (visualisationMR != null)
@@ -23,21 +20,21 @@ namespace GrindTools.utils
         {
             if (AssetLoader.RedMatfrombundle != null)
             {
-                ApplyMaterials(VisualNode, AssetLoader.RedMatfrombundle);
+                ApplyMaterials(Main.controller.GrindToolState.visualisationMR, AssetLoader.RedMatfrombundle);
             }
         }
         public void ApplyBlueMat()
         {
             if (AssetLoader.BlueMatfrombundle != null)
             {
-                ApplyMaterials(VisualNode, AssetLoader.BlueMatfrombundle);
+                ApplyMaterials(Main.controller.GrindToolState.visualisationMR, AssetLoader.BlueMatfrombundle);
             }
         }
         public void ApplyGreenMat()
         {
             if (AssetLoader.GreenMatfrombundle != null)
             {
-                ApplyMaterials(VisualNode, AssetLoader.GreenMatfrombundle);
+                ApplyMaterials(Main.controller.GrindToolState.visualisationMR, AssetLoader.GreenMatfrombundle);
             }
         }
     }

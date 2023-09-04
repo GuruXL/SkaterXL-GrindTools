@@ -3,7 +3,7 @@ using MapEditor;
 using GameManagement;
 using TMPro;
 
-namespace GrindTools.utils
+namespace GrindTools.Utils
 {
     public class UIManager : MonoBehaviour
     {

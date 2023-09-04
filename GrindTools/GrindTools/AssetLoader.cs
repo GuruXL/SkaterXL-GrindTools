@@ -70,11 +70,6 @@ namespace GrindTools
             RedMatfrombundle = assetBundle.LoadAsset<Material>("RedMat");
             BlueMatfrombundle = assetBundle.LoadAsset<Material>("BlueMat");
             GreenMatfrombundle = assetBundle.LoadAsset<Material>("GreenMat");
-
-            if (RedMatfrombundle != null) MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"RedMat Loaded From Bundle", 2.5f);
-            if (BlueMatfrombundle != null) MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"BlueMat Loaded From Bundle", 2.5f);
-            if (GreenMatfrombundle != null) MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"GreenMat Loaded From Bundle", 2.5f);
-
             yield return null;
         }
         public static void UnloadAssetBundle()
@@ -85,7 +80,6 @@ namespace GrindTools
                 assetBundle = null;
             }
         }
-
         private static void OnDestroy()
         {
             UnloadAssetBundle();

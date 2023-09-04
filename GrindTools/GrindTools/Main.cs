@@ -4,7 +4,7 @@ using RapidGUI;
 using UnityEngine;
 using UnityModManagerNet;
 using ModIO.UI;
-using GrindTools.utils;
+using GrindTools.Utils;
 
 namespace GrindTools
 {
@@ -20,7 +20,7 @@ namespace GrindTools
         public static Controller controller;
         public static InputController inputctrl;
         public static UIManager uiManager;
-        public static MatUtil matUtil;
+        //public static MatUtil matUtil;
 
         public static bool Load(UnityModManager.ModEntry modEntry)
         {
@@ -70,7 +70,7 @@ namespace GrindTools
                     controller = ScriptManager.AddComponent<Controller>();
                     inputctrl = ScriptManager.AddComponent<InputController>();
                     uiManager = ScriptManager.AddComponent<UIManager>();
-                    matUtil = ScriptManager.AddComponent<MatUtil>();
+                    //matUtil = ScriptManager.AddComponent<MatUtil>();
 
                     AssetLoader.LoadBundles();
                 }
