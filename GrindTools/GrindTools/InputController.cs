@@ -5,6 +5,7 @@ using ModIO.UI;
 using Rewired;
 using System;
 using System.Collections.Generic;
+using GrindTools.Patches;
 
 namespace GrindTools
 {
@@ -65,7 +66,11 @@ namespace GrindTools
                     {
                         Main.controller.ToggleState("Wax");
                         Main.uiManager.ToggleIndicators(false);
-                        MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $" Wax Tool Active", 2f);
+                        MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $" Wax Tool Active", 1f);
+                    }
+                    else if (CheckRaycastsPatch.selectedSpline.nodes.Count >= 2 && player.GetButtonDown("X"))
+                    {
+                        MessageSystem.QueueMessage(MessageDisplayData.Type.Success, $"New Spline Created", 2.5f);
                     }
                     else if (player.GetButtonDown("B"))
                     {
@@ -77,7 +82,7 @@ namespace GrindTools
                     {
                         Main.controller.ToggleState("Grind");
                         Main.uiManager.ToggleIndicators(true);
-                        MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $" Grind Tool Active", 2f);
+                        MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $" Grind Tool Active", 1f);
                     }
                     else if (player.GetButtonDown("B"))
                     {

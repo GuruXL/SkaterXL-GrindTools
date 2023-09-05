@@ -42,6 +42,7 @@ namespace GrindTools
             if (GUILayout.Button("Delete All Placed Splines", RGUIStyle.button, GUILayout.Width(256)))
             {
                 controller.DeletePlacedSplines();
+                MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Custom Splines Deleted", 2.5f);
             }
             GUILayout.EndVertical();
             GUILayout.BeginVertical(GUILayout.Width(256));
