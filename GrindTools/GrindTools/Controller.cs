@@ -14,16 +14,17 @@ namespace GrindTools
         public MapEditorController EditorController;
         public MapEditorGameState EditorGameState;
         public GrindSplineToolState GrindToolState;
-        public WaxToolState WaxToolState;
+        public WaxToolState WaxToolState;       
         //public MeshRenderer NodeRenderer;
 
         public CinemachineVirtualCamera grindToolCam;
         public CinemachineVirtualCamera waxToolCam;
-
+        public OutlineManager Outline;
         public void Awake()
         {
             EditorController = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<MapEditorController>();
             EditorGameState = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<MapEditorGameState>();
+            Outline = GameStateMachine.Instance.GetComponentInChildren<OutlineManager>();
 
             GetObjects();
             GetComponents();

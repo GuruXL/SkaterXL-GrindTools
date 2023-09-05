@@ -155,6 +155,7 @@
   <ItemGroup>
     <Compile Include="GrindTools.Patches\CheckRaycastsPatch.cs" />
     <Compile Include="GrindTools.Patches\AvailableStatePatch.cs" />
+    <Compile Include="GrindTools.Patches\MapEditorStatePatch.cs" />
     <Compile Include="GrindTools.Utils\MatUtil.cs" />
     <Compile Include="GrindTools\AssetLoader.cs" />
     <Compile Include="GrindTools.Utils\UIManager.cs" />

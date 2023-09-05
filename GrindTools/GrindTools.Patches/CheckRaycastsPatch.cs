@@ -23,11 +23,6 @@ namespace GrindTools.Patches
                         MatUtil.Instance.ApplyGreenMat();
                         return;
                     }
-                    else if (selectedSpline != null && selectedSpline.nodes.Count <= 0)
-                    {
-                        Object.Destroy(selectedSpline);
-                    }
-
                     MatUtil.Instance.ApplyBlueMat();
                     return;
                 }

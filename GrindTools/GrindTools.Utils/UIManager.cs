@@ -8,7 +8,7 @@ namespace GrindTools.Utils
     public class UIManager : MonoBehaviour
     {
         Transform mapEditorUI;
-        TMP_Text speedFactorText;
+        Transform speedFactorText;
         Transform grind_ControlsUI;
         Transform wax_ControlsUI;
 
@@ -32,7 +32,6 @@ namespace GrindTools.Utils
         {
             GetUIObjects();
             CreateIndicatorClone();
-            SetSpeedTextValues();
             DisableUIObjects();
         }
         private void GetUIObjects()
@@ -40,7 +39,7 @@ namespace GrindTools.Utils
             //mapEditorUI = GameStateMachine.Instance.MapEditorObject.transform.Find("MapEditorUI");
             mapEditorUI = Main.controller.EditorController.ModeSelectionUI.transform.parent;
             indicatorsObj = mapEditorUI.transform.Find("Indicators");
-            speedFactorText = Main.controller.EditorController.speedFactorText;
+            speedFactorText = Main.controller.EditorController.speedFactorText.transform.parent;
 
             grind_ControlsUI = Main.controller.GrindtoolObj.Find("Controls UI");
             wax_ControlsUI = Main.controller.WaxToolObj.Find("Controls UI");
@@ -103,10 +102,9 @@ namespace GrindTools.Utils
                 indicator_Label_Rect2.anchoredPosition = new Vector2(1420, -520);
             }
         }
-        private void SetSpeedTextValues()
+        public void SetLabelText(TextMeshProUGUI label, string text)
         {
-            speedFactorText.alpha = 0.45f;
-            speedFactorText.fontSize = 28;
+            label.text = text;
         }
         public void ToggleSpeedText(bool state)
         {
@@ -115,10 +113,6 @@ namespace GrindTools.Utils
         public void ToggleIndicators(bool state)
         {
             indicators_Clone.gameObject.SetActive(state);
-        }
-        public void SetLabelText(TextMeshProUGUI label, string text)
-        {
-            label.text = text;
         }
         private void DisableUIObjects()
         {
