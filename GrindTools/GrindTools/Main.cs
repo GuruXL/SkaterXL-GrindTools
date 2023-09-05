@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityModManagerNet;
 using ModIO.UI;
 using GrindTools.Utils;
+using GrindTools.Patches;
 
 namespace GrindTools
 {
@@ -38,9 +39,16 @@ namespace GrindTools
         {
             
             GUILayout.BeginVertical(GUILayout.Width(256));
-            if (GUILayout.Button("Delete All Placed Objects", RGUIStyle.button, GUILayout.Width(256)))
+            if (GUILayout.Button("Delete All Placed Splines", RGUIStyle.button, GUILayout.Width(256)))
             {
-                controller.EditorController.DeleteAllObstacles();
+                controller.DeletePlacedSplines();
+            }
+            GUILayout.EndVertical();
+            GUILayout.BeginVertical(GUILayout.Width(256));
+            if (RGUI.Button(settings.OutlineSplines, "Outline Splines"))
+            {
+                settings.OutlineSplines = !settings.OutlineSplines;
+                controller.OutlinePlacedSplines(settings.OutlineSplines);
             }
             GUILayout.EndVertical();
             GUILayout.BeginVertical(GUILayout.Width(256));
@@ -49,7 +57,7 @@ namespace GrindTools
         }
         private static void OnSaveGUI(UnityModManager.ModEntry modEntry)
         {
-            //settings.Save(modEntry);
+            settings.Save(modEntry);
         }
         private static bool OnToggle(UnityModManager.ModEntry modEntry, bool value)
         {

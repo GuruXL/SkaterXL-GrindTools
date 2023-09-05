@@ -2,6 +2,8 @@
 using MapEditor;
 using GameManagement;
 using Cinemachine;
+using System.Collections.Generic;
+using System;
 
 namespace GrindTools
 {
@@ -24,7 +26,7 @@ namespace GrindTools
         {
             EditorController = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<MapEditorController>();
             EditorGameState = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<MapEditorGameState>();
-            Outline = GameStateMachine.Instance.GetComponentInChildren<OutlineManager>();
+            Outline = GameStateMachine.Instance.gameObject.GetComponentInChildren<OutlineManager>();
 
             GetObjects();
             GetComponents();
@@ -89,6 +91,45 @@ namespace GrindTools
 
             grindToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
             waxToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
+        }
+
+        public void DeletePlacedSplines()
+        {
+            if (EditorController.placedObjectsParent.childCount <= 0)
+                return;
+
+            MapEditorSplineObject[] placedSplines = EditorController.placedObjectsParent.GetComponentsInChildren<MapEditorSplineObject>();
+
+            if (placedSplines != null)
+            {
+                foreach (MapEditorSplineObject splines in placedSplines)
+                {
+                    Destroy(splines.gameObject);
+                }
+            }
+        }
+        public void OutlinePlacedSplines(bool state)
+        {
+            if (EditorController.placedObjectsParent.childCount <= 0)
+                return;
+
+            MapEditorSplineObject[] placedSplines = EditorController.placedObjectsParent.GetComponentsInChildren<MapEditorSplineObject>();
+
+            if (placedSplines != null)
+            {
+                foreach (MapEditorSplineObject splines in placedSplines)
+                {
+                    switch (state)
+                    {
+                        case true:
+                            Outline.AddOutlineTo(splines.gameObject, state);
+                            break;
+                        case false:
+                            Outline.RemoveOutlineOn(splines.gameObject);
+                            break;
+                    }
+                }
+            }
         }
     }
 }

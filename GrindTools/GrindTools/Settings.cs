@@ -9,8 +9,8 @@ namespace GrindTools
     [Serializable]
     public class Settings : UnityModManager.ModSettings, IDrawable
     {
-        public Color BGColor = new Color(0.0f, 0.0f, 0.0f);
         public float CamFOV = 70f;
+        public bool OutlineSplines = false;
 
         public void OnChange()
         {
