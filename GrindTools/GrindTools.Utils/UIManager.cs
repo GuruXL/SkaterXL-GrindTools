@@ -37,12 +37,12 @@ namespace GrindTools.Utils
         private void GetUIObjects()
         {
             //mapEditorUI = GameStateMachine.Instance.MapEditorObject.transform.Find("MapEditorUI");
-            mapEditorUI = Main.controller.EditorController.ModeSelectionUI.transform.parent;
+            mapEditorUI = Main.controller.editorController.ModeSelectionUI.transform.parent;
             indicatorsObj = mapEditorUI.transform.Find("Indicators");
-            speedFactorText = Main.controller.EditorController.speedFactorText.transform.parent;
+            speedFactorText = Main.controller.editorController.speedFactorText.transform.parent;
 
-            grind_ControlsUI = Main.controller.GrindtoolObj.Find("Controls UI");
-            wax_ControlsUI = Main.controller.WaxToolObj.Find("Controls UI");
+            grind_ControlsUI = Main.controller.grindtoolObj.Find("Controls UI");
+            wax_ControlsUI = Main.controller.waxToolObj.Find("Controls UI");
         }
         private void CreateIndicatorClone()
         {

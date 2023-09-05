@@ -7,6 +7,7 @@ namespace GrindTools.Patches
 {
     public class MapEditorStatePatch
     {
+        
         [HarmonyPatch(typeof(MapEditorState), "OnDpadLeft")]
         public static class OnDpadLeftPatch
         {
@@ -20,6 +21,7 @@ namespace GrindTools.Patches
                 }
             }
         }
+        
         [HarmonyPatch(typeof(MapEditorState), "OnDpadRight")]
         public static class OnDpadRightPatch
         {
@@ -33,6 +35,7 @@ namespace GrindTools.Patches
                 }
             }
         }
+        
     }
     
 }

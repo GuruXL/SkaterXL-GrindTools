@@ -20,21 +20,21 @@ namespace GrindTools.Utils
         {
             if (AssetLoader.RedMatfrombundle != null)
             {
-                ApplyMaterials(Main.controller.GrindToolState.visualisationMR, AssetLoader.RedMatfrombundle);
+                ApplyMaterials(Main.controller.grindToolState.visualisationMR, AssetLoader.RedMatfrombundle);
             }
         }
         public void ApplyBlueMat()
         {
             if (AssetLoader.BlueMatfrombundle != null)
             {
-                ApplyMaterials(Main.controller.GrindToolState.visualisationMR, AssetLoader.BlueMatfrombundle);
+                ApplyMaterials(Main.controller.grindToolState.visualisationMR, AssetLoader.BlueMatfrombundle);
             }
         }
         public void ApplyGreenMat()
         {
             if (AssetLoader.GreenMatfrombundle != null)
             {
-                ApplyMaterials(Main.controller.GrindToolState.visualisationMR, AssetLoader.GreenMatfrombundle);
+                ApplyMaterials(Main.controller.grindToolState.visualisationMR, AssetLoader.GreenMatfrombundle);
             }
         }
     }

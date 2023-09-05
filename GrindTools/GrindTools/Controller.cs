@@ -9,24 +9,24 @@ namespace GrindTools
 {
     public class Controller : MonoBehaviour
     {
-        public Transform StatesObj;
-        public Transform GrindtoolObj;
-        public Transform WaxToolObj;
+        public Transform statesObj;
+        public Transform grindtoolObj;
+        public Transform waxToolObj;
 
-        public MapEditorController EditorController;
-        public MapEditorGameState EditorGameState;
-        public GrindSplineToolState GrindToolState;
-        public WaxToolState WaxToolState;       
+        public MapEditorController editorController;
+        public MapEditorGameState editorGameState;
+        public GrindSplineToolState grindToolState;
+        public WaxToolState waxToolState;       
         //public MeshRenderer NodeRenderer;
 
         public CinemachineVirtualCamera grindToolCam;
         public CinemachineVirtualCamera waxToolCam;
-        public OutlineManager Outline;
+        public OutlineManager outline;
         public void Awake()
         {
-            EditorController = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<MapEditorController>();
-            EditorGameState = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<MapEditorGameState>();
-            Outline = GameStateMachine.Instance.gameObject.GetComponentInChildren<OutlineManager>();
+            editorController = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<MapEditorController>();
+            editorGameState = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<MapEditorGameState>();
+            outline = GameStateMachine.Instance.gameObject.GetComponentInChildren<OutlineManager>();
 
             GetObjects();
             GetComponents();
@@ -44,17 +44,17 @@ namespace GrindTools
 
         private void GetObjects()
         {
-            StatesObj = GameStateMachine.Instance.MapEditorObject.transform.Find("States");
-            GrindtoolObj = StatesObj.Find("GrindSpline Tool");
-            WaxToolObj = StatesObj.Find("Wax Tool");
+            statesObj = GameStateMachine.Instance.MapEditorObject.transform.Find("States");
+            grindtoolObj = statesObj.Find("GrindSpline Tool");
+            waxToolObj = statesObj.Find("Wax Tool");
         }      
         private void GetComponents()
         {
-            GrindToolState = GrindtoolObj.GetComponent<GrindSplineToolState>();
-            WaxToolState = WaxToolObj.GetComponent<WaxToolState>();
+            grindToolState = grindtoolObj.GetComponent<GrindSplineToolState>();
+            waxToolState = waxToolObj.GetComponent<WaxToolState>();
 
-            grindToolCam = GrindtoolObj.GetComponentInChildren<CinemachineVirtualCamera>();
-            waxToolCam = WaxToolObj.GetComponentInChildren<CinemachineVirtualCamera>();
+            grindToolCam = grindtoolObj.GetComponentInChildren<CinemachineVirtualCamera>();
+            waxToolCam = waxToolObj.GetComponentInChildren<CinemachineVirtualCamera>();
         }
 
         public void AllowRespawn(bool state)
@@ -76,11 +76,13 @@ namespace GrindTools
             switch (options)
             {
                 case "Grind": // Grind tool
-                    EditorController.ChangeState(GrindToolState);
+                    grindToolState.Enter(grindToolState);
+                    editorController.ChangeState(grindToolState);
                     break;
 
                 case "Wax": // Wax Tool
-                    EditorController.ChangeState(WaxToolState);
+                    waxToolState.Enter(waxToolState);
+                    editorController.ChangeState(waxToolState);
                     break;
             }
         }
@@ -95,10 +97,10 @@ namespace GrindTools
 
         public void DeletePlacedSplines()
         {
-            if (EditorController.placedObjectsParent.childCount <= 0)
+            if (editorController.placedObjectsParent.childCount <= 0)
                 return;
 
-            MapEditorSplineObject[] placedSplines = EditorController.placedObjectsParent.GetComponentsInChildren<MapEditorSplineObject>();
+            MapEditorSplineObject[] placedSplines = editorController.placedObjectsParent.GetComponentsInChildren<MapEditorSplineObject>();
 
             if (placedSplines != null)
             {
@@ -110,10 +112,10 @@ namespace GrindTools
         }
         public void OutlinePlacedSplines(bool state)
         {
-            if (EditorController.placedObjectsParent.childCount <= 0)
+            if (editorController.placedObjectsParent.childCount <= 0)
                 return;
 
-            MapEditorSplineObject[] placedSplines = EditorController.placedObjectsParent.GetComponentsInChildren<MapEditorSplineObject>();
+            MapEditorSplineObject[] placedSplines = editorController.placedObjectsParent.GetComponentsInChildren<MapEditorSplineObject>();
 
             if (placedSplines != null)
             {
@@ -122,10 +124,10 @@ namespace GrindTools
                     switch (state)
                     {
                         case true:
-                            Outline.AddOutlineTo(splines.gameObject, state);
+                            outline.AddOutlineTo(splines.gameObject, state);
                             break;
                         case false:
-                            Outline.RemoveOutlineOn(splines.gameObject);
+                            outline.RemoveOutlineOn(splines.gameObject);
                             break;
                     }
                 }
