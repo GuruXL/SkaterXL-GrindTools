@@ -102,7 +102,7 @@ namespace GrindTools
 
             // disable UI
             Main.uiManager.ToggleSpeedText(false);
-            Main.uiManager.ToggleIndicators(false);
+            //Main.uiManager.ToggleIndicators(false);
 
             // delete selected spline if enabled.
             if (CheckRaycastsPatch.selectedSpline != null)

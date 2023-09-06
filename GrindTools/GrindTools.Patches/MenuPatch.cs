@@ -12,7 +12,7 @@ namespace GrindTools.Patches
     [HarmonyPatch("OnEnter")]
     public class MenuPatch
     {
-        //public static MenuButton grindToolsButton;
+        public static MenuButton grindToolsButton;
 
         private static void Postfix(ref PauseState __instance)
         {
@@ -20,7 +20,7 @@ namespace GrindTools.Patches
             __instance.MapEditorButton.gameObject.SetActive(true);
             __instance.MapEditorButton.GreyedOut = false;
 
-            /*
+            
             if (grindToolsButton == null)
             {
                 GameObject originalButton = __instance.MapEditorButton.gameObject;
@@ -35,7 +35,7 @@ namespace GrindTools.Patches
                 grindToolsButton.onClick.RemoveAllListeners();  // Remove existing listeners
                 grindToolsButton.onClick.AddListener(() => GrindToolButtonOnClick());  // Add new listener
             }
-            */
+            
 
             __instance.StateMachine.PauseObject.SetActive(false);
             __instance.StateMachine.PauseObject.SetActive(true);
@@ -43,6 +43,7 @@ namespace GrindTools.Patches
 
         public static void GrindToolButtonOnClick()
         {
+            //GameStateMachine.Instance.RequestMapEditorState();
             Main.inputctrl.RequestGrindTool();
         }
     }

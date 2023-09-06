@@ -79,14 +79,14 @@ namespace GrindTools
                 case "Grind": // Grind tool
                     //grindToolState.Enter(grindToolState);
                     editorController.ChangeState(grindToolState);
-                    Main.uiManager.ToggleIndicators(true);
+                    //Main.uiManager.ToggleIndicators(true);
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Grind Tool Active", 1f);
                     break;
 
                 case "Wax": // Wax Tool
                     //waxToolState.Enter(waxToolState);
                     editorController.ChangeState(waxToolState);
-                    Main.uiManager.ToggleIndicators(false);
+                    //Main.uiManager.ToggleIndicators(false);
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Wax Tool Active", 1f);
                     break;
             }

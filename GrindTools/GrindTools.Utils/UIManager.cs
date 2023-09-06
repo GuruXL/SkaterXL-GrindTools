@@ -11,118 +11,66 @@ namespace GrindTools.Utils
         Transform speedFactorText;
         Transform grind_ControlsUI;
         Transform wax_ControlsUI;
+        Transform simple_ControlsUI;
 
-        Transform indicatorsObj;
-        Transform indicators_Clone;
-        Transform indicator_Panel;
-        Transform panel_x;
-        Transform panel_y;
-        Transform panel_a;
-        Transform indicator_Label;
-        Transform indicator_Label2;
-
-        RectTransform indicator_Panel_Rect;
-        RectTransform indicator_Label_Rect;
-        RectTransform indicator_Label_Rect2;
-
-        TextMeshProUGUI label1_text;
-        TextMeshProUGUI label2_text;
+        Transform newControlsUI;
 
         private void Start()
         {
             GetUIObjects();
-            CreateIndicatorClone();
+            //CreateIndicatorClone();
+            SetUpUIObjects();
             DisableUIObjects();
         }
         private void GetUIObjects()
         {
             //mapEditorUI = GameStateMachine.Instance.MapEditorObject.transform.Find("MapEditorUI");
             mapEditorUI = Main.controller.editorController.ModeSelectionUI.transform.parent;
-            indicatorsObj = mapEditorUI.transform.Find("Indicators");
             speedFactorText = Main.controller.editorController.speedFactorText.transform.parent;
 
+            // Get ControlsUI parents
             grind_ControlsUI = Main.controller.grindtoolObj.Find("Controls UI");
             wax_ControlsUI = Main.controller.waxToolObj.Find("Controls UI");
+            simple_ControlsUI = Main.controller.editorController.SimplePlacerState.gameObject.transform.Find("Controls UI");
+
         }
-        private void CreateIndicatorClone()
+        private void SetUpUIObjects()
         {
-            if (indicators_Clone == null)
-            {
-                // create indicator clone and set as child of MapEditorUI
-                indicators_Clone = Instantiate(indicatorsObj);
-                indicators_Clone.SetParent(mapEditorUI);
-
-                // find UI child objects
-                indicator_Panel = indicators_Clone.transform.Find("Panel");
-                indicator_Label = indicators_Clone.transform.Find("Space Label");
-
-                //create a clone of the main label object
-                indicator_Label2 = Instantiate(indicator_Label);
-                indicator_Label2.SetParent(indicators_Clone);
-                indicator_Label2.localScale = new Vector3(1, 1, 1);
-
-                //find X, Y, and A button labels
-                panel_x = indicator_Panel.Find("X");
-                panel_y = indicator_Panel.Find("Y");
-                panel_a = indicator_Panel.Find("Z");
-
-                // toggle off Y label
-                panel_y.gameObject.SetActive(false);
-
-                // Get Components for UI objects
-                GetUIComponents();
-
-                // Set the new anchored position of the UI objects and labels
-                SetIndicatorsPos();
-
-                // Change the default label text
-                SetLabelText(label1_text, "Apply Spline");
-                SetLabelText(label2_text, "Add Spline Points");
-            }
+            CreateGrindUI();
         }
-        private void GetUIComponents()
+
+        private void CreateGrindUI()
         {
-            // Get the RectTrasform components to allow anchor position change
-            indicator_Panel_Rect = indicator_Panel.GetComponent<RectTransform>();
-            indicator_Label_Rect = indicator_Label.GetComponent<RectTransform>();
-            indicator_Label_Rect2 = indicator_Label2.GetComponent<RectTransform>();
+            newControlsUI = Instantiate(simple_ControlsUI);
+            newControlsUI.transform.SetParent(Main.controller.grindtoolObj);
+            grind_ControlsUI.gameObject.SetActive(false);
+            newControlsUI.gameObject.SetActive(true);
 
-            // Get the TMP component for the labels and allow auto size
-            label1_text = indicator_Label.gameObject.GetComponent<TextMeshProUGUI>();
-            label1_text.autoSizeTextContainer = true;
-            label2_text = indicator_Label2.gameObject.GetComponent<TextMeshProUGUI>();
-            label2_text.autoSizeTextContainer = true;
+            // contine ui modifications here
         }
-        private void SetIndicatorsPos()
+
+        private void CreateWaxUI()
         {
-            if (indicator_Panel_Rect != null && indicator_Label_Rect != null)
-            {
-                indicator_Panel_Rect.anchoredPosition = new Vector2(1350, -450);
-                indicator_Label_Rect.anchoredPosition = new Vector2(1420, -460);
-                indicator_Label_Rect2.anchoredPosition = new Vector2(1420, -520);
-            }
+            // contine ui modifications here
         }
-        public void SetLabelText(TextMeshProUGUI label, string text)
-        {
-            label.text = text;
-        }
+
         public void ToggleSpeedText(bool state)
         {
             speedFactorText.gameObject.SetActive(state);
         }
-        public void ToggleIndicators(bool state)
-        {
-            indicators_Clone.gameObject.SetActive(state);
-        }
+       
         private void DisableUIObjects()
         {
+            //Grind Tool UI itmes
             var header = grind_ControlsUI.FindChildRecursively("HEADER Obstacle");
             var frictionUI = grind_ControlsUI.FindChildRecursively("Select");
-            var copingUI = grind_ControlsUI.FindChildRecursively("Clone Object");
+
+            //Wax tool UI items
+            var undo = wax_ControlsUI.FindChildRecursively("Undo Redo");
 
             header.gameObject.SetActive(false);
             frictionUI.gameObject.SetActive(false);
-            copingUI.gameObject.SetActive(false);
+            undo.gameObject.SetActive(false);
         }
     }
 }
