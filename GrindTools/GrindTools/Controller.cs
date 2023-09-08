@@ -25,10 +25,7 @@ namespace GrindTools
         public OutlineManager outline;
         public void Awake()
         {
-            editorController = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<MapEditorController>();
-            editorGameState = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<MapEditorGameState>();
-            outline = GameStateMachine.Instance.gameObject.GetComponentInChildren<OutlineManager>();
-
+            GetMapEditor();
             GetObjects();
             GetComponents();
         }
@@ -43,6 +40,11 @@ namespace GrindTools
             }
         }
 
+        private void GetMapEditor()
+        {
+            editorController = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<MapEditorController>();
+            editorGameState = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<MapEditorGameState>();
+        }
         private void GetObjects()
         {
             statesObj = GameStateMachine.Instance.MapEditorObject.transform.Find("States");
@@ -56,6 +58,8 @@ namespace GrindTools
 
             grindToolCam = grindtoolObj.GetComponentInChildren<CinemachineVirtualCamera>();
             waxToolCam = waxToolObj.GetComponentInChildren<CinemachineVirtualCamera>();
+
+            outline = GameStateMachine.Instance.gameObject.GetComponentInChildren<OutlineManager>();
         }
 
         public void AllowRespawn(bool state)

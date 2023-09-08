@@ -34,8 +34,6 @@ namespace GrindTools.Patches
                     Object.Destroy(selectedSpline.gameObject);
                 }
             }
-        }
-        
-    }
-    
+        }  
+    }   
 }
