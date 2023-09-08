@@ -22,15 +22,17 @@ namespace GrindTools.Patches
                 {
                     if (selectedSpline == null)
                     {
-                        MatUtil.Instance.ApplyGreenMat();
+                        MatUtil.Instance.UpdateMat(AssetLoader.RedMat);
                         return;
                     }
-                    MatUtil.Instance.ApplyBlueMat();
+                    MatUtil.Instance.UpdateMat(AssetLoader.BlueMat);
+
                     return;
                 }
                 else
                 {
-                    MatUtil.Instance.ApplyRedMat();
+                    MatUtil.Instance.UpdateMat(AssetLoader.GreenMat);
+
                 }
             }
         }

@@ -12,29 +12,14 @@ namespace GrindTools.Utils
         {
             if (visualisationMR != null)
             {
-                // Assign the new material back to the MeshRenderer
                 visualisationMR.material = mat;
             }
         }
-        public void ApplyRedMat()
+        public void UpdateMat(Material mat)
         {
-            if (AssetLoader.RedMatfrombundle != null)
+            if (mat != null)
             {
-                ApplyMaterials(Main.controller.grindToolState.visualisationMR, AssetLoader.RedMatfrombundle);
-            }
-        }
-        public void ApplyBlueMat()
-        {
-            if (AssetLoader.BlueMatfrombundle != null)
-            {
-                ApplyMaterials(Main.controller.grindToolState.visualisationMR, AssetLoader.BlueMatfrombundle);
-            }
-        }
-        public void ApplyGreenMat()
-        {
-            if (AssetLoader.GreenMatfrombundle != null)
-            {
-                ApplyMaterials(Main.controller.grindToolState.visualisationMR, AssetLoader.GreenMatfrombundle);
+                ApplyMaterials(Main.controller.grindToolState.visualisationMR, mat);
             }
         }
     }

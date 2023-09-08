@@ -9,9 +9,9 @@ namespace GrindTools
 {
     public static class AssetLoader
     {
-        public static Material RedMatfrombundle;
-        public static Material BlueMatfrombundle;
-        public static Material GreenMatfrombundle;
+        public static Material RedMat;
+        public static Material BlueMat;
+        public static Material GreenMat;
         public static AssetBundle assetBundle;
 
         public static void LoadBundles()
@@ -23,8 +23,7 @@ namespace GrindTools
             {
                 PlayerController.Instance.StartCoroutine(LoadAssetBundle());     
             }
-        }
-      
+        }   
         private static byte[] ExtractResources(string filename)
         {
             using (Stream manifestResourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(filename))
@@ -67,9 +66,9 @@ namespace GrindTools
         }
         private static IEnumerator LoadAssetFromBundle()
         {
-            RedMatfrombundle = assetBundle.LoadAsset<Material>("RedMat");
-            BlueMatfrombundle = assetBundle.LoadAsset<Material>("BlueMat");
-            GreenMatfrombundle = assetBundle.LoadAsset<Material>("GreenMat");
+            RedMat = assetBundle.LoadAsset<Material>("RedMat");
+            BlueMat = assetBundle.LoadAsset<Material>("BlueMat");
+            GreenMat = assetBundle.LoadAsset<Material>("GreenMat");
             yield return null;
         }
         public static void UnloadAssetBundle()
