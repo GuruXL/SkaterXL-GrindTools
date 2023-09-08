@@ -8,35 +8,36 @@ namespace GrindTools.UI
 {
     public class UIManager : MonoBehaviour
     {
-        Transform mapEditorUI;
-        Transform speedFactorText;
-        Transform grind_ControlsUI;
-        Transform wax_ControlsUI;
-        Transform simple_ControlsUI;
+        //Transform mapEditorUI;
+        //Transform speedFactorText;
+        //Transform grind_ControlsUI;
+        //Transform wax_ControlsUI;
+        //Transform simple_ControlsUI;
 
-        Transform newControlsUI;
-        Transform infoPanel;
+        //Transform newControlsUI;
+        //Transform infoPanel;
 
         private void Start()
         {
-            GetUIObjects();
-            CreateGrindUI();
-            DisableUIObjects();
+            //GetUIObjects();
+            //CreateGrindUI();
+            //DisableUIObjects();
         }
         private void GetUIObjects()
         {
             //mapEditorUI = GameStateMachine.Instance.MapEditorObject.transform.Find("MapEditorUI");
-            mapEditorUI = Main.controller.editorController.ModeSelectionUI.transform.parent;
-            speedFactorText = Main.controller.editorController.speedFactorText.transform.parent;
+            //mapEditorUI = Main.controller.editorController.ModeSelectionUI.transform.parent;
+            //speedFactorText = Main.controller.editorController.speedFactorText.transform.parent;
 
             // Get Default ControlsUI parents
-            grind_ControlsUI = Main.controller.grindtoolObj.Find("Controls UI");
-            wax_ControlsUI = Main.controller.waxToolObj.Find("Controls UI");
-            simple_ControlsUI = Main.controller.editorController.SimplePlacerState.gameObject.transform.Find("Controls UI");
+            //grind_ControlsUI = Main.controller.grindtoolObj.Find("Controls UI");
+            //wax_ControlsUI = Main.controller.waxToolObj.Find("Controls UI");
+            //simple_ControlsUI = Main.controller.editorController.SimplePlacerState.gameObject.transform.Find("Controls UI");
 
-            CloneControlsUI();
+            //CloneControlsUI();
         }
 
+        /*
         private void CloneControlsUI()
         {
             newControlsUI = Instantiate(simple_ControlsUI);
@@ -45,6 +46,8 @@ namespace GrindTools.UI
             grind_ControlsUI.gameObject.SetActive(false);
             newControlsUI.gameObject.SetActive(true);
         }
+        */
+        /*
         private void CreateGrindUI()
         {
             Transform aButton = infoPanel.Find("Place");
@@ -79,17 +82,14 @@ namespace GrindTools.UI
                 }
             }
         }
-
-        private void CreateWaxUI()
-        {
-            // contine ui modifications here
-        }
-
+        */
+        /*
         public void ToggleSpeedText(bool state)
         {
             speedFactorText.gameObject.SetActive(state);
         }
-       
+        */
+        /*
         private void DisableUIObjects()
         {
             //Grind Tool UI itmes
@@ -103,5 +103,6 @@ namespace GrindTools.UI
             //frictionUI.gameObject.SetActive(false);
             undo.gameObject.SetActive(false);
         }
+        */
     }
 }

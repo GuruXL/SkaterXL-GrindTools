@@ -101,7 +101,7 @@ namespace GrindTools
             Main.controller.AllowRespawn(true);
 
             // disable UI
-            Main.uiManager.ToggleSpeedText(false);
+            Main.controller.ToggleSpeedText(false);
             //Main.uiManager.ToggleIndicators(false);
 
             // delete selected spline if enabled.
@@ -110,12 +110,11 @@ namespace GrindTools
                 Destroy(CheckRaycastsPatch.selectedSpline.gameObject);
             }
         }
-
         public void RequestGrindTool()
         {
             Main.controller.ToggleState("Grind");
             Main.controller.AllowRespawn(false);
-            Main.uiManager.ToggleSpeedText(true);
+            Main.controller.ToggleSpeedText(true);
         }
     }
 }

@@ -13,6 +13,9 @@ namespace GrindTools
         public Transform statesObj;
         public Transform grindtoolObj;
         public Transform waxToolObj;
+        public Transform speedFactorText;
+        public Transform grind_ControlsUI;
+        public Transform wax_ControlsUI;
 
         public MapEditorController editorController;
         public MapEditorGameState editorGameState;
@@ -28,6 +31,7 @@ namespace GrindTools
             GetMapEditor();
             GetObjects();
             GetComponents();
+            DisableDefaultUI();
         }
 
         private float delay = 0.2f;
@@ -48,16 +52,19 @@ namespace GrindTools
         private void GetObjects()
         {
             statesObj = GameStateMachine.Instance.MapEditorObject.transform.Find("States");
-            grindtoolObj = statesObj.Find("GrindSpline Tool");
-            waxToolObj = statesObj.Find("Wax Tool");
+            grindtoolObj = statesObj?.Find("GrindSpline Tool");
+            waxToolObj = statesObj?.Find("Wax Tool");
+            speedFactorText = editorController.speedFactorText.transform.parent;
+            grind_ControlsUI = grindtoolObj?.Find("Controls UI");
+            wax_ControlsUI = waxToolObj?.Find("Controls UI");
         }      
         private void GetComponents()
         {
-            grindToolState = grindtoolObj.GetComponent<GrindSplineToolState>();
-            waxToolState = waxToolObj.GetComponent<WaxToolState>();
+            grindToolState = grindtoolObj?.GetComponent<GrindSplineToolState>();
+            waxToolState = waxToolObj?.GetComponent<WaxToolState>();
 
-            grindToolCam = grindtoolObj.GetComponentInChildren<CinemachineVirtualCamera>();
-            waxToolCam = waxToolObj.GetComponentInChildren<CinemachineVirtualCamera>();
+            grindToolCam = grindtoolObj?.GetComponentInChildren<CinemachineVirtualCamera>();
+            waxToolCam = waxToolObj?.GetComponentInChildren<CinemachineVirtualCamera>();
 
             outline = GameStateMachine.Instance.gameObject.GetComponentInChildren<OutlineManager>();
         }
@@ -83,17 +90,19 @@ namespace GrindTools
                 case "Grind": // Grind tool
                     //grindToolState.Enter(grindToolState);
                     editorController.ChangeState(grindToolState);
-                    //Main.uiManager.ToggleIndicators(true);
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Grind Tool Active", 1f);
                     break;
 
                 case "Wax": // Wax Tool
                     //waxToolState.Enter(waxToolState);
                     editorController.ChangeState(waxToolState);
-                    //Main.uiManager.ToggleIndicators(false);
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Wax Tool Active", 1f);
                     break;
             }
+        }
+        public void ToggleSpeedText(bool state)
+        {
+            speedFactorText.gameObject.SetActive(state);
         }
         public void SetCamFov()
         {
@@ -103,7 +112,11 @@ namespace GrindTools
             grindToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
             waxToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
         }
-
+        public void DisableDefaultUI()
+        {
+            grind_ControlsUI.gameObject.SetActive(false);
+            wax_ControlsUI.gameObject.SetActive(false);
+        }
         public void DeletePlacedSplines()
         {
             if (editorController.placedObjectsParent.childCount <= 0)
