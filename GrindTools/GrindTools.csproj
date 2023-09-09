@@ -189,5 +189,47 @@
     </None>
     <EmbeddedResource Include="Resources\mats" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ButtonIcons\Playstation\button_ps.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Playstation\Circle.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Playstation\Cross.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Playstation\Dpad.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Playstation\Dpad_Down.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Playstation\Dpad_Left.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Playstation\Dpad_Right.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Playstation\Dpad_Up.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Playstation\L1.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Playstation\L2.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Playstation\Left_Stick.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Playstation\Left_Stick_Click.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Playstation\Options.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Playstation\R1.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Playstation\R2.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Playstation\Right_Stick.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Playstation\Right_Stick_Click.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Playstation\Share.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Playstation\Square.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Playstation\Triangle.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Xbox\A.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Xbox\B.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Xbox\Dpad.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Xbox\DpadDown.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Xbox\DpadLeft.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Xbox\DpadRight.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Xbox\DpadUp.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Xbox\LB.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Xbox\LeftStick.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Xbox\LeftStickClick.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Xbox\LT.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Xbox\Menu.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Xbox\RB.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Xbox\RightStick.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Xbox\RightStickClick.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Xbox\RT.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Xbox\View.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Xbox\X.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Xbox\xbox.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\Xbox\Y.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
