@@ -21,7 +21,6 @@ namespace GrindTools
         public MapEditorGameState editorGameState;
         public GrindSplineToolState grindToolState;
         public WaxToolState waxToolState;       
-        //public MeshRenderer NodeRenderer;
 
         public CinemachineVirtualCamera grindToolCam;
         public CinemachineVirtualCamera waxToolCam;
@@ -62,10 +61,8 @@ namespace GrindTools
         {
             grindToolState = grindtoolObj?.GetComponent<GrindSplineToolState>();
             waxToolState = waxToolObj?.GetComponent<WaxToolState>();
-
             grindToolCam = grindtoolObj?.GetComponentInChildren<CinemachineVirtualCamera>();
             waxToolCam = waxToolObj?.GetComponentInChildren<CinemachineVirtualCamera>();
-
             outline = GameStateMachine.Instance.gameObject.GetComponentInChildren<OutlineManager>();
         }
 
@@ -108,7 +105,6 @@ namespace GrindTools
         {
             if (Main.settings.CamFOV == grindToolCam.m_Lens.FieldOfView)
                 return;
-
             grindToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
             waxToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
         }
@@ -121,9 +117,7 @@ namespace GrindTools
         {
             if (editorController.placedObjectsParent.childCount <= 0)
                 return;
-
             MapEditorSplineObject[] placedSplines = editorController.placedObjectsParent.GetComponentsInChildren<MapEditorSplineObject>();
-
             if (placedSplines != null)
             {
                 foreach (MapEditorSplineObject splines in placedSplines)
@@ -136,9 +130,7 @@ namespace GrindTools
         {
             if (editorController.placedObjectsParent.childCount <= 0)
                 return;
-
             MapEditorSplineObject[] placedSplines = editorController.placedObjectsParent.GetComponentsInChildren<MapEditorSplineObject>();
-
             if (placedSplines != null)
             {
                 foreach (MapEditorSplineObject splines in placedSplines)

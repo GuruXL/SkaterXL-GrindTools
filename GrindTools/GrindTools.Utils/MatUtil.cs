@@ -15,11 +15,31 @@ namespace GrindTools.Utils
                 visualisationMR.material = mat;
             }
         }
-        public void UpdateMat(Material mat)
+        public void ApplyRedMat()
         {
-            if (mat != null)
+            if (AssetLoader.RedMat != null)
             {
-                ApplyMaterials(Main.controller.grindToolState.visualisationMR, mat);
+                if (Main.controller.grindToolState.visualisationMR.material = AssetLoader.RedMat)
+                    return;
+                ApplyMaterials(Main.controller.grindToolState.visualisationMR, AssetLoader.RedMat);
+            }
+        }
+        public void ApplyBlueMat()
+        {
+            if (AssetLoader.BlueMat != null)
+            {
+                if (Main.controller.grindToolState.visualisationMR.material = AssetLoader.BlueMat)
+                    return;
+                ApplyMaterials(Main.controller.grindToolState.visualisationMR, AssetLoader.BlueMat);
+            }
+        }
+        public void ApplyGreenMat()
+        {
+            if (AssetLoader.GreenMat != null)
+            {
+                if (Main.controller.grindToolState.visualisationMR.material = AssetLoader.GreenMat)
+                    return;
+                ApplyMaterials(Main.controller.grindToolState.visualisationMR, AssetLoader.GreenMat);
             }
         }
     }

@@ -93,18 +93,9 @@ namespace GrindTools
         }
         private void ResetToPlayState()
         {
-            // allow respawn and pin before requestion transitions
             Main.controller.AllowRespawn(true);
-
-            // requestion transitions
             GameStateMachine.Instance.RequestTransitionBackToPlayState();
-            Main.controller.AllowRespawn(true);
-
-            // disable UI
             Main.controller.ToggleSpeedText(false);
-            //Main.uiManager.ToggleIndicators(false);
-
-            // delete selected spline if enabled.
             if (CheckRaycastsPatch.selectedSpline != null)
             {
                 Destroy(CheckRaycastsPatch.selectedSpline.gameObject);

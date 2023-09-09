@@ -47,7 +47,7 @@ namespace GrindTools
             }
             GUILayout.EndVertical();
             GUILayout.BeginVertical(GUILayout.Width(256));
-            if (RGUI.Button(settings.OutlineSplines, "Outline Splines"))
+            if (RGUI.Button(settings.OutlineSplines, "Outline Placed Splines"))
             {
                 settings.OutlineSplines = !settings.OutlineSplines;
                 controller.OutlinePlacedSplines(settings.OutlineSplines);
