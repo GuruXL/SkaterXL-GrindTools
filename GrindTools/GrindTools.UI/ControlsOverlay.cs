@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace GrindTools.UI
 {
-	public class ControlsOverlay
+	public class ControlsOverlay : MonoBehaviour
 	{
-		private static ControlsOverlay _instance;
+		//private static ControlsOverlay _instance;
 		private GUIStyle fontStyle;
 		private GUIStyle fontStyleBlue;
 		private GUIStyle menuStyle;
@@ -17,6 +17,8 @@ namespace GrindTools.UI
 		private int guiPadding;
 		private Texture2D whiteTex;
 		private bool isXbox;
+
+		/*
 		public static ControlsOverlay Instance
 		{
 			get
@@ -28,6 +30,7 @@ namespace GrindTools.UI
 				return _instance;
 			}
 		}
+		*/
 		public bool GUIReady { get; private set; }
 
 		public void Show()
@@ -111,17 +114,6 @@ namespace GrindTools.UI
 			{
 				UIAssetLoader.Instance.psButtons.Options
 			});
-			if (PhotonNetwork.InRoom && !PhotonNetwork.CurrentRoom.IsVisible)
-			{
-				if (PhotonNetwork.IsMasterClient)
-				{
-					singleControlEntry("Enable / Disable scaling\nfor current room", new Texture2D[]
-					{
-						UIAssetLoader.Instance.psButtons.Share
-					});
-				}
-				//singleInfoEntry("Scaling Enabled", Main.customObjectDropperState.unlimitedScalingAllowed ? "ON" : ("OFF (" + Main.customObjectDropperState.roomScalingFactor.ToString() + "x)"));
-			}
 			GUILayout.FlexibleSpace();
 			singleControlEntry("Clear Selection / Exit", new Texture2D[]
 			{

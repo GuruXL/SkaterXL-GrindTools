@@ -5,6 +5,7 @@ using Cinemachine;
 using System.Collections.Generic;
 using System;
 using ModIO.UI;
+using GrindTools.UI;
 
 namespace GrindTools
 {
@@ -43,6 +44,13 @@ namespace GrindTools
             }
         }
 
+        private void OnGUI()
+        {
+            if (editorController.CurrentState == grindToolState)
+            {
+                Main.overlay.Show();
+            }
+        }
         private void GetMapEditor()
         {
             editorController = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<MapEditorController>();

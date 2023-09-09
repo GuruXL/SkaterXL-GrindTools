@@ -23,6 +23,7 @@ namespace GrindTools
         public static InputController inputctrl;
         public static UIManager uiManager;
         //public static MatUtil matUtil;
+        public static ControlsOverlay overlay;
 
         public static bool Load(UnityModManager.ModEntry modEntry)
         {
@@ -81,6 +82,7 @@ namespace GrindTools
                     inputctrl = ScriptManager.AddComponent<InputController>();
                     uiManager = ScriptManager.AddComponent<UIManager>();
                     //matUtil = ScriptManager.AddComponent<MatUtil>();
+                    overlay = ScriptManager.AddComponent<ControlsOverlay>();
 
                     AssetLoader.LoadBundles();
                 }
