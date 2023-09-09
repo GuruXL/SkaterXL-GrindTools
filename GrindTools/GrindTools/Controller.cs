@@ -11,20 +11,21 @@ namespace GrindTools
 {
     public class Controller : MonoBehaviour
     {
-        public Transform statesObj;
-        public Transform grindtoolObj;
-        public Transform waxToolObj;
-        public Transform speedFactorText;
-        public Transform grind_ControlsUI;
-        public Transform wax_ControlsUI;
+        private Transform statesObj;
+        private Transform grindtoolObj;
+        private Transform waxToolObj;
+        private Transform speedFactorText;
+        private Transform grind_ControlsUI;
+        private Transform wax_ControlsUI;
 
         public MapEditorController editorController;
-        public MapEditorGameState editorGameState;
+        private MapEditorGameState editorGameState;
         public GrindSplineToolState grindToolState;
-        public WaxToolState waxToolState;       
+        public WaxToolState waxToolState;  
+        
 
-        public CinemachineVirtualCamera grindToolCam;
-        public CinemachineVirtualCamera waxToolCam;
+        private CinemachineVirtualCamera grindToolCam;
+        private CinemachineVirtualCamera waxToolCam;
         public OutlineManager outline;
         public void Awake()
         {
@@ -120,7 +121,7 @@ namespace GrindTools
             grindToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
             waxToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
         }
-        public void DisableDefaultUI()
+        private void DisableDefaultUI()
         {
             grind_ControlsUI.gameObject.SetActive(false);
             wax_ControlsUI.gameObject.SetActive(false);

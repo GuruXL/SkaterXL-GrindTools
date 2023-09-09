@@ -49,96 +49,39 @@ namespace GrindTools.UI
 			Share = share;
 		}
 
-		public static Texture2D convertPsTo(Texture2D tex, bool isXbox)
+		public static Texture2D SwapToPlaystationUI(Texture2D tex, bool isXbox)
 		{
 			if (!isXbox)
 			{
 				return tex;
 			}
-			return UIAssetLoader.Instance.psButtons.mapPsToXbox()[tex];
+			return UIAssetLoader.Instance.psButtons.SwapToXboxUI()[tex];
 		}
 
-		public Dictionary<Texture2D, Texture2D> mapPsToXbox()
+		public Dictionary<Texture2D, Texture2D> SwapToXboxUI()
 		{
 			XboxButtons xboxButtons = UIAssetLoader.Instance.xboxButtons;
 			return new Dictionary<Texture2D, Texture2D>
 			{
-				{
-					Circle,
-					xboxButtons.B
-				},
-				{
-					Square,
-					xboxButtons.X
-				},
-				{
-					Cross,
-					xboxButtons.A
-				},
-				{
-					Triangle,
-					xboxButtons.Y
-				},
-				{
-					LeftStickClick,
-					LeftStickClick
-				},
-				{
-					DpadRight,
-					xboxButtons.DpadRight
-				},
-				{
-					DpadUp,
-					xboxButtons.DpadUp
-				},
-				{
-					DpadLeft,
-					xboxButtons.DpadLeft
-				},
-				{
-					DpadDown,
-					xboxButtons.DpadDown
-				},
-				{
-					Dpad,
-					Dpad
-				},
-				{
-					L1,
-					xboxButtons.LB
-				},
-				{
-					L2,
-					xboxButtons.LT
-				},
-				{
-					R1,
-					xboxButtons.RB
-				},
-				{
-					R2,
-					xboxButtons.RT
-				},
-				{
-					LeftStick,
-					LeftStick
-				},
-				{
-					RightStick,
-					RightStick
-				},
-				{
-					RightStickClick,
-					RightStickClick
-				},
-				{
-					Options,
-					xboxButtons.Menu
-				},
-				{
-					Share,
-					xboxButtons.View
-				}
+				{ Circle, xboxButtons.B },
+				{ Square, xboxButtons.X },
+				{ Cross, xboxButtons.A },
+				{ Triangle, xboxButtons.Y },
+				{ LeftStickClick, LeftStickClick },
+				{ DpadRight, xboxButtons.DpadRight },
+				{ DpadUp, xboxButtons.DpadUp },
+				{ DpadLeft, xboxButtons.DpadLeft },
+				{ DpadDown, xboxButtons.DpadDown },
+				{ Dpad, Dpad },
+				{ L1, xboxButtons.LB },
+				{ L2, xboxButtons.LT },
+				{ R1, xboxButtons.RB },
+				{ R2, xboxButtons.RT },
+				{ LeftStick, LeftStick },
+				{ RightStick, RightStick },
+				{ RightStickClick, RightStickClick },
+				{ Options, xboxButtons.Menu },
+				{ Share, xboxButtons.View}
 			};
 		}
 	}

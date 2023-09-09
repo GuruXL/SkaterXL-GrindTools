@@ -7,21 +7,12 @@ namespace GrindTools.UI
 {
 	public class UIAssetLoader
 	{
-		private static UIAssetLoader _instance;
+		public static UIAssetLoader __instance { get; private set; }
+		public static UIAssetLoader Instance => __instance ?? (__instance = new UIAssetLoader());
+
 		private PlaystationButtons _psButtons;
 		private XboxButtons _xboxButtons;
 
-		public static UIAssetLoader Instance
-		{
-			get
-			{
-				if (_instance == null)
-				{
-					_instance = new UIAssetLoader();
-				}
-				return _instance;
-			}
-		}
 		public PlaystationButtons psButtons
 		{
 			get
