@@ -94,6 +94,7 @@ namespace GrindTools
         private void ResetToPlayState()
         {
             Main.controller.AllowRespawn(true);
+            Main.controller.editorController.ExitMapEditor();
             GameStateMachine.Instance.RequestTransitionBackToPlayState();
             Main.controller.ToggleSpeedText(false);
             if (CheckRaycastsPatch.selectedSpline != null)

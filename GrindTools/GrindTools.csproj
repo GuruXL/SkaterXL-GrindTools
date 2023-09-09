@@ -189,6 +189,5 @@
     </None>
     <EmbeddedResource Include="Resources\mats" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
