@@ -15,6 +15,16 @@ namespace GrindTools.Utils
                 visualisationMR.material = mat;
             }
         }
+        public void UpdateMaterial(Material mat)
+        {
+            if (mat != null)
+            {
+                if (Main.controller.grindToolState.visualisationMR.material = mat)
+                    return;
+                ApplyMaterials(Main.controller.grindToolState.visualisationMR, mat);
+            }
+        }
+        /*
         public void ApplyRedMat()
         {
             if (AssetLoader.RedMat != null)
@@ -42,5 +52,6 @@ namespace GrindTools.Utils
                 ApplyMaterials(Main.controller.grindToolState.visualisationMR, AssetLoader.GreenMat);
             }
         }
+        */
     }
 }

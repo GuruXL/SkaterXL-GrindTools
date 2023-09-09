@@ -151,7 +151,7 @@
     <Compile Include="GrindTools.UI\PlaystationButtons.cs" />
     <Compile Include="GrindTools.UI\UIAssetLoader.cs" />
     <Compile Include="GrindTools.Utils\MatUtil.cs" />
-    <Compile Include="GrindTools\AssetLoader.cs" />
+    <Compile Include="GrindTools.Utils\AssetLoader.cs" />
     <Compile Include="GrindTools\Controller.cs" />
     <Compile Include="GrindTools.Patches\AllowMapEditorPatch.cs" />
     <Compile Include="GrindTools.Patches\MenuPatch.cs" />

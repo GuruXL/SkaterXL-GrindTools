@@ -5,7 +5,7 @@ using System.Collections;
 using System;
 using ModIO.UI;
 
-namespace GrindTools
+namespace GrindTools.Utils
 {
     public static class AssetLoader
     {
