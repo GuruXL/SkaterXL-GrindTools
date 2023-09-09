@@ -10,15 +10,13 @@ namespace GrindTools
     public class Settings : UnityModManager.ModSettings, IDrawable
     {
         public float CamFOV = 70f;
-        public bool OutlineSplines = false;
-
         public void OnChange()
         {
             throw new NotImplementedException();
         }
         public override void Save(UnityModManager.ModEntry modEntry)
         {
-            //Save(this, modEntry);
+            Save(this, modEntry);
         }
     }
 }
