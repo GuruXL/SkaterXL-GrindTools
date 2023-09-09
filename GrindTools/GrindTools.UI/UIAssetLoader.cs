@@ -98,7 +98,7 @@ namespace GrindTools.UI
                     }
                     catch (Exception ex)  // Catch any exception
                     {
-                        Debug.LogError($"An error occurred while loading textures: {ex.Message}");
+                        Main.Logger.Log($"An error occurred while loading textures: {ex.Message}");
                     }
                     finally
                     {

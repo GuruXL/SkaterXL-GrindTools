@@ -21,8 +21,8 @@ namespace GrindTools
         public MapEditorController editorController;
         private MapEditorGameState editorGameState;
         public GrindSplineToolState grindToolState;
-        public WaxToolState waxToolState;  
-        
+        public WaxToolState waxToolState;
+        //public SimpleMode simplePlacerState;
 
         private CinemachineVirtualCamera grindToolCam;
         private CinemachineVirtualCamera waxToolCam;
@@ -76,7 +76,13 @@ namespace GrindTools
             waxToolState = waxToolObj?.GetComponent<WaxToolState>();
             grindToolCam = grindtoolObj?.GetComponentInChildren<CinemachineVirtualCamera>();
             waxToolCam = waxToolObj?.GetComponentInChildren<CinemachineVirtualCamera>();
+            //simplePlacerState = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<SimpleMode>();
             outline = GameStateMachine.Instance.gameObject.GetComponentInChildren<OutlineManager>();
+        }
+
+        private void SetInitialState()
+        {
+            editorController.initialState = editorController.SimplePlacerState;
         }
 
         public void AllowRespawn(bool state)

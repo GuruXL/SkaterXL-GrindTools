@@ -104,6 +104,8 @@ namespace GrindTools
         }
         public void RequestGrindTool()
         {
+            //GameStateMachine.Instance.RequestTransitionTo(typeof(MapEditorGameState), false, null);
+           // Main.controller.editorController.ChangeState(Main.controller.editorController.SimplePlacerState);
             Main.controller.ToggleState("Grind");
             Main.controller.AllowRespawn(false);
             Main.controller.ToggleSpeedText(true);

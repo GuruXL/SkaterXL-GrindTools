@@ -20,7 +20,6 @@ namespace GrindTools.Patches
             __instance.MapEditorButton.gameObject.SetActive(true);
             __instance.MapEditorButton.GreyedOut = false;
 
-            
             if (grindToolsButton == null)
             {
                 GameObject originalButton = __instance.MapEditorButton.gameObject;
@@ -34,8 +33,7 @@ namespace GrindTools.Patches
                 grindToolsButton.Label.SetText("Grind Tools");
                 grindToolsButton.onClick.RemoveAllListeners();  // Remove existing listeners
                 grindToolsButton.onClick.AddListener(() => GrindToolButtonOnClick());  // Add new listener
-            }
-            
+            }           
 
             __instance.StateMachine.PauseObject.SetActive(false);
             __instance.StateMachine.PauseObject.SetActive(true);
