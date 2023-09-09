@@ -21,9 +21,6 @@ namespace GrindTools
         public static GameObject ScriptManager;
         public static Controller controller;
         public static InputController inputctrl;
-        //public static UIManager uiManager;
-        //public static MatUtil matUtil;
-        public static ControlsOverlay overlay;
 
         public static bool Load(UnityModManager.ModEntry modEntry)
         {
@@ -80,7 +77,6 @@ namespace GrindTools
                     Object.DontDestroyOnLoad(ScriptManager);
                     controller = ScriptManager.AddComponent<Controller>();
                     inputctrl = ScriptManager.AddComponent<InputController>();
-                    overlay = ScriptManager.AddComponent<ControlsOverlay>();
 
                     AssetLoader.LoadBundles();
                 }

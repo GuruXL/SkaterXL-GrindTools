@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace GrindTools.UI
 {
-	public class ControlsOverlay : MonoBehaviour
+	public class ControlsUI
 	{
 		private GUIStyle fontStyle;
 		private GUIStyle menuStyle;
@@ -17,8 +17,8 @@ namespace GrindTools.UI
 		private Texture2D backgroundTex;
 		private bool isXbox;
 
-		//public static ControlsOverlay __instance { get; private set; }
-		//public static ControlsOverlay Instance => __instance ?? (__instance = new ControlsOverlay());
+		public static ControlsUI __instance { get; private set; }
+		public static ControlsUI Instance => __instance ?? (__instance = new ControlsUI());
 		public bool GUIReady { get; private set; }
 
 		public void Show(string options)
@@ -41,14 +41,20 @@ namespace GrindTools.UI
 
 		private void initGui()
 		{
-			IList<Joystick> joySticks = PlayerController.Instance.inputController.player.controllers.Joysticks;
-			//string[] joystickNames = Input.GetJoystickNames();
-			for (int i = 0; i < joySticks.Count; i++)
+			//IList<Joystick> joySticks = PlayerController.Instance.inputController.player.controllers.Joysticks;
+			string[] joySticks = Input.GetJoystickNames();
+			for (int i = 0; i < joySticks.Length; i++)
 			{
+				if (joySticks[i].ToLower().Contains("xbox"))
+				{
+					isXbox = true;
+				}
+				/*
 				if (joySticks[i].name.ToLower().Contains("xbox") || joySticks[i].hardwareName.ToLower().Contains("xbox"))
 				{
 					isXbox = true;
 				}
+				*/
 			}
 			backgroundTex = new Texture2D(1, 1);
 			backgroundTex.wrapMode = TextureWrapMode.Repeat;
@@ -212,7 +218,7 @@ namespace GrindTools.UI
 			});
 			CreateLabel("Toggle Coping", new Texture2D[]
 			{
-				UIAssetLoader.Instance.psButtons.Cross
+				UIAssetLoader.Instance.psButtons.Square
 			});
 			GUILayout.EndVertical();
 			GUILayout.EndArea();
@@ -240,7 +246,7 @@ namespace GrindTools.UI
 			GUILayout.FlexibleSpace();
 			for (int i = 0; i < buttons.Length; i++)
 			{
-				GUILayout.Label(PlaystationButton.convertPsTo(buttons[i], isXbox), controllerButtonBoxStyle, Array.Empty<GUILayoutOption>());
+				GUILayout.Label(PlaystationButtons.convertPsTo(buttons[i], isXbox), controllerButtonBoxStyle, Array.Empty<GUILayoutOption>());
 				if (delimiter != null && i != buttons.Length - 1)
 				{
 					GUILayout.Label(delimiter[i], fontStyle, Array.Empty<GUILayoutOption>());

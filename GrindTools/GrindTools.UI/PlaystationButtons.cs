@@ -60,7 +60,7 @@ namespace GrindTools.UI
 
 		public Dictionary<Texture2D, Texture2D> mapPsToXbox()
 		{
-			XboxButton xboxButtons = UIAssetLoader.Instance.xboxButtons;
+			XboxButtons xboxButtons = UIAssetLoader.Instance.xboxButtons;
 			return new Dictionary<Texture2D, Texture2D>
 			{
 				{

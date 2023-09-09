@@ -48,11 +48,11 @@ namespace GrindTools
         {
             if (editorController.CurrentState == grindToolState)
             {
-                Main.overlay.Show("Grind");
+                ControlsUI.Instance.Show("Grind");
             }
             else if (editorController.CurrentState == waxToolState)
             {
-                Main.overlay.Show("Wax");
+                ControlsUI.Instance.Show("Wax");
             }
         }
         private void GetMapEditor()
