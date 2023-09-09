@@ -7,8 +7,8 @@ namespace GrindTools.UI
 	public class UIAssetLoader
 	{
 		private static UIAssetLoader _instance;
-		private PlaystationButton _psButtons;
-		private XboxButton _xboxButtons;
+		private PlaystationButtons _psButtons;
+		private XboxButtons _xboxButtons;
 
 		public static UIAssetLoader Instance
 		{
@@ -22,7 +22,7 @@ namespace GrindTools.UI
 			}
 		}
 
-		public PlaystationButton psButtons
+		public PlaystationButtons psButtons
 		{
 			get
 			{
@@ -72,14 +72,14 @@ namespace GrindTools.UI
 					}
 					finally
 					{
-						_psButtons = new PlaystationButton(texture2D3, texture2D4, texture2D, texture2D2, texture2D6, texture2D9, texture2D11, texture2D10, texture2D12, texture2D13, texture2D14, texture2D15, texture2D16, texture2D17, texture2D5, texture2D7, texture2D8, texture2D18, texture2D19);
+						_psButtons = new PlaystationButtons(texture2D3, texture2D4, texture2D, texture2D2, texture2D6, texture2D9, texture2D11, texture2D10, texture2D12, texture2D13, texture2D14, texture2D15, texture2D16, texture2D17, texture2D5, texture2D7, texture2D8, texture2D18, texture2D19);
 					}
 				}
 				return _psButtons;
 			}
 		}
 
-		public XboxButton xboxButtons
+		public XboxButtons xboxButtons
 		{
 			get
 			{
@@ -119,7 +119,7 @@ namespace GrindTools.UI
 					}
 					finally
 					{
-						_xboxButtons = new XboxButton(texture2D, texture2D2, texture2D3, texture2D4, texture2D5, texture2D6, texture2D7, texture2D8, texture2D9, texture2D10, texture2D11, texture2D13, texture2D12, texture2D14);
+						_xboxButtons = new XboxButtons(texture2D, texture2D2, texture2D3, texture2D4, texture2D5, texture2D6, texture2D7, texture2D8, texture2D9, texture2D10, texture2D11, texture2D13, texture2D12, texture2D14);
 					}
 				}
 				return _xboxButtons;

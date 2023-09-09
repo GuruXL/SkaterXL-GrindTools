@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GrindTools.UI
 {
-	public class PlaystationButton
+	public class PlaystationButtons
 	{
 		public Texture2D Circle;
 		public Texture2D Square;
@@ -26,7 +26,7 @@ namespace GrindTools.UI
 		public Texture2D Options;
 		public Texture2D Share;
 
-		public PlaystationButton(Texture2D circle, Texture2D square, Texture2D cross, Texture2D triangle, Texture2D leftStickClick, Texture2D dpadRight, Texture2D dpadUp, Texture2D dpadLeft, Texture2D dpadDown, Texture2D dpad, Texture2D l1, Texture2D l2, Texture2D r1, Texture2D r2, Texture2D leftStick, Texture2D rightStick, Texture2D rightStickClick, Texture2D options, Texture2D share)
+		public PlaystationButtons(Texture2D circle, Texture2D square, Texture2D cross, Texture2D triangle, Texture2D leftStickClick, Texture2D dpadRight, Texture2D dpadUp, Texture2D dpadLeft, Texture2D dpadDown, Texture2D dpad, Texture2D l1, Texture2D l2, Texture2D r1, Texture2D r2, Texture2D leftStick, Texture2D rightStick, Texture2D rightStickClick, Texture2D options, Texture2D share)
 		{
 			Circle = circle;
 			Square = square;

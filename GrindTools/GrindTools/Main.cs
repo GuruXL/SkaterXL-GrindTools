@@ -80,8 +80,6 @@ namespace GrindTools
                     Object.DontDestroyOnLoad(ScriptManager);
                     controller = ScriptManager.AddComponent<Controller>();
                     inputctrl = ScriptManager.AddComponent<InputController>();
-                    //uiManager = ScriptManager.AddComponent<UIManager>();
-                    //matUtil = ScriptManager.AddComponent<MatUtil>();
                     overlay = ScriptManager.AddComponent<ControlsOverlay>();
 
                     AssetLoader.LoadBundles();

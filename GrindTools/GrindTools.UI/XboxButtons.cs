@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace GrindTools.UI
 {
-	public class XboxButton
+	public class XboxButtons
 	{
-		public XboxButton(Texture2D a, Texture2D x, Texture2D b, Texture2D y, Texture2D lb, Texture2D lt, Texture2D rb, Texture2D rt, Texture2D menu, Texture2D view, Texture2D dpadUp, Texture2D dpadRight, Texture2D dpadLeft, Texture2D dpadDown)
+		public XboxButtons(Texture2D a, Texture2D x, Texture2D b, Texture2D y, Texture2D lb, Texture2D lt, Texture2D rb, Texture2D rt, Texture2D menu, Texture2D view, Texture2D dpadUp, Texture2D dpadRight, Texture2D dpadLeft, Texture2D dpadDown)
 		{
 			A = a;
 			X = x;
