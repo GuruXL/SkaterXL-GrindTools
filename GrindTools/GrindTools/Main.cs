@@ -21,7 +21,7 @@ namespace GrindTools
         public static GameObject ScriptManager;
         public static Controller controller;
         public static InputController inputctrl;
-        public static UIManager uiManager;
+        //public static UIManager uiManager;
         //public static MatUtil matUtil;
         public static ControlsOverlay overlay;
 
@@ -80,7 +80,7 @@ namespace GrindTools
                     Object.DontDestroyOnLoad(ScriptManager);
                     controller = ScriptManager.AddComponent<Controller>();
                     inputctrl = ScriptManager.AddComponent<InputController>();
-                    uiManager = ScriptManager.AddComponent<UIManager>();
+                    //uiManager = ScriptManager.AddComponent<UIManager>();
                     //matUtil = ScriptManager.AddComponent<MatUtil>();
                     overlay = ScriptManager.AddComponent<ControlsOverlay>();
 

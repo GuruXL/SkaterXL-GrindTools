@@ -14,8 +14,8 @@ namespace GrindTools.UI
 		private GUIStyle controllerButtonBoxStyle;
 		private GUIStyle inputLabelStyle;
 		private Vector3 scale = Vector3.one;
-		private int guiPadding;
-		private Texture2D whiteTex;
+		//private int guiPadding = 2;
+		private Texture2D backgroundTex;
 		private bool isXbox;
 
 		/*
@@ -33,95 +33,22 @@ namespace GrindTools.UI
 		*/
 		public bool GUIReady { get; private set; }
 
-		public void Show()
+		public void Show(string options)
 		{
 			if (!GUIReady)
 			{
 				initGui();
 				return;
 			}
-			Matrix4x4 matrix = GUI.matrix;
-			scale.y = Screen.height / 1440f;
-			scale.x = scale.y;
-			scale.z = 1f;
-			GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, scale);
-			float num = Screen.width / 3f;
-			GUILayout.BeginArea(new Rect(0f, 0f, num / scale.y, (Screen.height - guiPadding * 2) / scale.y)
-			{
-				center = new Vector2(((Screen.width - guiPadding) - num / 2f) / scale.y, Screen.height / 2f / scale.y)
-			}, whiteTex, menuStyle);
-			GUILayout.BeginVertical(Array.Empty<GUILayoutOption>());
-			GUILayout.Label("General", sectionStyle, Array.Empty<GUILayoutOption>());
-			//singleInfoEntry("Speed Factor", Main.customObjectDropperState.getSpeedFactor().ToString("F1") + "x Speed");
-			singleControlEntry("Increase/Decrease Speed", "/", new Texture2D[]
-			{
-				UIAssetLoader.Instance.psButtons.DpadUp,
-				UIAssetLoader.Instance.psButtons.DpadDown
-			});
-			//singleInfoEntry("Current Axis", Main.customObjectDropperState.editorAxis.ToString() + " Axis");
-			singleControlEntry("Next/Previous Axis", "/", new Texture2D[]
-			{
-				UIAssetLoader.Instance.psButtons.DpadRight,
-				UIAssetLoader.Instance.psButtons.DpadLeft
-			});
-			GUILayout.Label("Movement", sectionStyle, Array.Empty<GUILayoutOption>());
-			singleControlEntry("Select Objects", new Texture2D[]
-			{
-				UIAssetLoader.Instance.psButtons.Cross
-			});
-			singleControlEntry("Move Objects", "+", new Texture2D[]
-			{
-				UIAssetLoader.Instance.psButtons.L1,
-				UIAssetLoader.Instance.psButtons.LeftStick
-			});
-			singleControlEntry("Rotate Objects", "+", new Texture2D[]
-			{
-				UIAssetLoader.Instance.psButtons.L1,
-				UIAssetLoader.Instance.psButtons.RightStick
-			});
-			singleControlEntry("Delete Objects", new Texture2D[]
-			{
-				UIAssetLoader.Instance.psButtons.Square
-			});
-			GUILayout.Label("Manipulation", sectionStyle, Array.Empty<GUILayoutOption>());
-			singleControlEntry("Scale Object", new string[]
-			{
-				"+",
-				"/"
-			}, new Texture2D[]
-			{
-				UIAssetLoader.Instance.psButtons.R1,
-				UIAssetLoader.Instance.psButtons.L2,
-				UIAssetLoader.Instance.psButtons.R2
-			});
-			singleControlEntry("Snap to ground", "+", new Texture2D[]
-			{
-				UIAssetLoader.Instance.psButtons.R1,
-				UIAssetLoader.Instance.psButtons.Triangle
-			});
-			singleControlEntry("Match rotation \nwith highlighted object", "+", new Texture2D[]
-			{
-				UIAssetLoader.Instance.psButtons.R1,
-				UIAssetLoader.Instance.psButtons.Cross
-			});
-			singleControlEntry("Clone objects", "+", new Texture2D[]
-			{
-				UIAssetLoader.Instance.psButtons.R1,
-				UIAssetLoader.Instance.psButtons.Square
-			});
-			GUILayout.Label("Navigation", sectionStyle, Array.Empty<GUILayoutOption>());
-			singleControlEntry("Save / Load Presets", new Texture2D[]
-			{
-				UIAssetLoader.Instance.psButtons.Options
-			});
-			GUILayout.FlexibleSpace();
-			singleControlEntry("Clear Selection / Exit", new Texture2D[]
-			{
-				UIAssetLoader.Instance.psButtons.Circle
-			});
-			GUILayout.EndVertical();
-			GUILayout.EndArea();
-			GUI.matrix = matrix;
+            switch (options)
+            {
+				case"Grind":
+					ShowGrindUI();
+					break;
+				case"Wax":
+					ShowWaxUI();
+					break;
+            }
 		}
 
 		private void initGui()
@@ -134,10 +61,10 @@ namespace GrindTools.UI
 					isXbox = true;
 				}
 			}
-			whiteTex = new Texture2D(1, 1);
-			whiteTex.wrapMode = TextureWrapMode.Repeat;
-			whiteTex.SetPixel(0, 0, new Color(1f, 1f, 1f, 0.8f));
-			whiteTex.Apply();
+			backgroundTex = new Texture2D(1, 1);
+			backgroundTex.wrapMode = TextureWrapMode.Repeat;
+			backgroundTex.SetPixel(0, 0, new Color(0.24f, 0.24f, 0.24f, 0.85f));
+			backgroundTex.Apply();
 			scale.y = Screen.height / 1440f;
 			scale.x = scale.y;
 			scale.z = 1f;
@@ -146,11 +73,11 @@ namespace GrindTools.UI
 				fontSize = 25,
 				normal =
 				{
-					textColor = new Color(0.32f, 0.32f, 0.35f, 1f)
+					textColor = new Color(1f, 1f, 1f, 1f)
 				},
 				alignment = TextAnchor.MiddleLeft,
 				fixedHeight = 50f,
-				padding = new RectOffset(30, 30, 0, 0)
+				padding = new RectOffset(10, 10, 0, 0)
 			};
 			fontStyleBlue = new GUIStyle(fontStyle)
 			{
@@ -161,10 +88,10 @@ namespace GrindTools.UI
 			};
 			menuStyle = new GUIStyle(GUI.skin.window)
 			{
-				padding = new RectOffset(0, 0, 50, 50),
+				padding = new RectOffset(10, 10, 50, 50),
 				normal =
 				{
-					background = whiteTex
+					background = backgroundTex
 				}
 			};
 			sectionStyle = new GUIStyle(GUI.skin.window)
@@ -173,8 +100,8 @@ namespace GrindTools.UI
 				fontSize = 30,
 				normal =
 				{
-					textColor = new Color(0.32f, 0.32f, 0.35f, 1f),
-					background = whiteTex
+					textColor = new Color(1f, 1f, 1f, 1f),
+					background = backgroundTex
 				},
 				alignment = TextAnchor.MiddleLeft,
 				fixedHeight = 60f,
@@ -196,22 +123,142 @@ namespace GrindTools.UI
 			GUIReady = true;
 		}
 
-		private void singleControlEntry(string text, string delimiter, params Texture2D[] buttons)
+		private void ShowGrindUI()
+        {
+			Matrix4x4 matrix = GUI.matrix;
+			scale.y = Screen.height / 1440f;
+			scale.x = scale.y;
+			scale.z = 1f;
+			GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, scale);
+			float padding = 25f;
+			float width = (Screen.width / 3.8f) - (padding * 2);
+			float height = (Screen.height - (Screen.height / 3f)) - (padding * 2);
+
+			// Position the UI in the top-right corner with padding
+			float x = Screen.width - width - padding;
+			float y = padding;
+
+			GUILayout.BeginArea(new Rect(x / scale.x, y / scale.y, width / scale.x, height / scale.y), backgroundTex, menuStyle);
+			GUILayout.BeginVertical(Array.Empty<GUILayoutOption>());
+			GUILayout.Label("General", sectionStyle, Array.Empty<GUILayoutOption>());
+			CreateLabel("Switch Modes", new Texture2D[]
+			{
+				UIAssetLoader.Instance.psButtons.Triangle
+			});
+			CreateLabel("Increase/Decrease Speed", "/", new Texture2D[]
+			{
+				UIAssetLoader.Instance.psButtons.DpadUp,
+				UIAssetLoader.Instance.psButtons.DpadDown
+			});
+			GUILayout.Label("Camera", sectionStyle, Array.Empty<GUILayoutOption>());
+			CreateLabel("Left / Right / In / Out", new Texture2D[]
+			{
+				UIAssetLoader.Instance.psButtons.LeftStick
+			});
+			CreateLabel("Up / Down", "/", new Texture2D[]
+			{
+				UIAssetLoader.Instance.psButtons.L2,
+				UIAssetLoader.Instance.psButtons.R2
+			});
+			CreateLabel("Rotate", new Texture2D[]
+			{
+				UIAssetLoader.Instance.psButtons.RightStick
+			});
+			GUILayout.Label("Splines", sectionStyle, Array.Empty<GUILayoutOption>());
+			CreateLabel("Remove Active Spline Points", "or", new Texture2D[]
+			{
+				UIAssetLoader.Instance.psButtons.DpadLeft,
+				UIAssetLoader.Instance.psButtons.DpadRight
+			});
+			CreateLabel("Scale Splines", "/", new Texture2D[]
+			{
+				UIAssetLoader.Instance.psButtons.R1,
+				UIAssetLoader.Instance.psButtons.LeftStick
+			});
+			CreateLabel("Add Spline Points", new Texture2D[]
+			{
+				UIAssetLoader.Instance.psButtons.Cross
+			});
+			CreateLabel("Create New Spline", new Texture2D[]
+			{
+				UIAssetLoader.Instance.psButtons.Square
+			});
+			GUILayout.EndVertical();
+			GUILayout.EndArea();
+			GUI.matrix = matrix;
+		}
+
+		private void ShowWaxUI()
+        {
+			Matrix4x4 matrix = GUI.matrix;
+			scale.y = Screen.height / 1440f;
+			scale.x = scale.y;
+			scale.z = 1f;
+			GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, scale);
+			float padding = 25f;
+			float width = (Screen.width / 3.8f) - (padding * 2);
+			float height = (Screen.height - (Screen.height / 2.25f)) - (padding * 2);
+
+			// Position the UI in the top-right corner with padding
+			float x = Screen.width - width - padding;
+			float y = padding;
+
+			GUILayout.BeginArea(new Rect(x / scale.x, y / scale.y, width / scale.x, height / scale.y), backgroundTex, menuStyle);
+			GUILayout.BeginVertical(Array.Empty<GUILayoutOption>());
+			GUILayout.Label("General", sectionStyle, Array.Empty<GUILayoutOption>());
+			CreateLabel("Switch Modes", new Texture2D[]
+			{
+				UIAssetLoader.Instance.psButtons.Triangle
+			});
+			CreateLabel("Increase/Decrease Speed", "/", new Texture2D[]
+			{
+				UIAssetLoader.Instance.psButtons.DpadUp,
+				UIAssetLoader.Instance.psButtons.DpadDown
+			});
+			GUILayout.Label("Camera", sectionStyle, Array.Empty<GUILayoutOption>());
+			CreateLabel("Left / Right / In / Out", new Texture2D[]
+			{
+				UIAssetLoader.Instance.psButtons.LeftStick
+			});
+			CreateLabel("Up / Down", "/", new Texture2D[]
+			{
+				UIAssetLoader.Instance.psButtons.L2,
+				UIAssetLoader.Instance.psButtons.R2
+			});
+			CreateLabel("Rotate", new Texture2D[]
+			{
+				UIAssetLoader.Instance.psButtons.RightStick
+			});
+			GUILayout.Label("Splines", sectionStyle, Array.Empty<GUILayoutOption>());
+			CreateLabel("Change Friction", "+", new Texture2D[]
+			{
+				UIAssetLoader.Instance.psButtons.R1,
+				UIAssetLoader.Instance.psButtons.LeftStick
+			});
+			CreateLabel("Toggle Coping", new Texture2D[]
+			{
+				UIAssetLoader.Instance.psButtons.Cross
+			});
+			GUILayout.EndVertical();
+			GUILayout.EndArea();
+			GUI.matrix = matrix;
+		}
+		private void CreateLabel(string text, string delimiter, params Texture2D[] buttons)
 		{
 			string[] array = new string[buttons.Length];
 			for (int i = 0; i < buttons.Length; i++)
 			{
 				array[i] = delimiter;
 			}
-			singleControlEntry(text, array, buttons);
+			CreateLabel(text, array, buttons);
 		}
 
-		private void singleControlEntry(string text, params Texture2D[] buttons)
+		private void CreateLabel(string text, params Texture2D[] buttons)
 		{
-            singleControlEntry(text, (string)null, buttons);
+			CreateLabel(text, (string)null, buttons);
 		}
 
-		private void singleControlEntry(string text, string[] delimiter, params Texture2D[] buttons)
+		private void CreateLabel(string text, string[] delimiter, params Texture2D[] buttons)
 		{
 			GUILayout.BeginHorizontal(Array.Empty<GUILayoutOption>());
 			GUILayout.Label(text, fontStyle, Array.Empty<GUILayoutOption>());
@@ -227,7 +274,7 @@ namespace GrindTools.UI
 			GUILayout.EndHorizontal();
 			GUILayout.Space(20f);
 		}
-		private void singleToggleEntry(string text, bool isOn, string onText = "ON", string offText = "OFF")
+		private void CreateToggle(string text, bool isOn, string onText = "ON", string offText = "OFF")
 		{
 			GUILayout.BeginHorizontal(Array.Empty<GUILayoutOption>());
 			GUILayout.Label(text, fontStyle, Array.Empty<GUILayoutOption>());
@@ -236,7 +283,7 @@ namespace GrindTools.UI
 			GUILayout.EndHorizontal();
 			GUILayout.Space(20f);
 		}
-		private void singleInfoEntry(string textL, string textR)
+		private void CreateInfo(string textL, string textR)
 		{
 			GUILayout.BeginHorizontal(Array.Empty<GUILayoutOption>());
 			GUILayout.Label(textL, fontStyle, Array.Empty<GUILayoutOption>());
