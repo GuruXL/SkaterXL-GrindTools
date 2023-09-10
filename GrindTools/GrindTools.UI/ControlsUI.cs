@@ -17,7 +17,7 @@ namespace GrindTools.UI
 		//private int guiPadding = 2;
 		private Texture2D backgroundTex;
 		//private bool isJoystickXbox;
-		public bool isPS4; // { get; private set; }
+		//public bool isPS4; // { get; private set; }
 
 		public static ControlsUI __instance { get; private set; }
 		public static ControlsUI Instance => __instance ?? (__instance = new ControlsUI());
@@ -29,9 +29,11 @@ namespace GrindTools.UI
 			string text = ((joystick != null) ? joystick.name : null) ?? "unknown";
 			if (text.ToLower().Contains("dual shock") || text.ToLower().Contains("dualshock"))
 			{
-				return isPS4;
+				//return isPS4;
+				return Main.controller.TempisPS4;
 			}
-			return !isPS4;
+			//return !isPS4;
+			return !Main.controller.TempisPS4;
 		}
 
 		public void Show(string options)
@@ -131,20 +133,20 @@ namespace GrindTools.UI
 			GUILayout.BeginVertical(Array.Empty<GUILayoutOption>());
 
 			GUILayout.Label("General", sectionStyle, Array.Empty<GUILayoutOption>());
-			CreateLabel("Switch Modes", new Texture2D[] { UIAssetLoader.Instance.psButtons.Triangle });
-			CreateLabel("Increase/Decrease Speed", "/", new Texture2D[] { UIAssetLoader.Instance.psButtons.DpadUp, UIAssetLoader.Instance.psButtons.DpadDown });
+			CreateLabel("Switch Modes", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.Y });
+			CreateLabel("Increase/Decrease Speed", "/", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.DpadUp, UIAssetLoader.Instance.xboxButtons.DpadDown });
 
 			GUILayout.Label("Camera", sectionStyle, Array.Empty<GUILayoutOption>());
-			CreateLabel("Camera Fov: " + Mathf.RoundToInt(Main.settings.CamFOV).ToString(""), "+", new Texture2D[] { UIAssetLoader.Instance.psButtons.R1, UIAssetLoader.Instance.psButtons.RightStick });
-			CreateLabel("Left / Right / In / Out", new Texture2D[] { UIAssetLoader.Instance.psButtons.LeftStick });
-			CreateLabel("Up / Down", "/", new Texture2D[] {UIAssetLoader.Instance.psButtons.L2, UIAssetLoader.Instance.psButtons.R2 });
-			CreateLabel("Rotate", new Texture2D[] { UIAssetLoader.Instance.psButtons.RightStick });
+			CreateLabel("Camera Fov: " + Mathf.RoundToInt(Main.settings.CamFOV).ToString(""), "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RB, UIAssetLoader.Instance.xboxButtons.RightStick });
+			CreateLabel("Left / Right / In / Out", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.LeftStick });
+			CreateLabel("Up / Down", "/", new Texture2D[] {UIAssetLoader.Instance.xboxButtons.LT, UIAssetLoader.Instance.xboxButtons.RT });
+			CreateLabel("Rotate", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RightStick });
 
 			GUILayout.Label("Splines", sectionStyle, Array.Empty<GUILayoutOption>());
-			CreateLabel("Remove Active Spline Points", "or", new Texture2D[] { UIAssetLoader.Instance.psButtons.DpadLeft, UIAssetLoader.Instance.psButtons.DpadRight });
-			CreateLabel("Scale Splines", "+", new Texture2D[] { UIAssetLoader.Instance.psButtons.R1,UIAssetLoader.Instance.psButtons.LeftStick });
-			CreateLabel("Add Spline Points", new Texture2D[] { UIAssetLoader.Instance.psButtons.Cross });
-			CreateLabel("Create New Spline", new Texture2D[] { UIAssetLoader.Instance.psButtons.Square });
+			CreateLabel("Remove Active Spline Points", "or", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.DpadLeft, UIAssetLoader.Instance.xboxButtons.DpadRight });
+			CreateLabel("Scale Splines", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RB,UIAssetLoader.Instance.xboxButtons.LeftStick });
+			CreateLabel("Add Spline Points", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.A });
+			CreateLabel("Create New Spline", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.X });
 
 			GUILayout.EndVertical();
 			GUILayout.EndArea();
@@ -170,18 +172,18 @@ namespace GrindTools.UI
 			GUILayout.BeginVertical(Array.Empty<GUILayoutOption>());
 
 			GUILayout.Label("General", sectionStyle, Array.Empty<GUILayoutOption>());
-			CreateLabel("Switch Modes", new Texture2D[] { UIAssetLoader.Instance.psButtons.Triangle });
-			CreateLabel("Increase/Decrease Speed", "/", new Texture2D[] { UIAssetLoader.Instance.psButtons.DpadUp, UIAssetLoader.Instance.psButtons.DpadDown });
+			CreateLabel("Switch Modes", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.Y });
+			CreateLabel("Increase/Decrease Speed", "/", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.DpadUp, UIAssetLoader.Instance.xboxButtons.DpadDown });
 
 			GUILayout.Label("Camera", sectionStyle, Array.Empty<GUILayoutOption>());
-			CreateLabel("Camera Fov: " + Mathf.RoundToInt(Main.settings.CamFOV).ToString(""), "+", new Texture2D[] { UIAssetLoader.Instance.psButtons.R1, UIAssetLoader.Instance.psButtons.RightStick });
-			CreateLabel("Left / Right / In / Out", new Texture2D[] { UIAssetLoader.Instance.psButtons.LeftStick });
-			CreateLabel("Up / Down", "/", new Texture2D[] { UIAssetLoader.Instance.psButtons.L2, UIAssetLoader.Instance.psButtons.R2 });
-			CreateLabel("Rotate", new Texture2D[] { UIAssetLoader.Instance.psButtons.RightStick });
+			CreateLabel("Camera Fov: " + Mathf.RoundToInt(Main.settings.CamFOV).ToString(""), "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RB, UIAssetLoader.Instance.xboxButtons.RightStick });
+			CreateLabel("Left / Right / In / Out", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.LeftStick });
+			CreateLabel("Up / Down", "/", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.LT, UIAssetLoader.Instance.xboxButtons.RT });
+			CreateLabel("Rotate", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RightStick });
 
 			GUILayout.Label("Splines", sectionStyle, Array.Empty<GUILayoutOption>());
-			CreateLabel("Change Friction", "+", new Texture2D[] { UIAssetLoader.Instance.psButtons.R1, UIAssetLoader.Instance.psButtons.LeftStick });
-			CreateLabel("Toggle Coping", new Texture2D[] { UIAssetLoader.Instance.psButtons.Square });
+			CreateLabel("Change Friction", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RB, UIAssetLoader.Instance.xboxButtons.LeftStick });
+			CreateLabel("Toggle Coping", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.X });
 
 			GUILayout.EndVertical();
 			GUILayout.EndArea();
@@ -209,7 +211,8 @@ namespace GrindTools.UI
 			GUILayout.FlexibleSpace();
 			for (int i = 0; i < buttons.Length; i++)
 			{
-				GUILayout.Label(XboxButtons.SwapToPlaystationUI(buttons[i], isPS4), controllerButtonBoxStyle, Array.Empty<GUILayoutOption>());
+				//GUILayout.Label(XboxButtons.SwapToPlaystationUI(buttons[i], isPS4), controllerButtonBoxStyle, Array.Empty<GUILayoutOption>());
+				GUILayout.Label(XboxButtons.SwapToPlaystationUI(buttons[i], Main.controller.TempisPS4), controllerButtonBoxStyle, Array.Empty<GUILayoutOption>());
 				if (spacer != null && i != buttons.Length - 1)
 				{
 					GUILayout.Label(spacer[i], fontStyle, Array.Empty<GUILayoutOption>());

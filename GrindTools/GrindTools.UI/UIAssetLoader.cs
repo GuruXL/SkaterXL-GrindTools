@@ -52,24 +52,25 @@ namespace GrindTools.UI
                     Texture2D icon18 = new Texture2D(100, 100);
                     Texture2D icon19 = new Texture2D(100, 100);
 
+
                     // Extract Resources
-                    byte[] iconData = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Cross.png");
-                    byte[] iconData2 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Triangle.png");
-                    byte[] iconData3 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Circle.png");
-                    byte[] iconData4 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Square.png");
-                    byte[] iconData5 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Left_Stick.png");
-                    byte[] iconData6 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Left_Stick_Click.png");
-                    byte[] iconData7 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Right_Stick.png");
-                    byte[] iconData8 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Right_Stick_Click.png");
-                    byte[] iconData9 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Dpad_Right.png");
-                    byte[] iconData10 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Dpad_Left.png");
-                    byte[] iconData11 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Dpad_Up.png");
-                    byte[] iconData12 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Dpad_Down.png");
-                    byte[] iconData13 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Dpad.png");
-                    byte[] iconData14 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.L1.png");
-                    byte[] iconData15 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.L2.png");
-                    byte[] iconData16 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.R1.png");
-                    byte[] iconData17 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.R2.png");
+                    byte[] iconData = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Circle.png");
+                    byte[] iconData2 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Square.png");
+                    byte[] iconData3 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Cross.png");
+                    byte[] iconData4 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Triangle.png");
+                    byte[] iconData5 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Dpad_Right.png");
+                    byte[] iconData6 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Dpad_Left.png");
+                    byte[] iconData7 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Dpad_Up.png");
+                    byte[] iconData8 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Dpad_Down.png");
+                    byte[] iconData9 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Dpad.png");
+                    byte[] iconData10 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.L1.png");
+                    byte[] iconData11 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.L2.png");
+                    byte[] iconData12 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.R1.png");
+                    byte[] iconData13 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.R2.png");
+                    byte[] iconData14 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Left_Stick_Click.png");
+                    byte[] iconData15 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Left_Stick.png");
+                    byte[] iconData16 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Right_Stick.png");
+                    byte[] iconData17 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Right_Stick_Click.png"); 
                     byte[] iconData18 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Options.png");
                     byte[] iconData19 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Share.png");
 
@@ -102,7 +103,7 @@ namespace GrindTools.UI
                     }
                     finally
                     {
-                        _psButtons = new PlaystationButtons(icon3, icon4, icon, icon2, icon6, icon9, icon11, icon10, icon12, icon13, icon14, icon15, icon16, icon17, icon5, icon7, icon8, icon18, icon19);
+                        _psButtons = new PlaystationButtons(icon, icon2, icon3, icon4, icon5, icon6, icon7, icon8, icon9, icon10, icon11, icon12, icon13, icon14, icon15, icon16, icon17, icon18, icon19);
                     }
                 }
                 return _psButtons;
@@ -133,6 +134,8 @@ namespace GrindTools.UI
                     Texture2D icon16 = new Texture2D(100, 100);
                     Texture2D icon17 = new Texture2D(100, 100);
                     Texture2D icon18 = new Texture2D(100, 100);
+
+
 
                     // Extract resources first
                     byte[] iconData = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.A.png");
@@ -182,7 +185,7 @@ namespace GrindTools.UI
                     }
                     finally
                     {
-                        _xboxButtons = new XboxButtons(icon3, icon4, icon, icon2, icon6, icon9, icon11, icon10, icon12, icon13, icon14, icon15, icon16, icon17, icon5, icon7, icon8, icon18);
+                        _xboxButtons = new XboxButtons(icon, icon2, icon3, icon4, icon5, icon6, icon7, icon8, icon9, icon10, icon11, icon12, icon13, icon14, icon15, icon16, icon17, icon18);
                     }
                 }
                 return _xboxButtons;
