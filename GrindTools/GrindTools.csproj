@@ -143,6 +143,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GrindTools.Patches\WaxToolMoveCameraPatch.cs" />
     <Compile Include="GrindTools.Patches\CheckRaycastsPatch.cs" />
     <Compile Include="GrindTools.Patches\AvailableStatePatch.cs" />
     <Compile Include="GrindTools.Patches\MapEditorStatePatch.cs" />

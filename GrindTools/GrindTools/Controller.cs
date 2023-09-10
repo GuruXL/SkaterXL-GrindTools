@@ -24,8 +24,8 @@ namespace GrindTools
         public WaxToolState waxToolState;
         //public SimpleMode simplePlacerState;
 
-        private CinemachineVirtualCamera grindToolCam;
-        private CinemachineVirtualCamera waxToolCam;
+        public CinemachineVirtualCamera grindToolCam;
+        public CinemachineVirtualCamera waxToolCam;
         public OutlineManager outline;
         public void Awake()
         {
@@ -34,17 +34,6 @@ namespace GrindTools
             GetComponents();
             DisableDefaultUI();
         }
-
-        private float delay = 0.2f;
-        private float lastDelay = 0f;
-        public void Update()
-        {
-            if (Time.time - lastDelay >= delay)
-            {
-                SetCamFov();
-            }
-        }
-
         private void OnGUI()
         {
             if (editorController.CurrentState == grindToolState)

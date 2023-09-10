@@ -18,6 +18,8 @@ namespace GrindTools
         public void Awake()
         {
             player = PlayerController.Instance.inputController.player;
+            Main.controller.grindToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
+            Main.controller.waxToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
         }
 
         public void Update()
@@ -30,14 +32,21 @@ namespace GrindTools
 
                 if (currentType == typeof(GrindSplineToolState) || currentType == typeof(WaxToolState))
                 {
-                    SwapToolStates();
+                    bool rbPRessed = player.GetButton(7);
+                    if (rbPRessed)
+                    {
+                        UpdateFOV();
+                    }
+                    else
+                    {
+                        SwapToolStates();
+                    }
                 }
                 else if (GameStateMachine.Instance.CurrentState.GetType() == typeof(MapEditorGameState))
                 {
                     CheckForInput();
                 }
             }
-
         }
         private void CheckForInput()
         {
@@ -91,6 +100,20 @@ namespace GrindTools
                     break;
             }
         }
+        public float changeSpeed = 20.0f;
+        private void UpdateFOV()
+        {
+            Vector2 rightstick = player.GetAxis2D("RightStickX", "RightStickY");
+            Main.settings.CamFOV -= rightstick.y * changeSpeed * Time.unscaledDeltaTime;
+            Main.settings.CamFOV = Mathf.Clamp(Main.settings.CamFOV, 40.0f, 120.0f);
+            //Main.settings.CamFOV = Mathf.Max(0f, Main.settings.CamFOV + rightstick.y * Time.unscaledDeltaTime * changeSpeed);
+
+            if (Main.settings.CamFOV == Main.controller.grindToolCam.m_Lens.FieldOfView)
+                return;
+            Main.controller.grindToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
+            Main.controller.waxToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
+        }
+
         private void ResetToPlayState()
         {
             Main.controller.AllowRespawn(true);
@@ -105,7 +128,7 @@ namespace GrindTools
         public void RequestGrindTool()
         {
             //GameStateMachine.Instance.RequestTransitionTo(typeof(MapEditorGameState), false, null);
-           // Main.controller.editorController.ChangeState(Main.controller.editorController.SimplePlacerState);
+            //Main.controller.editorController.ChangeState(Main.controller.editorController.SimplePlacerState);
             Main.controller.ToggleState("Grind");
             Main.controller.AllowRespawn(false);
             Main.controller.ToggleSpeedText(true);
