@@ -3,6 +3,7 @@ using Photon.Pun;
 using UnityEngine;
 using Rewired;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GrindTools.UI
 {
@@ -15,11 +16,23 @@ namespace GrindTools.UI
 		private Vector3 scale = Vector3.one;
 		//private int guiPadding = 2;
 		private Texture2D backgroundTex;
-		private bool isJoystickXbox;
+		//private bool isJoystickXbox;
+		public bool isPS4; // { get; private set; }
 
 		public static ControlsUI __instance { get; private set; }
 		public static ControlsUI Instance => __instance ?? (__instance = new ControlsUI());
 		public bool isUISetup { get; private set; }
+
+		private bool GetControllerType()
+        {
+			Joystick joystick = PlayerController.Instance.inputController.player.controllers.Joysticks.FirstOrDefault();
+			string text = ((joystick != null) ? joystick.name : null) ?? "unknown";
+			if (text.ToLower().Contains("dual shock") || text.ToLower().Contains("dualshock"))
+			{
+				return isPS4;
+			}
+			return !isPS4;
+		}
 
 		public void Show(string options)
 		{
@@ -41,6 +54,16 @@ namespace GrindTools.UI
 
 		private void SetupUIlayout()
 		{
+			/*
+			Joystick joystick = PlayerController.Instance.inputController.player.controllers.Joysticks.FirstOrDefault<Joystick>();
+			string text = ((joystick != null) ? joystick.name : null) ?? "unknown";
+			if (text.ToLower().Contains("dual shock") || text.ToLower().Contains("dualshock"))
+			{
+				isPS4 = true;
+			}
+			*/
+
+			/*
 			//IList<Joystick> joySticks = PlayerController.Instance.inputController.player.controllers.Joysticks;
 			string[] joySticks = Input.GetJoystickNames();
 			for (int i = 0; i < joySticks.Length; i++)
@@ -49,13 +72,11 @@ namespace GrindTools.UI
 				{
 					isJoystickXbox = true;
 				}
-				/*
-				if (joySticks[i].name.ToLower().Contains("xbox") || joySticks[i].hardwareName.ToLower().Contains("xbox"))
-				{
-					isJoystickXbox = true;
-				}
-				*/
 			}
+			*/
+
+			GetControllerType();
+
 			backgroundTex = new Texture2D(1, 1);
 			backgroundTex.wrapMode = TextureWrapMode.Repeat;
 			backgroundTex.SetPixel(0, 0, new Color(0.24f, 0.24f, 0.24f, 0.85f));
@@ -188,7 +209,7 @@ namespace GrindTools.UI
 			GUILayout.FlexibleSpace();
 			for (int i = 0; i < buttons.Length; i++)
 			{
-				GUILayout.Label(PlaystationButtons.SwapToPlaystationUI(buttons[i], isJoystickXbox), controllerButtonBoxStyle, Array.Empty<GUILayoutOption>());
+				GUILayout.Label(XboxButtons.SwapToPlaystationUI(buttons[i], isPS4), controllerButtonBoxStyle, Array.Empty<GUILayoutOption>());
 				if (spacer != null && i != buttons.Length - 1)
 				{
 					GUILayout.Label(spacer[i], fontStyle, Array.Empty<GUILayoutOption>());

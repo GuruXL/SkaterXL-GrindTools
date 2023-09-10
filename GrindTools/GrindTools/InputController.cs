@@ -24,7 +24,7 @@ namespace GrindTools
 
         public void Update()
         {
-            // Check if enough time has passed since the last input check
+            // delays update loop for less calls
             if (Time.time - lastDelay >= delay)
             {
                 var currentState = Main.controller.editorController.CurrentState;
@@ -32,8 +32,8 @@ namespace GrindTools
 
                 if (currentType == typeof(GrindSplineToolState) || currentType == typeof(WaxToolState))
                 {
-                    bool rbPRessed = player.GetButton(7);
-                    if (rbPRessed)
+                    bool RBPressed = player.GetButton(7);
+                    if (RBPressed)
                     {
                         UpdateFOV();
                     }
@@ -127,9 +127,9 @@ namespace GrindTools
         }
         public void RequestGrindTool()
         {
-            GameStateMachine.Instance.RequestTransitionTo(typeof(MapEditorGameState));
-            GameStateMachine.Instance.RequestMapEditorState();
-            GameStateMachine.Instance.RequestTransitionTo(typeof(SimpleMode));
+            //GameStateMachine.Instance.RequestTransitionTo(typeof(MapEditorGameState));
+            //GameStateMachine.Instance.RequestMapEditorState();
+            //GameStateMachine.Instance.RequestTransitionTo(typeof(SimpleMode));
 
             Main.controller.ToggleState("Grind");
             Main.controller.AllowRespawn(false);

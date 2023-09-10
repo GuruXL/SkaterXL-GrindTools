@@ -129,6 +129,10 @@ namespace GrindTools.UI
                     Texture2D icon12 = new Texture2D(100, 100);
                     Texture2D icon13 = new Texture2D(100, 100);
                     Texture2D icon14 = new Texture2D(100, 100);
+                    Texture2D icon15 = new Texture2D(100, 100);
+                    Texture2D icon16 = new Texture2D(100, 100);
+                    Texture2D icon17 = new Texture2D(100, 100);
+                    Texture2D icon18 = new Texture2D(100, 100);
 
                     // Extract resources first
                     byte[] iconData = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.A.png");
@@ -145,6 +149,10 @@ namespace GrindTools.UI
                     byte[] iconData12 = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.DpadLeft.png");
                     byte[] iconData13 = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.DpadRight.png");
                     byte[] iconData14 = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.DpadDown.png");
+                    byte[] iconData15 = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.LeftStick.png");
+                    byte[] iconData16 = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.LeftStickClick.png");
+                    byte[] iconData17 = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.RightStick.png");
+                    byte[] iconData18 = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.RightStickClick.png");
 
                     try
                     {
@@ -163,6 +171,10 @@ namespace GrindTools.UI
                         if (iconData12 != null) ImageConversion.LoadImage(icon12, iconData12);
                         if (iconData13 != null) ImageConversion.LoadImage(icon13, iconData13);
                         if (iconData14 != null) ImageConversion.LoadImage(icon14, iconData14);
+                        if (iconData15 != null) ImageConversion.LoadImage(icon15, iconData15);
+                        if (iconData16 != null) ImageConversion.LoadImage(icon16, iconData16);
+                        if (iconData17 != null) ImageConversion.LoadImage(icon17, iconData17);
+                        if (iconData18 != null) ImageConversion.LoadImage(icon18, iconData18);
                     }
                     catch (Exception ex)  // Catch any exception
                     {
