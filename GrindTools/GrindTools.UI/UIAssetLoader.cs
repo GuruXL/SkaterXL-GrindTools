@@ -182,7 +182,7 @@ namespace GrindTools.UI
                     }
                     finally
                     {
-                        _xboxButtons = new XboxButtons(icon, icon2, icon3, icon4, icon5, icon6, icon7, icon8, icon9, icon10, icon11, icon13, icon12, icon14);
+                        _xboxButtons = new XboxButtons(icon3, icon4, icon, icon2, icon6, icon9, icon11, icon10, icon12, icon13, icon14, icon15, icon16, icon17, icon5, icon7, icon8, icon18);
                     }
                 }
                 return _xboxButtons;
