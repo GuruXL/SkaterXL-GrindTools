@@ -13,7 +13,8 @@ namespace GrindTools.UI
 		public static ControlsUI Instance => __instance ?? (__instance = new ControlsUI());
 
 		private GUIStyle fontStyle;
-		private GUIStyle menuStyle;
+        private GUIStyle headerStyle;
+        private GUIStyle menuStyle;
 		private GUIStyle sectionStyle;
 		private GUIStyle controllerButtonBoxStyle;
 		private Vector3 scale = Vector3.one;
@@ -68,20 +69,30 @@ namespace GrindTools.UI
 
 			backgroundTex = new Texture2D(1, 1);
 			backgroundTex.wrapMode = TextureWrapMode.Repeat;
-			backgroundTex.SetPixel(0, 0, new Color(0.24f, 0.24f, 0.24f, 0.85f));
+			backgroundTex.SetPixel(0, 0, new Color(0.25f, 0.25f, 0.25f, 0.90f));
 			backgroundTex.Apply();
 			scale.y = Screen.height / 1440f;
 			scale.x = scale.y;
 			scale.z = 1f;
-			fontStyle = new GUIStyle {
-				fontSize = 25, 
-				normal = {textColor = new Color(1f, 1f, 1f, 1f)}, 
-				alignment = TextAnchor.MiddleLeft, 
-				fixedHeight = 50f, padding = new RectOffset(10, 10, 0, 0)
+			fontStyle = new GUIStyle
+			{
+				fontSize = 25,
+				normal = { textColor = new Color(1f, 1f, 1f, 1f) },
+				alignment = TextAnchor.MiddleLeft,
+				fixedHeight = 50f,
+				padding = new RectOffset(10, 10, 0, 0)
+			};
+
+			headerStyle = new GUIStyle
+			{
+				fontSize = 40,
+				normal = { textColor = new Color(1f, 1f, 1f, 1f) },
+				alignment = TextAnchor.MiddleCenter,
+				padding = new RectOffset(10, 10, 10, 10)
 			};
 
 			menuStyle = new GUIStyle(GUI.skin.window) {
-				padding = new RectOffset(10, 10, 50, 50),
+				padding = new RectOffset(10, 10, 10, 10),
 				normal ={background = backgroundTex}
 			};
 
@@ -116,9 +127,22 @@ namespace GrindTools.UI
 			float x = Screen.width - width - edgePadding;
 			float y = edgePadding;
 
-			GUILayout.BeginArea(new Rect(x / scale.x, y / scale.y, width / scale.x, height / scale.y), backgroundTex, menuStyle);
+			// Calculate the total number of labels and sections
+			int totalLabels = 14; // Adjust this based on how many Labels
+			int totalSections = 3; // Adjust this based on how many CreateLabels and GUILayout.Label
+
+			// Calculate available space
+			float availableHeight = height / scale.y;
+			float labelHeight = availableHeight / (totalLabels + totalSections);
+
+			// Modify styles based on calculated height 
+			fontStyle.fixedHeight = labelHeight * 0.8f; // can adjust as needed
+			sectionStyle.fixedHeight = labelHeight * 1.2f; // can adjust as needed
+
+			GUILayout.BeginArea(new Rect(x / scale.x, y / scale.y, width / scale.x, availableHeight), backgroundTex, menuStyle);
 			GUILayout.BeginVertical(Array.Empty<GUILayoutOption>());
 
+			CreateHeader("Grind Spline Tool");
 			GUILayout.Label("General", sectionStyle, Array.Empty<GUILayoutOption>());
 			CreateLabel("Switch Modes", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.Y });
 			CreateLabel("Increase/Decrease Speed", "/", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.DpadUp, UIAssetLoader.Instance.xboxButtons.DpadDown });
@@ -155,9 +179,22 @@ namespace GrindTools.UI
 			float x = Screen.width - width - edgepadding;
 			float y = edgepadding;
 
-			GUILayout.BeginArea(new Rect(x / scale.x, y / scale.y, width / scale.x, height / scale.y), backgroundTex, menuStyle);
+			// Calculate the total number of labels and sections
+			int totalLabels = 12;  // Adjust this based on how many Labels
+			int totalSections = 3; // Adjust this based on how many sectionStyle
+
+			// Calculate available space
+			float availableHeight = height / scale.y;
+			float labelHeight = availableHeight / (totalLabels + totalSections); // Dividing by the total number of elements (labels + sections)
+
+			// Modify styles based on calculated height
+			fontStyle.fixedHeight = labelHeight * 0.8f; // can adjust as needed
+			sectionStyle.fixedHeight = labelHeight * 1.2f; // can adjust as needed
+
+			GUILayout.BeginArea(new Rect(x / scale.x, y / scale.y, width / scale.x, availableHeight), backgroundTex, menuStyle);
 			GUILayout.BeginVertical(Array.Empty<GUILayoutOption>());
 
+			CreateHeader("Wax Tool");
 			GUILayout.Label("General", sectionStyle, Array.Empty<GUILayoutOption>());
 			CreateLabel("Switch Modes", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.Y });
 			CreateLabel("Increase/Decrease Speed", "/", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.DpadUp, UIAssetLoader.Instance.xboxButtons.DpadDown });
@@ -193,6 +230,7 @@ namespace GrindTools.UI
 
 		private void CreateLabel(string text, string[] spacer, params Texture2D[] buttons)
 		{
+			GUILayout.Space(5);
 			GUILayout.BeginHorizontal(Array.Empty<GUILayoutOption>());
 			GUILayout.Label(text, fontStyle, Array.Empty<GUILayoutOption>());
 			GUILayout.FlexibleSpace();
@@ -205,16 +243,15 @@ namespace GrindTools.UI
 				}
 			}
 			GUILayout.EndHorizontal();
-			GUILayout.Space(20f);
+			GUILayout.Space(10);
 		}
-		private void CreateInfo(string textL, string textR)
+		private void CreateHeader(string text)
 		{
 			GUILayout.BeginHorizontal(Array.Empty<GUILayoutOption>());
-			GUILayout.Label(textL, fontStyle, Array.Empty<GUILayoutOption>());
 			GUILayout.FlexibleSpace();
-			GUILayout.Label("<b>" + textR + "</b>", fontStyle, Array.Empty<GUILayoutOption>());
+			GUILayout.Label("<b>" + text + "</b>", headerStyle, Array.Empty<GUILayoutOption>());
+			GUILayout.FlexibleSpace();
 			GUILayout.EndHorizontal();
-			GUILayout.Space(20f);
 		}
 	}
 }
