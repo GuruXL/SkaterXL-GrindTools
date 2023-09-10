@@ -28,8 +28,6 @@ namespace GrindTools
         public CinemachineVirtualCamera waxToolCam;
         public OutlineManager outline;
 
-        public bool TempisPS4 = false;
-
         public void Awake()
         {
             GetMapEditor();
