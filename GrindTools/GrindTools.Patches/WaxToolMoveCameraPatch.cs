@@ -13,8 +13,6 @@ namespace GrindTools.Patches
         private static bool Prefix()
         {
             bool rbPressed = PlayerController.Instance.inputController.player.GetButton(7);
-
-            // Return false to stop the execution of the MoveCamera function if RB is pressed
             return !rbPressed;
         }
     }

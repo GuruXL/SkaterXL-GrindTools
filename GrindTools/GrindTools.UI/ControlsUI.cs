@@ -99,7 +99,7 @@ namespace GrindTools.UI
 			scale.z = 1f;
 			GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, scale);
 			float edgePadding = 25f;
-			float bottomPadding = 3f;
+			float bottomPadding = 3.25f;
 			float leftPadding = 3.8f;
 			float width = (Screen.width / leftPadding) - (edgePadding * 2);
 			float height = (Screen.height - (Screen.height / bottomPadding)) - (edgePadding * 2);
@@ -114,6 +114,7 @@ namespace GrindTools.UI
 			CreateLabel("Increase/Decrease Speed", "/", new Texture2D[] { UIAssetLoader.Instance.psButtons.DpadUp, UIAssetLoader.Instance.psButtons.DpadDown });
 
 			GUILayout.Label("Camera", sectionStyle, Array.Empty<GUILayoutOption>());
+			CreateLabel("Camera Fov: " + Mathf.RoundToInt(Main.settings.CamFOV).ToString(""), "+", new Texture2D[] { UIAssetLoader.Instance.psButtons.R1, UIAssetLoader.Instance.psButtons.RightStick });
 			CreateLabel("Left / Right / In / Out", new Texture2D[] { UIAssetLoader.Instance.psButtons.LeftStick });
 			CreateLabel("Up / Down", "/", new Texture2D[] {UIAssetLoader.Instance.psButtons.L2, UIAssetLoader.Instance.psButtons.R2 });
 			CreateLabel("Rotate", new Texture2D[] { UIAssetLoader.Instance.psButtons.RightStick });
@@ -137,7 +138,7 @@ namespace GrindTools.UI
 			scale.z = 1f;
 			GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, scale);
 			float edgepadding = 25f;
-			float bottomPadding = 2.25f;
+			float bottomPadding = 2.5f;
 			float leftPadding = 3.8f;
 			float width = (Screen.width / leftPadding) - (edgepadding * 2);
 			float height = (Screen.height - (Screen.height / bottomPadding)) - (edgepadding * 2);
@@ -152,12 +153,13 @@ namespace GrindTools.UI
 			CreateLabel("Increase/Decrease Speed", "/", new Texture2D[] { UIAssetLoader.Instance.psButtons.DpadUp, UIAssetLoader.Instance.psButtons.DpadDown });
 
 			GUILayout.Label("Camera", sectionStyle, Array.Empty<GUILayoutOption>());
+			CreateLabel("Camera Fov: " + Mathf.RoundToInt(Main.settings.CamFOV).ToString(""), "+", new Texture2D[] { UIAssetLoader.Instance.psButtons.R1, UIAssetLoader.Instance.psButtons.RightStick });
 			CreateLabel("Left / Right / In / Out", new Texture2D[] { UIAssetLoader.Instance.psButtons.LeftStick });
-			CreateLabel("Up / Down", "/", new Texture2D[] { UIAssetLoader.Instance.psButtons.L2,UIAssetLoader.Instance.psButtons.R2 });
+			CreateLabel("Up / Down", "/", new Texture2D[] { UIAssetLoader.Instance.psButtons.L2, UIAssetLoader.Instance.psButtons.R2 });
 			CreateLabel("Rotate", new Texture2D[] { UIAssetLoader.Instance.psButtons.RightStick });
 
 			GUILayout.Label("Splines", sectionStyle, Array.Empty<GUILayoutOption>());
-			CreateLabel("Change Friction", "+", new Texture2D[] { UIAssetLoader.Instance.psButtons.R1,UIAssetLoader.Instance.psButtons.LeftStick });
+			CreateLabel("Change Friction", "+", new Texture2D[] { UIAssetLoader.Instance.psButtons.R1, UIAssetLoader.Instance.psButtons.LeftStick });
 			CreateLabel("Toggle Coping", new Texture2D[] { UIAssetLoader.Instance.psButtons.Square });
 
 			GUILayout.EndVertical();
@@ -192,6 +194,15 @@ namespace GrindTools.UI
 					GUILayout.Label(spacer[i], fontStyle, Array.Empty<GUILayoutOption>());
 				}
 			}
+			GUILayout.EndHorizontal();
+			GUILayout.Space(20f);
+		}
+		private void CreateInfo(string textL, string textR)
+		{
+			GUILayout.BeginHorizontal(Array.Empty<GUILayoutOption>());
+			GUILayout.Label(textL, fontStyle, Array.Empty<GUILayoutOption>());
+			GUILayout.FlexibleSpace();
+			GUILayout.Label("<b>" + textR + "</b>", fontStyle, Array.Empty<GUILayoutOption>());
 			GUILayout.EndHorizontal();
 			GUILayout.Space(20f);
 		}

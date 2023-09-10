@@ -155,7 +155,7 @@
     <Compile Include="GrindTools.Utils\AssetLoader.cs" />
     <Compile Include="GrindTools\Controller.cs" />
     <Compile Include="GrindTools.Patches\AllowMapEditorPatch.cs" />
-    <Compile Include="GrindTools.Patches\MenuPatch.cs" />
+    <Compile Include="GrindTools.Patches\PauseStateMenuPatch.cs" />
     <Compile Include="GrindTools\InputController.cs" />
     <Compile Include="GrindTools\Settings.cs" />
     <Compile Include="GrindTools\Main.cs" />

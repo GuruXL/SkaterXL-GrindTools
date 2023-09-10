@@ -10,7 +10,7 @@ namespace GrindTools.Patches
 {
     [HarmonyPatch(typeof(PauseState))]
     [HarmonyPatch("OnEnter")]
-    public class MenuPatch
+    public class PauseStateMenuPatch
     {
         public static MenuButton grindToolsButton;
 
