@@ -27,6 +27,17 @@ namespace GrindTools.UI
         {
 			Joystick joystick = PlayerController.Instance.inputController.player.controllers.Joysticks.FirstOrDefault();
 			string text = ((joystick != null) ? joystick.name : null) ?? "unknown";
+			if (text.ToLower().Contains("xbox"))
+			{
+				//return isPS4;
+				return !Main.controller.TempisPS4;
+			}
+			//return !isPS4;
+			return Main.controller.TempisPS4;
+
+			/*
+			Joystick joystick = PlayerController.Instance.inputController.player.controllers.Joysticks.FirstOrDefault();
+			string text = ((joystick != null) ? joystick.name : null) ?? "unknown";
 			if (text.ToLower().Contains("dual shock") || text.ToLower().Contains("dualshock"))
 			{
 				//return isPS4;
@@ -34,6 +45,7 @@ namespace GrindTools.UI
 			}
 			//return !isPS4;
 			return !Main.controller.TempisPS4;
+			*/
 		}
 
 		public void Show(string options)

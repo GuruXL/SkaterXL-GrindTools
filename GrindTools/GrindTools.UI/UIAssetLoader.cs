@@ -59,8 +59,8 @@ namespace GrindTools.UI
                     byte[] iconData3 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Cross.png");
                     byte[] iconData4 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Triangle.png");
                     byte[] iconData5 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Dpad_Right.png");
-                    byte[] iconData6 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Dpad_Left.png");
-                    byte[] iconData7 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Dpad_Up.png");
+                    byte[] iconData6 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Dpad_Up.png");
+                    byte[] iconData7 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Dpad_Left.png");
                     byte[] iconData8 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Dpad_Down.png");
                     byte[] iconData9 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Dpad.png");
                     byte[] iconData10 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.L1.png");
@@ -149,11 +149,11 @@ namespace GrindTools.UI
                     byte[] iconData9 = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.Menu.png");
                     byte[] iconData10 = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.View.png");
                     byte[] iconData11 = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.DpadUp.png");
-                    byte[] iconData12 = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.DpadLeft.png");
-                    byte[] iconData13 = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.DpadRight.png");
+                    byte[] iconData12 = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.DpadRight.png");
+                    byte[] iconData13 = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.DpadLeft.png");     
                     byte[] iconData14 = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.DpadDown.png");
-                    byte[] iconData15 = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.LeftStick.png");
-                    byte[] iconData16 = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.LeftStickClick.png");
+                    byte[] iconData15 = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.LeftStickClick.png");
+                    byte[] iconData16 = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.LeftStick.png");     
                     byte[] iconData17 = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.RightStick.png");
                     byte[] iconData18 = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.RightStickClick.png");
 

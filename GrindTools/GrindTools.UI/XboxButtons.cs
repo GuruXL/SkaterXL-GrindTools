@@ -74,10 +74,10 @@ namespace GrindTools.UI
 				{ LT, psButtons.L2 },
 				{ RB, psButtons.R1 },
 				{ RT, psButtons.R2 },
-				{ LeftStickClick, LeftStickClick },
-				{ LeftStick, LeftStick },
-				{ RightStick, RightStick },
-				{ RightStickClick, RightStickClick },
+				{ LeftStickClick, psButtons.LeftStickClick },
+				{ LeftStick, psButtons.LeftStick },
+				{ RightStick, psButtons.RightStick },
+				{ RightStickClick, psButtons.RightStickClick },
 				{ Menu, psButtons.Options },
 				{ View, psButtons.Share}
 			};
