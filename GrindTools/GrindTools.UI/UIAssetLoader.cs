@@ -52,7 +52,6 @@ namespace GrindTools.UI
                     Texture2D icon18 = new Texture2D(100, 100);
                     Texture2D icon19 = new Texture2D(100, 100);
 
-
                     // Extract Resources
                     byte[] iconData = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Circle.png");
                     byte[] iconData2 = ExtractResources("GrindTools.Resources.ButtonIcons.Playstation.Square.png");
@@ -134,8 +133,6 @@ namespace GrindTools.UI
                     Texture2D icon16 = new Texture2D(100, 100);
                     Texture2D icon17 = new Texture2D(100, 100);
                     Texture2D icon18 = new Texture2D(100, 100);
-
-
 
                     // Extract resources first
                     byte[] iconData = ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.A.png");

@@ -11,9 +11,7 @@ namespace GrindTools
 {
     public class InputController : MonoBehaviour
     {
-        private Player player;
-        private float delay = 0.2f;
-        private float lastDelay = 0f;
+        public Player player { get; private set; }
 
         public void Awake()
         {
@@ -24,28 +22,24 @@ namespace GrindTools
 
         public void Update()
         {
-            // delays update loop for less calls
-            if (Time.time - lastDelay >= delay)
-            {
-                var currentState = Main.controller.editorController.CurrentState;
-                Type currentType = currentState?.GetType();
+            var currentState = Main.controller.editorController.CurrentState;
+            Type currentType = currentState?.GetType();
 
-                if (currentType == typeof(GrindSplineToolState) || currentType == typeof(WaxToolState))
+            if (currentType == typeof(GrindSplineToolState) || currentType == typeof(WaxToolState))
+            {
+                bool RBPressed = player.GetButton(7);
+                if (RBPressed)
                 {
-                    bool RBPressed = player.GetButton(7);
-                    if (RBPressed)
-                    {
-                        UpdateFOV();
-                    }
-                    else
-                    {
-                        SwapToolStates();
-                    }
+                    UpdateFOV();
                 }
-                else if (GameStateMachine.Instance.CurrentState.GetType() == typeof(MapEditorGameState))
+                else
                 {
-                    CheckForInput();
+                    SwapToolStates();
                 }
+            }
+            else if (GameStateMachine.Instance.CurrentState.GetType() == typeof(MapEditorGameState))
+            {
+                CheckForInput();
             }
         }
         private void CheckForInput()

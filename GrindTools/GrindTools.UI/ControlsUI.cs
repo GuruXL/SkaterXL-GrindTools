@@ -9,19 +9,18 @@ namespace GrindTools.UI
 {
 	public class ControlsUI
 	{
+		public static ControlsUI __instance { get; private set; }
+		public static ControlsUI Instance => __instance ?? (__instance = new ControlsUI());
+
 		private GUIStyle fontStyle;
 		private GUIStyle menuStyle;
 		private GUIStyle sectionStyle;
 		private GUIStyle controllerButtonBoxStyle;
 		private Vector3 scale = Vector3.one;
-		//private int guiPadding = 2;
 		private Texture2D backgroundTex;
 		public bool isPS4 { get; private set; }
-
-		public static ControlsUI __instance { get; private set; }
-		public static ControlsUI Instance => __instance ?? (__instance = new ControlsUI());
 		public bool isUISetup { get; private set; }
-
+	
 		private bool GetControllerType()
         {
 			Joystick joystick = PlayerController.Instance.inputController.player.controllers.Joysticks.FirstOrDefault();

@@ -19,7 +19,7 @@ namespace GrindTools
         private Transform wax_ControlsUI;
 
         public MapEditorController editorController;
-        private MapEditorGameState editorGameState;
+        //private MapEditorGameState editorGameState;
         public GrindSplineToolState grindToolState;
         public WaxToolState waxToolState;
         //public SimpleMode simplePlacerState;
@@ -49,7 +49,7 @@ namespace GrindTools
         private void GetMapEditor()
         {
             editorController = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<MapEditorController>();
-            editorGameState = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<MapEditorGameState>();
+            //editorGameState = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<MapEditorGameState>();
         }
         private void GetObjects()
         {
