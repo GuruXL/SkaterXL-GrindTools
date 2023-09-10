@@ -18,8 +18,8 @@ namespace GrindTools
         public void Awake()
         {
             player = PlayerController.Instance.inputController.player;
-            Main.controller.grindToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
-            Main.controller.waxToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
+            if(Main.controller.grindToolCam != null ) Main.controller.grindToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
+            if (Main.controller.waxToolCam != null) Main.controller.waxToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
         }
 
         public void Update()
@@ -127,8 +127,10 @@ namespace GrindTools
         }
         public void RequestGrindTool()
         {
-            //GameStateMachine.Instance.RequestTransitionTo(typeof(MapEditorGameState), false, null);
-            //Main.controller.editorController.ChangeState(Main.controller.editorController.SimplePlacerState);
+            GameStateMachine.Instance.RequestTransitionTo(typeof(MapEditorGameState));
+            GameStateMachine.Instance.RequestMapEditorState();
+            GameStateMachine.Instance.RequestTransitionTo(typeof(SimpleMode));
+
             Main.controller.ToggleState("Grind");
             Main.controller.AllowRespawn(false);
             Main.controller.ToggleSpeedText(true);

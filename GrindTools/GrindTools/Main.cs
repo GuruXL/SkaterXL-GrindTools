@@ -1,6 +1,5 @@
 ﻿using HarmonyLib;
 using System.Reflection;
-using RapidGUI;
 using UnityEngine;
 using UnityModManagerNet;
 using ModIO.UI;
@@ -26,7 +25,6 @@ namespace GrindTools
         public static bool Load(UnityModManager.ModEntry modEntry)
         {
             settings = UnityModManager.ModSettings.Load<Settings>(modEntry);
-            modEntry.OnGUI = OnGUI;
             modEntry.OnSaveGUI = new System.Action<UnityModManager.ModEntry>(OnSaveGUI);
             modEntry.OnToggle = new System.Func<UnityModManager.ModEntry, bool, bool>(OnToggle);
             modEntry.OnUnload = new System.Func<UnityModManager.ModEntry, bool>(Unload);
@@ -35,41 +33,7 @@ namespace GrindTools
 
             return true;
         }
-        private static void OnGUI(UnityModManager.ModEntry modEntry)
-        {
-            /*
-            GUILayout.BeginVertical(GUILayout.Width(256));
-            if (GUILayout.Button("Delete All Placed Splines", RGUIStyle.button, GUILayout.Width(256)))
-            {
-                controller.DeletePlacedSplines();
-                MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Custom Splines Deleted", 2.5f);
-            }
-            GUILayout.EndVertical(); 
-            GUILayout.BeginVertical(GUILayout.Width(256));
-            GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Outline Splines", RGUIStyle.button, GUILayout.Width(128)))
-            {
-                if (GameStateMachine.Instance.CurrentState.GetType() == typeof(PlayState))
-                {
-                    controller.OutlinePlacedSplines(true);
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Success, $"Custom Splines Outlined", 1f);
-                }
-                else
-                {
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Outlines only visable in playmode", 2f);
-                }
-            }
-            if (GUILayout.Button("Remove Outlines", RGUIStyle.button, GUILayout.Width(128)))
-            {
-                controller.OutlinePlacedSplines(false);
-            }
-            GUILayout.EndHorizontal();
-            GUILayout.EndVertical();
-            */
-            GUILayout.BeginVertical(GUILayout.Width(256));
-            settings.CamFOV = RGUI.SliderFloat(settings.CamFOV, 40f, 120f, 80f, "Cam Fov");
-            GUILayout.EndVertical();
-        }
+
         private static void OnSaveGUI(UnityModManager.ModEntry modEntry)
         {
             settings.Save(modEntry);
