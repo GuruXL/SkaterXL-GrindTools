@@ -33,7 +33,17 @@ namespace GrindTools.Patches
                 grindToolsButton.Label.SetText("Grind Tools");
                 grindToolsButton.onClick.RemoveAllListeners();  // Remove existing listeners
                 grindToolsButton.onClick.AddListener(() => GrindToolButtonOnClick());  // Add new listener
-            }           
+            }
+
+            // remove DLC button :)
+            if (PromotionController.Instance != null)
+            {
+                GameObject mainMenuBanner = Traverse.Create(PromotionController.Instance).Field("mainMenuBanner").GetValue<GameObject>();
+                if (mainMenuBanner != null)
+                {
+                    mainMenuBanner.SetActive(false);
+                }
+            }
 
             __instance.StateMachine.PauseObject.SetActive(false);
             __instance.StateMachine.PauseObject.SetActive(true);

@@ -20,7 +20,7 @@ namespace GrindTools.UI
 		private Vector3 scale = Vector3.one;
 		private Texture2D backgroundTex;
 		public bool isPS4 { get; private set; }
-		public bool isUISetup { get; private set; }
+		public bool isUISetup { get; private set; } = false;
 	
 		private bool GetControllerType()
         {
@@ -69,7 +69,7 @@ namespace GrindTools.UI
 
 			backgroundTex = new Texture2D(1, 1);
 			backgroundTex.wrapMode = TextureWrapMode.Repeat;
-			backgroundTex.SetPixel(0, 0, new Color(0.25f, 0.25f, 0.25f, 0.90f));
+			backgroundTex.SetPixel(0, 0, new Color(0.24f, 0.24f, 0.24f, 0.90f));
 			backgroundTex.Apply();
 			scale.y = Screen.height / 1440f;
 			scale.x = scale.y;
@@ -108,7 +108,7 @@ namespace GrindTools.UI
 				fixedHeight = 50f, 
 				fixedWidth = 50f 
 			};
-			
+
 			isUISetup = true;
 		}
 
@@ -136,7 +136,7 @@ namespace GrindTools.UI
 			float labelHeight = availableHeight / (totalLabels + totalSections);
 
 			// Modify styles based on calculated height 
-			fontStyle.fixedHeight = labelHeight * 0.8f; // can adjust as needed
+			fontStyle.fixedHeight = labelHeight * 0.85f; // can adjust as needed
 			sectionStyle.fixedHeight = labelHeight * 1.2f; // can adjust as needed
 
 			GUILayout.BeginArea(new Rect(x / scale.x, y / scale.y, width / scale.x, availableHeight), backgroundTex, menuStyle);
@@ -188,7 +188,7 @@ namespace GrindTools.UI
 			float labelHeight = availableHeight / (totalLabels + totalSections); // Dividing by the total number of elements (labels + sections)
 
 			// Modify styles based on calculated height
-			fontStyle.fixedHeight = labelHeight * 0.8f; // can adjust as needed
+			fontStyle.fixedHeight = labelHeight * 0.85f; // can adjust as needed
 			sectionStyle.fixedHeight = labelHeight * 1.2f; // can adjust as needed
 
 			GUILayout.BeginArea(new Rect(x / scale.x, y / scale.y, width / scale.x, availableHeight), backgroundTex, menuStyle);
