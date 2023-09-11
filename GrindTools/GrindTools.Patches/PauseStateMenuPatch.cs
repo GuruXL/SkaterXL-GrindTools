@@ -1,4 +1,4 @@
-﻿using UnityEngine.UI;  // Necessary for the Button component
+﻿using UnityEngine.UI;
 using GameManagement;
 using HarmonyLib;
 using UnityEngine;
@@ -39,7 +39,7 @@ namespace GrindTools.Patches
             if (PromotionController.Instance != null)
             {
                 GameObject mainMenuBanner = Traverse.Create(PromotionController.Instance).Field("mainMenuBanner").GetValue<GameObject>();
-                if (mainMenuBanner != null)
+                if (mainMenuBanner != null && mainMenuBanner.activeSelf)
                 {
                     mainMenuBanner.SetActive(false);
                 }
@@ -48,11 +48,18 @@ namespace GrindTools.Patches
             __instance.StateMachine.PauseObject.SetActive(false);
             __instance.StateMachine.PauseObject.SetActive(true);
         }
-
         public static void GrindToolButtonOnClick()
         {
             //GameStateMachine.Instance.RequestMapEditorState();
             Main.inputctrl.RequestGrindTool();
+        }
+        public static void OnDestroy()
+        {
+            if (grindToolsButton != null)
+            {
+                Object.Destroy(grindToolsButton.gameObject);
+                grindToolsButton = null;
+            }
         }
     }
 }

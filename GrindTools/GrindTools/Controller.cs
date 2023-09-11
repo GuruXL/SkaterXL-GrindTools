@@ -18,7 +18,7 @@ namespace GrindTools
         private Transform grind_ControlsUI;
         private Transform wax_ControlsUI;
 
-        public MapEditorController editorController;
+        //public MapEditorController editorController;
         //private MapEditorGameState editorGameState;
         public GrindSplineToolState grindToolState;
         public WaxToolState waxToolState;
@@ -30,35 +30,37 @@ namespace GrindTools
 
         public void Awake()
         {
-            GetMapEditor();
+            //GetMapEditor();
             GetObjects();
             GetComponents();
             DisableDefaultUI();
         }
         private void OnGUI()
         {
-            if (editorController.CurrentState == grindToolState)
+            if (MapEditorController.Instance.CurrentState == grindToolState)
             {
                 ControlsUI.Instance.Show("Grind");
             }
-            else if (editorController.CurrentState == waxToolState)
+            else if (MapEditorController.Instance.CurrentState == waxToolState)
             {
                 ControlsUI.Instance.Show("Wax");
             }
         }
+        /*
         private void GetMapEditor()
         {
-            editorController = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<MapEditorController>();
+            //editorController = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<MapEditorController>();
             //editorGameState = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<MapEditorGameState>();
         }
+        */
         private void GetObjects()
         {
             statesObj = GameStateMachine.Instance.MapEditorObject.transform.Find("States");
             grindtoolObj = statesObj?.Find("GrindSpline Tool");
             waxToolObj = statesObj?.Find("Wax Tool");
-            speedFactorText = editorController.speedFactorText.transform.parent;
             grind_ControlsUI = grindtoolObj?.Find("Controls UI");
             wax_ControlsUI = waxToolObj?.Find("Controls UI");
+            speedFactorText = MapEditorController.Instance.speedFactorText.transform.parent;
         }      
         private void GetComponents()
         {
@@ -72,7 +74,7 @@ namespace GrindTools
 
         private void SetInitialState()
         {
-            editorController.initialState = editorController.SimplePlacerState;
+            MapEditorController.Instance.initialState = MapEditorController.Instance.SimplePlacerState;
         }
 
         public void AllowRespawn(bool state)
@@ -95,13 +97,13 @@ namespace GrindTools
             {
                 case "Grind": // Grind tool
                     //grindToolState.Enter(grindToolState);
-                    editorController.ChangeState(grindToolState);
+                    MapEditorController.Instance.ChangeState(grindToolState);
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Grind Tool Active", 1f);
                     break;
 
                 case "Wax": // Wax Tool
                     //waxToolState.Enter(waxToolState);
-                    editorController.ChangeState(waxToolState);
+                    MapEditorController.Instance.ChangeState(waxToolState);
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Wax Tool Active", 1f);
                     break;
             }

@@ -22,10 +22,8 @@ namespace GrindTools
 
         public void Update()
         {
-            var currentState = Main.controller.editorController.CurrentState;
-            Type currentType = currentState?.GetType();
-
-            if (currentType == typeof(GrindSplineToolState) || currentType == typeof(WaxToolState))
+            var currentState = MapEditorController.Instance.CurrentState;
+            if (currentState == Main.controller.grindToolState || currentState == Main.controller.waxToolState)
             {
                 bool RBPressed = player.GetButton(7);
                 if (RBPressed)
@@ -55,7 +53,7 @@ namespace GrindTools
         }    
         private void SwapToolStates()
         {
-            switch (Main.controller.editorController.CurrentState)
+            switch (MapEditorController.Instance.CurrentState)
             {
                 case GrindSplineToolState grindToolState:
                     if (player.GetButtonDown("Y"))
@@ -111,7 +109,7 @@ namespace GrindTools
         private void ResetToPlayState()
         {
             Main.controller.AllowRespawn(true);
-            Main.controller.editorController.ExitMapEditor();
+            MapEditorController.Instance.ExitMapEditor();
             GameStateMachine.Instance.RequestTransitionBackToPlayState();
             Main.controller.ToggleSpeedText(false);
             if (CheckRaycastsPatch.selectedSpline != null)
@@ -119,12 +117,14 @@ namespace GrindTools
                 Destroy(CheckRaycastsPatch.selectedSpline.gameObject);
             }
         }
-        public void RequestGrindTool()
+        public async void RequestGrindTool()
         {
-            //GameStateMachine.Instance.RequestTransitionTo(typeof(MapEditorGameState));
-            //GameStateMachine.Instance.RequestMapEditorState();
-            //GameStateMachine.Instance.RequestTransitionTo(typeof(SimpleMode));
-
+            if (MapEditorController.Instance.initialState != MapEditorController.Instance.SimplePlacerState)
+            {
+                MapEditorController.Instance.initialState = MapEditorController.Instance.SimplePlacerState;
+                await MapEditorController.Instance.ChangeState<SimpleMode>();
+            }
+            GameStateMachine.Instance.RequestTransitionTo(typeof(MapEditorGameState));
             Main.controller.ToggleState("Grind");
             Main.controller.AllowRespawn(false);
             Main.controller.ToggleSpeedText(true);
