@@ -35,6 +35,16 @@ namespace GrindTools
             GetComponents();
             DisableDefaultUI();
         }
+        private void Start()
+        {
+            /*
+            if (MapEditorController.Instance.initialState == null)
+            {
+                GameStateMachine.Instance.MapEditorObject.SetActive(true);
+                GameStateMachine.Instance.MapEditorObject.SetActive(false);
+            }
+            */
+        }
         private void OnGUI()
         {
             if (MapEditorController.Instance.CurrentState == grindToolState)
@@ -46,13 +56,6 @@ namespace GrindTools
                 ControlsUI.Instance.Show("Wax");
             }
         }
-        /*
-        private void GetMapEditor()
-        {
-            //editorController = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<MapEditorController>();
-            //editorGameState = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<MapEditorGameState>();
-        }
-        */
         private void GetObjects()
         {
             statesObj = GameStateMachine.Instance.MapEditorObject.transform.Find("States");
@@ -70,11 +73,6 @@ namespace GrindTools
             waxToolCam = waxToolObj?.GetComponentInChildren<CinemachineVirtualCamera>();
             //simplePlacerState = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<SimpleMode>();
             outline = GameStateMachine.Instance.gameObject.GetComponentInChildren<OutlineManager>();
-        }
-
-        private void SetInitialState()
-        {
-            MapEditorController.Instance.initialState = MapEditorController.Instance.SimplePlacerState;
         }
 
         public void AllowRespawn(bool state)
@@ -96,13 +94,11 @@ namespace GrindTools
             switch (options)
             {
                 case "Grind": // Grind tool
-                    //grindToolState.Enter(grindToolState);
                     MapEditorController.Instance.ChangeState(grindToolState);
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Grind Tool Active", 1f);
                     break;
 
                 case "Wax": // Wax Tool
-                    //waxToolState.Enter(waxToolState);
                     MapEditorController.Instance.ChangeState(waxToolState);
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Wax Tool Active", 1f);
                     break;

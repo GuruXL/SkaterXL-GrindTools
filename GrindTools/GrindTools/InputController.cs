@@ -6,6 +6,7 @@ using Rewired;
 using System;
 using System.Collections.Generic;
 using GrindTools.Patches;
+using System.Collections;
 
 namespace GrindTools
 {
@@ -119,13 +120,10 @@ namespace GrindTools
         }
         public async void RequestGrindTool()
         {
-            if (MapEditorController.Instance.initialState != MapEditorController.Instance.SimplePlacerState)
-            {
-                MapEditorController.Instance.initialState = MapEditorController.Instance.SimplePlacerState;
-                await MapEditorController.Instance.ChangeState<SimpleMode>();
-            }
-            GameStateMachine.Instance.RequestTransitionTo(typeof(MapEditorGameState));
-            Main.controller.ToggleState("Grind");
+            //Main.controller.ToggleState("Grind");
+            GameStateMachine.Instance.RequestMapEditorState();
+            await MapEditorController.Instance.ChangeState(Main.controller.grindToolState);
+            MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Grind Tool Active", 1f);
             Main.controller.AllowRespawn(false);
             Main.controller.ToggleSpeedText(true);
         }

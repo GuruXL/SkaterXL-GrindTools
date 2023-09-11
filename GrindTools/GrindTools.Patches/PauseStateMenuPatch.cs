@@ -53,7 +53,7 @@ namespace GrindTools.Patches
             //GameStateMachine.Instance.RequestMapEditorState();
             Main.inputctrl.RequestGrindTool();
         }
-        public static void OnDestroy()
+        public static void DestroyGrindToolButton()
         {
             if (grindToolsButton != null)
             {

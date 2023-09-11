@@ -64,6 +64,7 @@ namespace GrindTools
                     harmonyInstance.UnpatchAll(harmonyInstance.Id);
                     AssetLoader.UnloadAssetBundle();
                     Object.Destroy(ScriptManager);
+                    PauseStateMenuPatch.DestroyGrindToolButton();
                 }
                 flag = true;
             }
@@ -74,6 +75,7 @@ namespace GrindTools
             harmonyInstance.UnpatchAll(harmonyInstance.Id);
             AssetLoader.UnloadAssetBundle();
             Object.Destroy(ScriptManager);
+            PauseStateMenuPatch.DestroyGrindToolButton();
             Logger.Log(nameof(Unload));
             return true;
         }
