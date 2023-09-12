@@ -2,9 +2,11 @@
 using GameManagement;
 using HarmonyLib;
 using UnityEngine;
+using MapEditor;
 using System;
 using Object = UnityEngine.Object;
 using TMPro;
+using UnityEngine.EventSystems;
 
 namespace GrindTools.Patches
 {
@@ -20,6 +22,9 @@ namespace GrindTools.Patches
             __instance.MapEditorButton.gameObject.SetActive(true);
             __instance.MapEditorButton.GreyedOut = false;
 
+            // Add new listener to the original MapEditorButton
+            __instance.MapEditorButton.onClick.AddListener(() => MapEditorButtonOnClick());
+
             if (grindToolsButton == null)
             {
                 GameObject originalButton = __instance.MapEditorButton.gameObject;
@@ -31,8 +36,10 @@ namespace GrindTools.Patches
                 grindToolsButton.GreyedOut = false;
                 grindToolsButton.GreyedOutInfoText = "Grind Tools";
                 grindToolsButton.Label.SetText("Grind Tools");
+
                 grindToolsButton.onClick.RemoveAllListeners();  // Remove existing listeners
                 grindToolsButton.onClick.AddListener(() => GrindToolButtonOnClick());  // Add new listener
+                CreateNewOnSubmit(grindToolsButton);
             }
 
             // remove DLC button :)
@@ -48,10 +55,43 @@ namespace GrindTools.Patches
             __instance.StateMachine.PauseObject.SetActive(false);
             __instance.StateMachine.PauseObject.SetActive(true);
         }
+
+        // OnSubmit might not be needed
+        public static void CustomOnSubmit(BaseEventData data)
+        {
+            Main.inputctrl.RequestGrindTool();
+        }
+        private static void CreateNewOnSubmit(MenuButton button)
+        {
+            EventTrigger eventTrigger = button.GetComponent<EventTrigger>();
+            if (eventTrigger != null)
+            {
+                for (int i = eventTrigger.triggers.Count - 1; i >= 0; i--)
+                {
+                    if (eventTrigger.triggers[i].eventID == EventTriggerType.Submit)
+                    {
+                        eventTrigger.triggers.RemoveAt(i);
+                    }
+                }
+                EventTrigger.Entry entry = new EventTrigger.Entry();
+                entry.eventID = EventTriggerType.Submit;
+                entry.callback.AddListener(CustomOnSubmit); // Reference the custom function here
+                eventTrigger.triggers.Add(entry);
+            }
+        }
+
         public static void GrindToolButtonOnClick()
         {
-            //GameStateMachine.Instance.RequestMapEditorState();
             Main.inputctrl.RequestGrindTool();
+        }
+        public static void MapEditorButtonOnClick()
+        {
+            if (MapEditorController.Instance.initialState != MapEditorController.Instance.SimplePlacerState)
+            {
+                MapEditorController.Instance.initialState = MapEditorController.Instance.SimplePlacerState;
+            }
+            GameStateMachine.Instance.RequestMapEditorState();
+            MapEditorController.Instance.ChangeState(MapEditorController.Instance.SimplePlacerState);
         }
         public static void DestroyGrindToolButton()
         {

@@ -116,13 +116,13 @@ namespace GrindTools
         }
         public void RequestGrindTool()
         {
-            //Main.controller.ToggleState("Grind");
-            GameStateMachine.Instance.RequestMapEditorState();
+            //GameStateMachine.Instance.RequestMapEditorState();
             MapEditorController.Instance.ChangeState(Main.controller.grindToolState);
             MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Grind Tool Active", 1f);
             Main.controller.AllowRespawn(false);
             Main.controller.ToggleSpeedText(true);
         }
+
         private void DeleteSelectedSpline(int nodeCount)
         {
             if (CheckRaycastsPatch.GetSelectedSpline() != null && CheckRaycastsPatch.GetSelectedSpline().nodes.Count <= nodeCount)

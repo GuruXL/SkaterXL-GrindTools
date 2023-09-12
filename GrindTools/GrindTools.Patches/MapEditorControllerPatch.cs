@@ -12,13 +12,14 @@ namespace GrindTools.Patches
     {
         public static void Prefix(MapEditorController __instance)
         {
-            
-            if(__instance.initialState != MapEditorController.Instance.SimplePlacerState)
+            /*
+            if(__instance.initialState != __instance.SimplePlacerState)
             {
-                GameStateMachine.Instance.RequestMapEditorState();
-                __instance.initialState = MapEditorController.Instance.SimplePlacerState;
+                //__instance.initialState = MapEditorController.Instance.SimplePlacerState;
+                __instance.ChangeState(__instance.SimplePlacerState);
+                __instance.ExitMapEditor();
             }
-            
+            */
         }
     }
     
