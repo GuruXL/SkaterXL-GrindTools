@@ -63,12 +63,13 @@ namespace GrindTools
                     {
                         //Main.controller.grindToolState.Exit(Main.controller.grindToolState);
                         Main.controller.ToggleState("Wax");
-
+                        /*
                         if (CheckRaycastsPatch.selectedSpline != null)
                         {
                             Destroy(CheckRaycastsPatch.selectedSpline.gameObject);
 
                         }
+                        */
                     }
                     else if (player.GetButtonDown("B"))
                     {
@@ -117,10 +118,12 @@ namespace GrindTools
             MapEditorController.Instance.ExitMapEditor();
             GameStateMachine.Instance.RequestTransitionBackToPlayState();
             Main.controller.ToggleSpeedText(false);
+            /*
             if (CheckRaycastsPatch.selectedSpline != null)
             {
                 Destroy(CheckRaycastsPatch.selectedSpline.gameObject);
             }
+            */
         }
         public void RequestGrindTool()
         {

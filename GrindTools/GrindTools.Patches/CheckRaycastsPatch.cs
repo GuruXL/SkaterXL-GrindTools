@@ -4,6 +4,7 @@ using MapEditor;
 using GrindTools.Utils;
 using ModIO.UI;
 
+/*
 namespace GrindTools.Patches
 {
     [HarmonyPatch(typeof(GrindSplineToolState), "CheckRaycasts")]
@@ -12,10 +13,12 @@ namespace GrindTools.Patches
         public static MapEditorSplineObject selectedSpline;
         public static void Postfix(GrindSplineToolState __instance)
         {
+            
             var currentNode = Traverse.Create(__instance).Field("currentNode").GetValue<GrindableEdgeNode>();
             var screenRayDidHit = Traverse.Create(__instance).Field("screenRayDidHit").GetValue<bool>();
             selectedSpline = Traverse.Create(__instance).Field("selectedSpline").GetValue<MapEditorSplineObject>();
 
+            
             if (screenRayDidHit)
             {
                 if (__instance.IsNodeValid(currentNode))
@@ -40,6 +43,8 @@ namespace GrindTools.Patches
 
                 }
             }
+            
         }
     }
 }
+*/
