@@ -3,6 +3,7 @@ using MapEditor;
 using GameManagement;
 using ModIO.UI;
 using Rewired;
+using Dreamteck.Splines;
 using System;
 using System.Collections.Generic;
 using GrindTools.Patches;
@@ -13,6 +14,7 @@ namespace GrindTools
     public class InputController : MonoBehaviour
     {
         public Player player { get; private set; }
+        Transform placedParent = MapEditorController.Instance.placedObjectsParent;
 
         public void Awake()
         {
@@ -72,6 +74,7 @@ namespace GrindTools
                     {
                         ResetToPlayState();
                     }
+                    /*
                     else if (CheckRaycastsPatch.selectedSpline != null)
                     {
                         if (CheckRaycastsPatch.selectedSpline.nodes.Count >= 2 && player.GetButtonDown("X"))
@@ -79,6 +82,7 @@ namespace GrindTools
                             MessageSystem.QueueMessage(MessageDisplayData.Type.Success, $"New Spline Created", 2.5f);
                         }
                     }
+                    */
                     break;
                 case WaxToolState waxToolState:
                     if (player.GetButtonDown("Y"))
@@ -118,14 +122,15 @@ namespace GrindTools
                 Destroy(CheckRaycastsPatch.selectedSpline.gameObject);
             }
         }
-        public async void RequestGrindTool()
+        public void RequestGrindTool()
         {
             //Main.controller.ToggleState("Grind");
             GameStateMachine.Instance.RequestMapEditorState();
-            await MapEditorController.Instance.ChangeState(Main.controller.grindToolState);
+            MapEditorController.Instance.ChangeState(Main.controller.grindToolState);
             MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Grind Tool Active", 1f);
             Main.controller.AllowRespawn(false);
             Main.controller.ToggleSpeedText(true);
         }
+
     }
 }

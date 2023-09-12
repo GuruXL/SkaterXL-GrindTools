@@ -30,20 +30,9 @@ namespace GrindTools
 
         public void Awake()
         {
-            //GetMapEditor();
             GetObjects();
             GetComponents();
             DisableDefaultUI();
-        }
-        private void Start()
-        {
-            /*
-            if (MapEditorController.Instance.initialState == null)
-            {
-                GameStateMachine.Instance.MapEditorObject.SetActive(true);
-                GameStateMachine.Instance.MapEditorObject.SetActive(false);
-            }
-            */
         }
         private void OnGUI()
         {

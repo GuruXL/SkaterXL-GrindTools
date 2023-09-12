@@ -30,7 +30,6 @@ namespace GrindTools.Patches
                     // Blue
                     MatUtil.Instance.UpdateMaterial(AssetLoader.BlueMat);
                     //MatUtil.Instance.ApplyBlueMat();
-
                     return;
                 }
                 else
