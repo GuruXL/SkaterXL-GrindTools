@@ -36,7 +36,7 @@ namespace GrindTools.Patches
                     {
                         //MapEditorController.Instance.DeleteObstacle(HightlightedObj);
                         Object.Destroy(HightlightedObj.gameObject);
-                        //HightlightedObj = null;
+                        AccessTools.Method(typeof(WaxToolState), "ShowInfo").Invoke(__instance, new object[] { "Spline Deleted" });
                         MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Spline Deleted", 2.5f);
                     }
                 }

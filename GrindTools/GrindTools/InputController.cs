@@ -63,22 +63,17 @@ namespace GrindTools
                     {
                         //Main.controller.grindToolState.Exit(Main.controller.grindToolState);
                         Main.controller.ToggleState("Wax");
-                        /*
-                        if (CheckRaycastsPatch.selectedSpline != null)
-                        {
-                            Destroy(CheckRaycastsPatch.selectedSpline.gameObject);
-
-                        }
-                        */
+                        DeleteSelectedSpline(1); // delete if <=1 node
+                       
                     }
                     else if (player.GetButtonDown("B"))
                     {
                         ResetToPlayState();
                     }
                     /*
-                    else if (CheckRaycastsPatch.selectedSpline != null)
+                    else if (CheckRaycastsPatch.GetSelectedSpline() != null)
                     {
-                        if (CheckRaycastsPatch.selectedSpline.nodes.Count >= 2 && player.GetButtonDown("X"))
+                        if (CheckRaycastsPatch.GetSelectedSpline().nodes.Count >= 2 && player.GetButtonDown("X"))
                         {
                             MessageSystem.QueueMessage(MessageDisplayData.Type.Success, $"New Spline Created", 2.5f);
                         }
@@ -111,19 +106,13 @@ namespace GrindTools
             Main.controller.grindToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
             Main.controller.waxToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
         }
-
         private void ResetToPlayState()
         {
             Main.controller.AllowRespawn(true);
             MapEditorController.Instance.ExitMapEditor();
             GameStateMachine.Instance.RequestTransitionBackToPlayState();
             Main.controller.ToggleSpeedText(false);
-            /*
-            if (CheckRaycastsPatch.selectedSpline != null)
-            {
-                Destroy(CheckRaycastsPatch.selectedSpline.gameObject);
-            }
-            */
+            DeleteSelectedSpline(2); // delete if <=2 nodes
         }
         public void RequestGrindTool()
         {
@@ -134,6 +123,12 @@ namespace GrindTools
             Main.controller.AllowRespawn(false);
             Main.controller.ToggleSpeedText(true);
         }
-
+        private void DeleteSelectedSpline(int nodeCount)
+        {
+            if (CheckRaycastsPatch.GetSelectedSpline() != null && CheckRaycastsPatch.GetSelectedSpline().nodes.Count <= nodeCount)
+            {
+                Destroy(CheckRaycastsPatch.GetSelectedSpline().gameObject);
+            }
+        }
     }
 }
