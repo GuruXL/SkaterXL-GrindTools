@@ -14,7 +14,8 @@ namespace GrindTools.Patches
     [HarmonyPatch("OnEnter")]
     public class PauseStateMenuPatch
     {
-        public static MenuButton grindToolsButton;
+        private static MenuButton mapEditorButton;
+        private static MenuButton grindToolsButton;
 
         private static void Postfix(ref PauseState __instance)
         {
@@ -22,11 +23,16 @@ namespace GrindTools.Patches
             __instance.MapEditorButton.gameObject.SetActive(true);
             __instance.MapEditorButton.GreyedOut = false;
 
-            // Add new listener to the original MapEditorButton
-            __instance.MapEditorButton.onClick.AddListener(() => MapEditorButtonOnClick());
+            if (mapEditorButton == null)
+            {
+                mapEditorButton = __instance.MapEditorButton.gameObject.GetComponent<MenuButton>();
+            }
 
             if (grindToolsButton == null)
             {
+                // Add new listener to the original MapEditorButton -- Fix for issue with MapEditor Initial state being grindtool
+                __instance.MapEditorButton.onClick.AddListener(() => MapEditorButtonOnClick());
+
                 GameObject originalButton = __instance.MapEditorButton.gameObject;
                 GameObject newButton = Object.Instantiate(originalButton, originalButton.transform.parent);
                 newButton.transform.SetSiblingIndex(originalButton.transform.GetSiblingIndex() + 1);
@@ -39,7 +45,7 @@ namespace GrindTools.Patches
 
                 grindToolsButton.onClick.RemoveAllListeners();  // Remove existing listeners
                 grindToolsButton.onClick.AddListener(() => GrindToolButtonOnClick());  // Add new listener
-                CreateNewOnSubmit(grindToolsButton);
+                //CreateNewOnSubmit(grindToolsButton);
             }
 
             // remove DLC button :)
@@ -57,6 +63,7 @@ namespace GrindTools.Patches
         }
 
         // OnSubmit might not be needed
+        /*
         public static void CustomOnSubmit(BaseEventData data)
         {
             Main.inputctrl.RequestGrindTool();
@@ -79,7 +86,7 @@ namespace GrindTools.Patches
                 eventTrigger.triggers.Add(entry);
             }
         }
-
+        */
         public static void GrindToolButtonOnClick()
         {
             Main.inputctrl.RequestGrindTool();
@@ -99,6 +106,8 @@ namespace GrindTools.Patches
             {
                 Object.Destroy(grindToolsButton.gameObject);
                 grindToolsButton = null;
+
+                mapEditorButton.onClick.RemoveListener(MapEditorButtonOnClick); // Stops multiple instances of the customOnClick being created if a new GrindToolButton is created.
             }
         }
     }

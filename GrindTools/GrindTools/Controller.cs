@@ -60,7 +60,6 @@ namespace GrindTools
             waxToolState = waxToolObj?.GetComponent<WaxToolState>();
             grindToolCam = grindtoolObj?.GetComponentInChildren<CinemachineVirtualCamera>();
             waxToolCam = waxToolObj?.GetComponentInChildren<CinemachineVirtualCamera>();
-            //simplePlacerState = GameStateMachine.Instance.MapEditorObject.GetComponentInChildren<SimpleMode>();
             outline = GameStateMachine.Instance.gameObject.GetComponentInChildren<OutlineManager>();
         }
 

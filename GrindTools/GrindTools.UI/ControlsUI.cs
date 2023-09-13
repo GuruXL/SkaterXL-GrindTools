@@ -37,11 +37,9 @@ namespace GrindTools.UI
 			string text = ((joystick != null) ? joystick.name : null) ?? "unknown";
 			if (text.ToLower().Contains("xbox"))
 			{
-				//return isPS4;
-				return !Main.controller.TempisPS4;
+				//return !isPS4;
 			}
-			//return !isPS4;
-			return Main.controller.TempisPS4;
+			//return isPS4;
 			*/
 		}
 
@@ -120,7 +118,7 @@ namespace GrindTools.UI
 			scale.z = 1f;
 			GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, scale);
 			float edgePadding = 25f;
-			float bottomPadding = 3.25f;
+			float bottomPadding = 3.75f;
 			float leftPadding = 3.8f;
 			float width = (Screen.width / leftPadding) - (edgePadding * 2);
 			float height = (Screen.height - (Screen.height / bottomPadding)) - (edgePadding * 2);
@@ -128,7 +126,7 @@ namespace GrindTools.UI
 			float y = edgePadding;
 
 			// Calculate the total number of labels and sections
-			int totalLabels = 14; // Adjust this based on how many Labels
+			int totalLabels = 15; // Adjust this based on how many Labels
 			int totalSections = 3; // Adjust this based on how many CreateLabels and GUILayout.Label
 
 			// Calculate available space
@@ -145,7 +143,7 @@ namespace GrindTools.UI
 			CreateHeader("Grind Spline Tool");
 			GUILayout.Label("General", sectionStyle, Array.Empty<GUILayoutOption>());
 			CreateLabel("Switch Modes", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.Y });
-			CreateLabel("Increase/Decrease Speed", "/", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.DpadUp, UIAssetLoader.Instance.xboxButtons.DpadDown });
+			CreateLabel("Increase / Decrease Speed", "/", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.DpadUp, UIAssetLoader.Instance.xboxButtons.DpadDown });
 
 			GUILayout.Label("Camera", sectionStyle, Array.Empty<GUILayoutOption>());
 			CreateLabel("Camera Fov: " + Mathf.RoundToInt(Main.settings.CamFOV).ToString(""), "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RB, UIAssetLoader.Instance.xboxButtons.RightStick });
@@ -154,8 +152,9 @@ namespace GrindTools.UI
 			CreateLabel("Rotate", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RightStick });
 
 			GUILayout.Label("Splines", sectionStyle, Array.Empty<GUILayoutOption>());
-			CreateLabel("Remove Active Spline Points", "or", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.DpadLeft, UIAssetLoader.Instance.xboxButtons.DpadRight });
-			CreateLabel("Scale Splines", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RB,UIAssetLoader.Instance.xboxButtons.LeftStick });
+			CreateLabel("Undo / Redo", "/", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.DpadLeft, UIAssetLoader.Instance.xboxButtons.DpadRight });
+			CreateLabel("Remove Active Spline", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.LB, UIAssetLoader.Instance.xboxButtons.RightStickClick });
+			CreateLabel("Scale Splines", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RB,UIAssetLoader.Instance.xboxButtons.LeftStick });		
 			CreateLabel("Add Spline Points", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.A });
 			CreateLabel("Create New Spline", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.X });
 
@@ -172,7 +171,7 @@ namespace GrindTools.UI
 			scale.z = 1f;
 			GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, scale);
 			float edgepadding = 25f;
-			float bottomPadding = 2.5f;
+			float bottomPadding = 3.25f;
 			float leftPadding = 3.8f;
 			float width = (Screen.width / leftPadding) - (edgepadding * 2);
 			float height = (Screen.height - (Screen.height / bottomPadding)) - (edgepadding * 2);
@@ -180,7 +179,7 @@ namespace GrindTools.UI
 			float y = edgepadding;
 
 			// Calculate the total number of labels and sections
-			int totalLabels = 12;  // Adjust this based on how many Labels
+			int totalLabels = 14;  // Adjust this based on how many Labels
 			int totalSections = 3; // Adjust this based on how many sectionStyle
 
 			// Calculate available space
@@ -197,7 +196,7 @@ namespace GrindTools.UI
 			CreateHeader("Wax Tool");
 			GUILayout.Label("General", sectionStyle, Array.Empty<GUILayoutOption>());
 			CreateLabel("Switch Modes", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.Y });
-			CreateLabel("Increase/Decrease Speed", "/", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.DpadUp, UIAssetLoader.Instance.xboxButtons.DpadDown });
+			CreateLabel("Increase / Decrease Speed", "/", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.DpadUp, UIAssetLoader.Instance.xboxButtons.DpadDown });
 
 			GUILayout.Label("Camera", sectionStyle, Array.Empty<GUILayoutOption>());
 			CreateLabel("Camera Fov: " + Mathf.RoundToInt(Main.settings.CamFOV).ToString(""), "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RB, UIAssetLoader.Instance.xboxButtons.RightStick });
@@ -206,8 +205,10 @@ namespace GrindTools.UI
 			CreateLabel("Rotate", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RightStick });
 
 			GUILayout.Label("Splines", sectionStyle, Array.Empty<GUILayoutOption>());
+			CreateLabel("Delete Custom Splines", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.LB, UIAssetLoader.Instance.xboxButtons.RightStickClick });
 			CreateLabel("Change Friction", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RB, UIAssetLoader.Instance.xboxButtons.LeftStick });
-			CreateLabel("Toggle Coping", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.X });
+			CreateLabel("Toggle Concrete / Metal", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.A });
+			CreateLabel("Toggle Coping / Grindable", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.X });
 
 			GUILayout.EndVertical();
 			GUILayout.EndArea();
@@ -222,7 +223,6 @@ namespace GrindTools.UI
 			}
 			CreateLabel(text, array, buttons);
 		}
-
 		private void CreateLabel(string text, params Texture2D[] buttons)
 		{
 			CreateLabel(text, (string)null, buttons);

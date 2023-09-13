@@ -93,7 +93,7 @@ namespace GrindTools
                     break;
             }
         }
-        public float changeSpeed = 20.0f;
+        private float changeSpeed = 20.0f;
         private void UpdateFOV()
         {
             Vector2 rightstick = player.GetAxis2D("RightStickX", "RightStickY");
@@ -122,7 +122,6 @@ namespace GrindTools
             Main.controller.AllowRespawn(false);
             Main.controller.ToggleSpeedText(true);
         }
-
         private void DeleteSelectedSpline(int nodeCount)
         {
             if (CheckRaycastsPatch.GetSelectedSpline() != null && CheckRaycastsPatch.GetSelectedSpline().nodes.Count <= nodeCount)
