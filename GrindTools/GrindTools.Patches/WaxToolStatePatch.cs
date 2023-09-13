@@ -69,7 +69,7 @@ namespace GrindTools.Patches
                 else if (spline.gameObject.tag == metal)
                 {
                     SetTagRecursively(spline.gameObject, concrete);
-                    AccessTools.Method(typeof(WaxToolState), "ShowInfo").Invoke(__instance, new object[] { "concrete" });
+                    AccessTools.Method(typeof(WaxToolState), "ShowInfo").Invoke(__instance, new object[] { "Concrete" });
                     return;
                 }
                 else // if tag is unknown or undefined the default is concrete in xl
