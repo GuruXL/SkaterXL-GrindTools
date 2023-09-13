@@ -15,7 +15,7 @@ namespace GrindTools
     {
         public Player player { get; private set; }
         Transform placedParent = MapEditorController.Instance.placedObjectsParent;
-
+       
         public void Awake()
         {
             player = PlayerController.Instance.inputController.player;
@@ -69,16 +69,7 @@ namespace GrindTools
                     else if (player.GetButtonDown("B"))
                     {
                         ResetToPlayState();
-                    }
-                    /*
-                    else if (CheckRaycastsPatch.GetSelectedSpline() != null)
-                    {
-                        if (CheckRaycastsPatch.GetSelectedSpline().nodes.Count >= 2 && player.GetButtonDown("X"))
-                        {
-                            MessageSystem.QueueMessage(MessageDisplayData.Type.Success, $"New Spline Created", 2.5f);
-                        }
-                    }
-                    */
+                    }  
                     break;
                 case WaxToolState waxToolState:
                     if (player.GetButtonDown("Y"))
