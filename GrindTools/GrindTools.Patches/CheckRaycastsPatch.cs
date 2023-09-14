@@ -26,20 +26,23 @@ namespace GrindTools.Patches
                     {
                         // Green
                         MatUtil.Instance.UpdateMaterial(AssetLoader.GreenMat);
-                        //MatUtil.Instance.ApplyGreenMat();
                         return;
                     }
-                    // Blue
-                    MatUtil.Instance.UpdateMaterial(AssetLoader.BlueMat);
-                    //MatUtil.Instance.ApplyBlueMat();
-                    return;
+                    else if (selectedSpline.nodes.Count >= 1)
+                    {
+                        // Blue
+                        MatUtil.Instance.UpdateMaterial(AssetLoader.BlueMat);
+                        return;
+                    }
+                    else
+                    {
+                        SetSelectedSplineNull();
+                    }
                 }
                 else
                 {
                     // Red
                     MatUtil.Instance.UpdateMaterial(AssetLoader.RedMat);
-                    //MatUtil.Instance.ApplyRedMat();
-
                 }
             }
             
@@ -48,6 +51,15 @@ namespace GrindTools.Patches
         public static MapEditorSplineObject GetSelectedSpline()
         {
             return selectedSpline;
+        }
+
+        public static void SetSelectedSplineNull()
+        {
+            if (selectedSpline != null)
+            {
+                Object.Destroy(selectedSpline.gameObject);
+                selectedSpline = null;
+            }
         }
     }
 }

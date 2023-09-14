@@ -11,6 +11,7 @@ using Object = UnityEngine.Object;
 
 namespace GrindTools.Patches
 {
+    /*
     [HarmonyPatch(typeof(WaxToolState), "Update")]
     public static class WaxToolStatePatch
     {
@@ -91,6 +92,6 @@ namespace GrindTools.Patches
                 }
             }
         }
-
     }
+    */
 }

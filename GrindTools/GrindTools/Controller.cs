@@ -108,43 +108,5 @@ namespace GrindTools
             grind_ControlsUI.gameObject.SetActive(false);
             wax_ControlsUI.gameObject.SetActive(false);
         }
-        /*
-        public void DeletePlacedSplines()
-        {
-            if (editorController.placedObjectsParent.childCount <= 0)
-                return;
-            MapEditorSplineObject[] placedSplines = editorController.placedObjectsParent.GetComponentsInChildren<MapEditorSplineObject>();
-            if (placedSplines != null)
-            {
-                foreach (MapEditorSplineObject splines in placedSplines)
-                {
-                    Destroy(splines.gameObject);
-                }
-            }
-        }
-        */
-        /*
-        public void OutlinePlacedSplines(bool state)
-        {
-            if (editorController.placedObjectsParent.childCount <= 0)
-                return;
-            MapEditorSplineObject[] placedSplines = editorController.placedObjectsParent.GetComponentsInChildren<MapEditorSplineObject>();
-            if (placedSplines != null)
-            {
-                foreach (MapEditorSplineObject splines in placedSplines)
-                {
-                    switch (state)
-                    {
-                        case true:
-                            outline.AddOutlineTo(splines.gameObject, state);
-                            break;
-                        case false:
-                            outline.RemoveOutlineOn(splines.gameObject);
-                            break;
-                    }
-                }
-            }
-        }
-        */
     }
 }
