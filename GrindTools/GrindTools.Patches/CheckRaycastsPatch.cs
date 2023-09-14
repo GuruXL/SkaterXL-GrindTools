@@ -34,7 +34,7 @@ namespace GrindTools.Patches
                         MatUtil.Instance.UpdateMaterial(AssetLoader.BlueMat);
                         return;
                     }
-                    else
+                    else // if selectedSpline is not null but has 0 nodes, destroy and set null
                     {
                         SetSelectedSplineNull();
                     }

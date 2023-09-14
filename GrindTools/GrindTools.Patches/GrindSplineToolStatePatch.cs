@@ -55,7 +55,7 @@ namespace GrindTools.Patches
                 {
                     if (CheckRaycastsPatch.GetSelectedSpline() != null)
                     {
-                        Object.Destroy(CheckRaycastsPatch.GetSelectedSpline().gameObject);
+                        CheckRaycastsPatch.SetSelectedSplineNull();
                         MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Active Spline Removed", 1f);
                     }
                     else
