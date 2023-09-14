@@ -11,7 +11,7 @@ using Object = UnityEngine.Object;
 
 namespace GrindTools.Patches
 {
-    /*
+    
     [HarmonyPatch(typeof(WaxToolState), "Update")]
     public static class WaxToolStatePatch
     {
@@ -73,7 +73,7 @@ namespace GrindTools.Patches
                     AccessTools.Method(typeof(WaxToolState), "ShowInfo").Invoke(__instance, new object[] { "Concrete" });
                     return;
                 }
-                else // if tag is unknown or undefined the default is concrete in xl
+                else // if tag is unknown or undefined the default is concrete so swap to metal
                 {
                     SetTagRecursively(spline.gameObject, metal);
                     AccessTools.Method(typeof(WaxToolState), "ShowInfo").Invoke(__instance, new object[] { "Metal" });
@@ -93,5 +93,4 @@ namespace GrindTools.Patches
             }
         }
     }
-    */
 }
