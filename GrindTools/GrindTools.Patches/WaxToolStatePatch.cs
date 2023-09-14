@@ -44,12 +44,12 @@ namespace GrindTools.Patches
         {
             if (Main.inputctrl.player.GetButton("LB"))
             {
-                AccessTools.Method(typeof(WaxToolState), "ShowInfo").Invoke(__instance, new object[] { "Warning: Spline Deletion is Permanent" });
+                ShowInfo(__instance, "Warning: Spline Deletion is Permanent");
 
                 if (Main.inputctrl.player.GetButtonUp(13))
                 {
                     Object.Destroy(HightlightedObj.gameObject);
-                    AccessTools.Method(typeof(WaxToolState), "ShowInfo").Invoke(__instance, new object[] { "Spline Deleted" });
+                    ShowInfo(__instance, "Spline Deleted");
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Spline Deleted", 1f);
                 }
             }
@@ -64,19 +64,19 @@ namespace GrindTools.Patches
                 if (spline.gameObject.tag == concrete)
                 {
                     SetTagRecursively(spline.gameObject, metal);
-                    AccessTools.Method(typeof(WaxToolState), "ShowInfo").Invoke(__instance, new object[] { "Metal" });
+                    ShowInfo(__instance, metal);
                     return;
                 }
                 else if (spline.gameObject.tag == metal)
                 {
                     SetTagRecursively(spline.gameObject, concrete);
-                    AccessTools.Method(typeof(WaxToolState), "ShowInfo").Invoke(__instance, new object[] { "Concrete" });
+                    ShowInfo(__instance, concrete);
                     return;
                 }
                 else // if tag is unknown or undefined the default is concrete so swap to metal
                 {
                     SetTagRecursively(spline.gameObject, metal);
-                    AccessTools.Method(typeof(WaxToolState), "ShowInfo").Invoke(__instance, new object[] { "Metal" });
+                    ShowInfo(__instance, metal);
                 }
             }
         }
@@ -91,6 +91,10 @@ namespace GrindTools.Patches
                     SetTagRecursively(child.gameObject, tag);
                 }
             }
+        }
+        private static void ShowInfo(WaxToolState __instance, string text)
+        {
+            AccessTools.Method(typeof(WaxToolState), "ShowInfo").Invoke(__instance, new object[] { text });
         }
     }
 }

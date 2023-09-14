@@ -17,7 +17,6 @@ namespace GrindTools.Patches
             var screenRayDidHit = Traverse.Create(__instance).Field("screenRayDidHit").GetValue<bool>();
             selectedSpline = Traverse.Create(__instance).Field("selectedSpline").GetValue<MapEditorSplineObject>();
 
-            // maybe change this to custom ray cast instead of highjacking this one
             if (screenRayDidHit)
             {
                 if (__instance.IsNodeValid(currentNode))

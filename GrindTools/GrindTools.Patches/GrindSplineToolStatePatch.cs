@@ -20,7 +20,8 @@ namespace GrindTools.Patches
         private static void CheckForNewSplines()
         {
             var parent = MapEditorController.Instance.placedObjectsParent;
-            if (parent == null) return;
+            if (parent == null) 
+                return;
 
             int childCount = parent.childCount;
             if (childCount == 0)
