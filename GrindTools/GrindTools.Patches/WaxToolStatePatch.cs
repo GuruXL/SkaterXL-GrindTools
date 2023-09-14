@@ -64,19 +64,19 @@ namespace GrindTools.Patches
                 if (spline.gameObject.tag == concrete)
                 {
                     SetTagRecursively(spline.gameObject, metal);
-                    ShowInfo(__instance, metal);
+                    ShowInfo(__instance, "Metal");
                     return;
                 }
                 else if (spline.gameObject.tag == metal)
                 {
                     SetTagRecursively(spline.gameObject, concrete);
-                    ShowInfo(__instance, concrete);
+                    ShowInfo(__instance, "Concrete");
                     return;
                 }
                 else // if tag is unknown or undefined the default is concrete so swap to metal
                 {
                     SetTagRecursively(spline.gameObject, metal);
-                    ShowInfo(__instance, metal);
+                    ShowInfo(__instance, "Metal");
                 }
             }
         }
