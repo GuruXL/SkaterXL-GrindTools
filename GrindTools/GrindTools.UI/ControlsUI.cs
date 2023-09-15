@@ -19,28 +19,22 @@ namespace GrindTools.UI
 		private GUIStyle controllerButtonBoxStyle;
 		private Vector3 scale = Vector3.one;
 		private Texture2D backgroundTex;
-		public bool isPS4 { get; private set; }
+		private bool isPS4;
 		public bool isUISetup { get; private set; } = false;
-	
-		private bool GetControllerType()
-        {
-			Joystick joystick = PlayerController.Instance.inputController.player.controllers.Joysticks.FirstOrDefault();
-			string text = ((joystick != null) ? joystick.name : null) ?? "unknown";
-			if (text.ToLower().Contains("dual shock") || text.ToLower().Contains("dualshock") || text.ToLower().Contains("playstation"))
+		public void GetControllerType()
+		{
+			string[] joystickNames = Input.GetJoystickNames();
+			for (int i = 0; i < joystickNames.Length; i++)
 			{
-				return isPS4;
+				if (joystickNames[i].ToLower().Contains("xbox"))
+				{
+					isPS4 = false;
+				}
+				else
+				{
+					isPS4 = true;
+				}
 			}
-			return !isPS4;
-
-			/*
-			Joystick joystick = PlayerController.Instance.inputController.player.controllers.Joysticks.FirstOrDefault();
-			string text = ((joystick != null) ? joystick.name : null) ?? "unknown";
-			if (text.ToLower().Contains("xbox"))
-			{
-				//return !isPS4;
-			}
-			//return isPS4;
-			*/
 		}
 
 		public void Show(string options)
@@ -64,7 +58,6 @@ namespace GrindTools.UI
 		private void SetupUIlayout()
 		{
 			GetControllerType();
-
 			backgroundTex = new Texture2D(1, 1);
 			backgroundTex.wrapMode = TextureWrapMode.Repeat;
 			backgroundTex.SetPixel(0, 0, new Color(0.24f, 0.24f, 0.24f, 0.90f));

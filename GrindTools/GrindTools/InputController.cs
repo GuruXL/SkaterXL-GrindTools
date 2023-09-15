@@ -43,6 +43,7 @@ namespace GrindTools
                 CheckForInput();
             }
         }
+
         private void CheckForInput()
         {
             if (player.GetButtonUp(13))
