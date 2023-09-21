@@ -83,12 +83,27 @@ namespace GrindTools
             {
                 case "Grind": // Grind tool
                     MapEditorController.Instance.ChangeState(grindToolState);
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Grind Tool Active", 1f);
+                    if (MapEditorController.Instance.CurrentState == grindToolState)
+                    {
+                        MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Grind Tool Active", 1f);
+                    }
+                    else
+                    {
+                        MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Grind Tool State Transition Failed", 1f);
+                    }
                     break;
 
                 case "Wax": // Wax Tool
                     MapEditorController.Instance.ChangeState(waxToolState);
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Wax Tool Active", 1f);
+                    if (MapEditorController.Instance.CurrentState == waxToolState)
+                    {
+                        MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Wax Tool Active", 1f);
+                    }
+                    else
+                    {
+                        MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Wax Tool State Transition Failed", 1f);
+                    }
+                    break;
                     break;
             }
         }

@@ -30,7 +30,9 @@ namespace GrindTools.Patches
                 return;
             }
 
-            if (childCount == currentCount) return;
+            if (childCount == currentCount)
+                MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Spline Creation Failed", 2f);
+                return;
 
             if (childCount > currentCount)
             {

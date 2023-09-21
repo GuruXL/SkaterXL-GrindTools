@@ -38,7 +38,7 @@ namespace GrindTools
                     SwapToolStates();
                 }
             }
-            else if (GameStateMachine.Instance.CurrentState.GetType() == typeof(MapEditorGameState))
+            else if (!GameStateMachine.Instance.CurrentState.IsGameplay() && MapEditorController.Instance.CurrentState == MapEditorController.Instance.SimplePlacerState)
             {
                 CheckForInput();
             }
@@ -109,10 +109,17 @@ namespace GrindTools
         public void RequestGrindTool()
         {
             //GameStateMachine.Instance.RequestMapEditorState();
-            MapEditorController.Instance.ChangeState(Main.controller.grindToolState);
-            MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Grind Tool Active", 1f);
+            MapEditorController.Instance.ChangeState(Main.controller.grindToolState);       
             Main.controller.AllowRespawn(false);
             Main.controller.ToggleSpeedText(true);
+            if (MapEditorController.Instance.CurrentState == Main.controller.grindToolState)
+            {
+                MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Grind Tool Active", 1f);
+            }
+            else
+            {
+                MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Grind Tool State Transition Failed", 1f);
+            }
         }
         private void DeleteSelectedSpline(int nodeCount)
         {

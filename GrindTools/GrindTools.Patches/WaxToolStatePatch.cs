@@ -22,13 +22,30 @@ namespace GrindTools.Patches
             IMapEditorSelectable HightlightedObj = null;
             SplineComputer splineComp = null;
             Ray ray = new Ray(cam.transform.position, cam.transform.forward);
+            RaycastHit hitInfo;
+            float maxDistance = 100f;
 
-            // Reusing the 'ray' variable here
+            if (Physics.Raycast(ray, out hitInfo, maxDistance))
+            {
+                HightlightedObj = hitInfo.collider.GetComponentInParent<IMapEditorSelectable>();
+                splineComp = hitInfo.collider.GetComponentInParent<SplineComputer>();
+                if (splineComp == null)
+                    maxDistance = hitInfo.distance + 1f;
+            }
+            if (splineComp == null && Physics.SphereCast(ray, 0.2f, out hitInfo, maxDistance, LayerUtility.GrindableMask))
+            {
+                splineComp = hitInfo.collider.GetComponentInParent<SplineComputer>();
+                if (splineComp == null)
+                    Main.Logger.Log(string.Format("Hit on Grindable/Coping layer but no SplineComputer in parent. layer: {0}", hitInfo.collider.gameObject.layer));
+            }
+
+            /*
             if (Physics.Raycast(ray, out RaycastHit hitInfo, -cam.transform.localPosition.z, LayerUtility.MapEditorSelectionMask))
             {
                 HightlightedObj = hitInfo.collider.GetComponentInParent<IMapEditorSelectable>();
                 splineComp = hitInfo.collider.GetComponentInParent<SplineComputer>();
             }
+            */
 
             if (HightlightedObj != null)
             {
