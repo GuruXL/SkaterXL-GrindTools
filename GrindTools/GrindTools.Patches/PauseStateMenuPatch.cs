@@ -87,9 +87,9 @@ namespace GrindTools.Patches
             }
         }
         */
-        public static void GrindToolButtonOnClick()
+        public static async void GrindToolButtonOnClick()
         {
-            Main.inputctrl.RequestGrindTool();
+            await Main.inputctrl.RequestGrindTool();
         }
         public static void MapEditorButtonOnClick()
         {

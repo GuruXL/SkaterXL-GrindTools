@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System;
 using ModIO.UI;
 using GrindTools.UI;
+using GrindTools.Data;
+using System.Threading.Tasks;
 
 namespace GrindTools
 {
@@ -76,34 +78,41 @@ namespace GrindTools
                     GameStateMachine.Instance.allowPinMovement = false;
                     break;
             }
-        }  
-        public void ToggleState(string options)
+        }
+        public async Task ToggleState(ToolStates toolState)
         {
-            switch (options)
+            try
             {
-                case "Grind": // Grind tool
-                    MapEditorController.Instance.ChangeState(grindToolState);
-                    if (MapEditorController.Instance.CurrentState == grindToolState)
-                    {
-                        MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Grind Tool Active", 1f);
-                    }
-                    else
-                    {
-                        MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Grind Tool State Transition Failed", 1f);
-                    }
-                    break;
+                MapEditorState targetState = null;
+                string name = "";
 
-                case "Wax": // Wax Tool
-                    MapEditorController.Instance.ChangeState(waxToolState);
-                    if (MapEditorController.Instance.CurrentState == waxToolState)
-                    {
-                        MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Wax Tool Active", 1f);
-                    }
-                    else
-                    {
-                        MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Wax Tool State Transition Failed", 1f);
-                    }
-                    break;
+                switch (toolState)
+                {
+                    case ToolStates.Grind:
+                        targetState = grindToolState;
+                        name = "Grind Tool";
+                        break;
+                    case ToolStates.Wax:
+                        targetState = waxToolState;
+                        name = "Wax Tool";
+                        break;
+                }
+
+                await MapEditorController.Instance.ChangeState(targetState);
+
+                if (MapEditorController.Instance.CurrentState == targetState)
+                {
+                    MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"{name} Active", 1f);
+                }
+                else
+                {
+                    MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"{name} State Transition Failed", 1f);
+                }
+            }
+            catch (Exception ex)
+            {
+                Main.Logger.Error($"Error toggling to state: {ex}");
+                MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Error toggling tool: {ex.Message}", 1f);
             }
         }
         public void ToggleSpeedText(bool state)

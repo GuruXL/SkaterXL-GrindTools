@@ -35,22 +35,19 @@ namespace GrindTools.Patches
                 MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Spline Creation Failed", 2f);
                 return;
             }
-            else 
+            else if (childCount > currentCount)
             {
-                if (childCount > currentCount)
+                Transform lastChild = parent.GetChild(childCount - 1);
+                if (lastChild.GetComponent<MapEditorSplineObject>() != null)
                 {
-                    Transform lastChild = parent.GetChild(childCount - 1);
-                    if (lastChild.GetComponent<MapEditorSplineObject>() != null)
-                    {
-                        MessageSystem.QueueMessage(MessageDisplayData.Type.Success, $"New Spline Created", 2f);
-                    }
-                    currentCount = childCount;
+                    MessageSystem.QueueMessage(MessageDisplayData.Type.Success, $"New Spline Created", 2f);
                 }
-                else
-                {
-                    currentCount = childCount;
-                }
-            }       
+                currentCount = childCount;
+            }
+            else
+            {
+                currentCount = childCount;
+            }
         }
 
         private static void RemoveNodes()
@@ -63,7 +60,6 @@ namespace GrindTools.Patches
                     if (CheckRaycastsPatch.GetSelectedSpline() != null)
                     {
                         CheckRaycastsPatch.SetSelectedSplineNull();
-                        MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Active Spline Removed", 1f);
                     }
                     else
                     {

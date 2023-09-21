@@ -33,7 +33,7 @@ namespace GrindTools.Patches
                         MatUtil.Instance.UpdateMaterial(AssetLoader.BlueMat);
                         return;
                     }
-                    else // if selectedSpline is not null but has 0 nodes, destroy and set null
+                    else // if selectedSpline != null but has 0 nodes, destroy and set null
                     {
                         SetSelectedSplineNull();
                     }
@@ -58,6 +58,15 @@ namespace GrindTools.Patches
             {
                 Object.Destroy(selectedSpline.gameObject);
                 selectedSpline = null;
+
+                if (selectedSpline = null)
+                {
+                    MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Active Spline Removed", 1f);
+                }
+                else
+                {
+                    MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Failed To Remove Active Spline", 1f);
+                }
             }
         }
     }
