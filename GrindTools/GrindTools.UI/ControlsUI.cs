@@ -34,6 +34,17 @@ namespace GrindTools.UI
 				{
 					isPS4 = true;
 				}
+			}	
+			
+			/*
+			string str = RewiredInput.PrimaryPlayer.controllers.Joysticks.FirstOrDefault()?.name ?? "unknown";
+			if (str.ToLower().Contains("dual shock") || str.ToLower().Contains("dualshock"))
+			{
+				isPS4 = true;
+			}
+            else
+            {
+				isPS4 = false;
 			}
 		}
 
