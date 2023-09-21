@@ -31,22 +31,26 @@ namespace GrindTools.Patches
             }
 
             if (childCount == currentCount)
+            {
                 MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Spline Creation Failed", 2f);
                 return;
-
-            if (childCount > currentCount)
+            }
+            else 
             {
-                Transform lastChild = parent.GetChild(childCount - 1);
-                if (lastChild.GetComponent<MapEditorSplineObject>() != null)
+                if (childCount > currentCount)
                 {
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Success, $"New Spline Created", 2f);
+                    Transform lastChild = parent.GetChild(childCount - 1);
+                    if (lastChild.GetComponent<MapEditorSplineObject>() != null)
+                    {
+                        MessageSystem.QueueMessage(MessageDisplayData.Type.Success, $"New Spline Created", 2f);
+                    }
+                    currentCount = childCount;
                 }
-                currentCount = childCount;
-            }
-            else
-            {
-                currentCount = childCount;
-            }
+                else
+                {
+                    currentCount = childCount;
+                }
+            }       
         }
 
         private static void RemoveNodes()

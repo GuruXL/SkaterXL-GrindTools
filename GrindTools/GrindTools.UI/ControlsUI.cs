@@ -46,6 +46,7 @@ namespace GrindTools.UI
             {
 				isPS4 = false;
 			}
+			*/
 		}
 
 		public void Show(string options)

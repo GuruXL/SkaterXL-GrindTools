@@ -104,7 +104,6 @@ namespace GrindTools
                         MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Wax Tool State Transition Failed", 1f);
                     }
                     break;
-                    break;
             }
         }
         public void ToggleSpeedText(bool state)
