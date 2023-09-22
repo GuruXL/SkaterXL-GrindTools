@@ -31,11 +31,9 @@ namespace GrindTools.Patches
             }
 
             if (childCount == currentCount)
-            {
-                MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Spline Creation Failed", 2f);
                 return;
-            }
-            else if (childCount > currentCount)
+
+            if (childCount > currentCount)
             {
                 Transform lastChild = parent.GetChild(childCount - 1);
                 if (lastChild.GetComponent<MapEditorSplineObject>() != null)
@@ -47,6 +45,7 @@ namespace GrindTools.Patches
             else
             {
                 currentCount = childCount;
+                MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Spline Creation Failed", 2f);
             }
         }
 
