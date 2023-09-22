@@ -51,7 +51,6 @@ namespace GrindTools.Patches
 
         private static void RemoveNodes()
         {
-
             if (Main.inputctrl.player.GetButton("LB"))
             {
                 if (Main.inputctrl.player.GetButtonUp(13))

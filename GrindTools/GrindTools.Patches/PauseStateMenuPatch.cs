@@ -3,6 +3,7 @@ using GameManagement;
 using HarmonyLib;
 using UnityEngine;
 using MapEditor;
+using GrindTools.Utils;
 using System;
 using Object = UnityEngine.Object;
 using TMPro;
@@ -89,7 +90,7 @@ namespace GrindTools.Patches
         */
         public static async void GrindToolButtonOnClick()
         {
-            await Main.inputctrl.RequestGrindTool();
+            await StateManager.Instance.RequestGrindTool();
         }
         public static void MapEditorButtonOnClick()
         {

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using GrindTools.Patches;
 using GrindTools.Data;
+using GrindTools.Utils;
 using System.Collections;
 using System.Threading.Tasks;
 
@@ -49,11 +50,11 @@ namespace GrindTools
         {
             if (player.GetButtonUp(13))
             {
-                await RequestGrindTool();
+                await StateManager.Instance.RequestGrindTool();
             }
             else if (player.GetButtonDown("B"))
             {
-                ResetToPlayState();
+                StateManager.Instance.ResetToPlayState();
             }
         }    
         private async void SwapToolStates()
@@ -63,23 +64,23 @@ namespace GrindTools
                 case GrindSplineToolState grindToolState:
                     if (player.GetButtonDown("Y"))
                     {
-                        await Main.controller.ToggleState(ToolStates.Wax);
-                        DeleteSelectedSpline(1); // delete if <=1 node
+                        await StateManager.Instance.ToggleState(ToolStates.Wax);
+                        Main.controller.DeleteSelectedSpline(1); // delete if <=1 node
                        
                     }
                     else if (player.GetButtonDown("B"))
                     {
-                        ResetToPlayState();
+                        StateManager.Instance.ResetToPlayState();
                     }  
                     break;
                 case WaxToolState waxToolState:
                     if (player.GetButtonDown("Y"))
                     {
-                        await Main.controller.ToggleState(ToolStates.Grind);
+                        await StateManager.Instance.ToggleState(ToolStates.Grind);
                     }
                     else if (player.GetButtonDown("B"))
                     {
-                        ResetToPlayState();
+                        StateManager.Instance.ResetToPlayState();
                     }
                     break;
             }
@@ -87,7 +88,7 @@ namespace GrindTools
         private float changeSpeed = 20.0f;
         private void UpdateFOV()
         {
-            Vector2 rightstick = player.GetAxis2D("RightStickX", "RightStickY");
+            Vector2 rightstick = Main.inputctrl.player.GetAxis2D("RightStickX", "RightStickY");
             Main.settings.CamFOV -= rightstick.y * changeSpeed * Time.unscaledDeltaTime;
             Main.settings.CamFOV = Mathf.Clamp(Main.settings.CamFOV, 40.0f, 120.0f);
             //Main.settings.CamFOV = Mathf.Max(0f, Main.settings.CamFOV + rightstick.y * Time.unscaledDeltaTime * changeSpeed);
@@ -96,54 +97,6 @@ namespace GrindTools
                 return;
             Main.controller.grindToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
             Main.controller.waxToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
-        }
-        private void ResetToPlayState()
-        {
-            try
-            {
-                Main.controller.AllowRespawn(true);
-                MapEditorController.Instance.ExitMapEditor();
-                GameStateMachine.Instance.RequestTransitionBackToPlayState();
-                Main.controller.ToggleSpeedText(false);
-                DeleteSelectedSpline(2); // delete if <=2 nodes
-            }
-            catch (Exception ex)
-            {
-                Main.Logger.Error($"An error occurred while Reseting to PlayState: {ex.Message}");
-                MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Reset To PlayState Error: {ex.Message}", 1f);
-            }
-        }
-        public async Task RequestGrindTool()
-        {
-            try
-            {
-                await MapEditorController.Instance.ChangeState(Main.controller.grindToolState);
-
-                Main.controller.AllowRespawn(false);
-                Main.controller.ToggleSpeedText(true);
-
-                if (MapEditorController.Instance.CurrentState == Main.controller.grindToolState)
-                {
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Grind Tool Active", 1f);
-                }
-                else
-                {
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Grind Tool State Transition Failed", 1f);
-                }
-            }
-            catch (Exception ex)
-            {
-                Main.Logger.Error($"An error occurred while requesting Grind Tool: {ex.Message}");
-                MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Grind Tool Error: {ex.Message}", 1f);
-            }
-        }
-
-        private void DeleteSelectedSpline(int nodeCount)
-        {
-            if (CheckRaycastsPatch.GetSelectedSpline() != null && CheckRaycastsPatch.GetSelectedSpline().nodes.Count <= nodeCount)
-            {
-                Destroy(CheckRaycastsPatch.GetSelectedSpline().gameObject);
-            }
         }
     }
 }

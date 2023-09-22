@@ -7,6 +7,7 @@ using System;
 using ModIO.UI;
 using GrindTools.UI;
 using GrindTools.Data;
+using GrindTools.Patches;
 using System.Threading.Tasks;
 
 namespace GrindTools
@@ -64,7 +65,6 @@ namespace GrindTools
             waxToolCam = waxToolObj?.GetComponentInChildren<CinemachineVirtualCamera>();
             outline = GameStateMachine.Instance.gameObject.GetComponentInChildren<OutlineManager>();
         }
-
         public void AllowRespawn(bool state)
         {
             switch (state)
@@ -79,42 +79,7 @@ namespace GrindTools
                     break;
             }
         }
-        public async Task ToggleState(ToolStates toolState)
-        {
-            try
-            {
-                MapEditorState targetState = null;
-                string name = "";
-
-                switch (toolState)
-                {
-                    case ToolStates.Grind:
-                        targetState = grindToolState;
-                        name = "Grind Tool";
-                        break;
-                    case ToolStates.Wax:
-                        targetState = waxToolState;
-                        name = "Wax Tool";
-                        break;
-                }
-
-                await MapEditorController.Instance.ChangeState(targetState);
-
-                if (MapEditorController.Instance.CurrentState == targetState)
-                {
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"{name} Active", 1f);
-                }
-                else
-                {
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"{name} State Transition Failed", 1f);
-                }
-            }
-            catch (Exception ex)
-            {
-                Main.Logger.Error($"Error toggling to state: {ex}");
-                MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Error toggling tool: {ex.Message}", 1f);
-            }
-        }
+       
         public void ToggleSpeedText(bool state)
         {
             speedFactorText.gameObject.SetActive(state);
@@ -130,6 +95,13 @@ namespace GrindTools
         {
             grind_ControlsUI.gameObject.SetActive(false);
             wax_ControlsUI.gameObject.SetActive(false);
+        }
+        public void DeleteSelectedSpline(int nodeCount)
+        {
+            if (CheckRaycastsPatch.GetSelectedSpline() != null && CheckRaycastsPatch.GetSelectedSpline().nodes.Count <= nodeCount)
+            {
+                Destroy(CheckRaycastsPatch.GetSelectedSpline().gameObject);
+            }
         }
     }
 }
