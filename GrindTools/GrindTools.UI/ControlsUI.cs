@@ -4,6 +4,7 @@ using UnityEngine;
 using Rewired;
 using System.Collections.Generic;
 using System.Linq;
+using GrindTools.Data;
 
 namespace GrindTools.UI
 {
@@ -48,25 +49,24 @@ namespace GrindTools.UI
 			}
 			*/
 		}
-
-		public void Show(string options)
+		public void Show(ToolStates state)
 		{
 			if (!isUISetup)
 			{
 				SetupUIlayout();
 				return;
 			}
-            switch (options)
-            {
-				case"Grind":
+			switch (state)
+			{
+				case ToolStates.Grind:
 					ShowGrindUI();
 					break;
-				case"Wax":
+				case ToolStates.Wax:
 					ShowWaxUI();
 					break;
-            }
+			}
 		}
-
+		
 		private void SetupUIlayout()
 		{
 			GetControllerType();
