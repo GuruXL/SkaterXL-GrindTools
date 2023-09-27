@@ -96,11 +96,15 @@ namespace GrindTools
             grind_ControlsUI.gameObject.SetActive(false);
             wax_ControlsUI.gameObject.SetActive(false);
         }
-        public void DeleteSelectedSpline(int nodeCount)
+        public void DeleteSelectedSpline()
         {
-            if (CheckRaycastsPatch.GetSelectedSpline() != null && CheckRaycastsPatch.GetSelectedSpline().nodes.Count <= nodeCount)
+            if (CheckRaycastsPatch.GetSelectedSpline() != null && CheckRaycastsPatch.GetSelectedSpline().nodes.Count < 2)
             {
                 Destroy(CheckRaycastsPatch.GetSelectedSpline().gameObject);
+            }
+            else
+            {
+                return;
             }
         }
     }

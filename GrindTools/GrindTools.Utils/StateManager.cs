@@ -93,7 +93,7 @@ namespace GrindTools.Utils
                 await GameStateMachine.Instance.RequestTransitionBackToPlayState();
                 GameStateMachine.Instance.StopLoading();
                 Main.controller.ToggleSpeedText(false);
-                Main.controller.DeleteSelectedSpline(2); // delete if <=2 nodes
+                Main.controller.DeleteSelectedSpline(); // delete if < 2 nodes
             }
             catch (Exception ex)
             {

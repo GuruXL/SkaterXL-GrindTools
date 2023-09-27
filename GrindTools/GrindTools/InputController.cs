@@ -65,7 +65,7 @@ namespace GrindTools
                     if (player.GetButtonDown("Y"))
                     {
                         await StateManager.Instance.ToggleState(ToolStates.Wax);
-                        Main.controller.DeleteSelectedSpline(1); // delete if <=1 node
+                        Main.controller.DeleteSelectedSpline(); // delete if < 2 nodes
                        
                     }
                     else if (player.GetButtonDown("B"))
