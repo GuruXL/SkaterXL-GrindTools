@@ -56,12 +56,11 @@ namespace GrindTools.Utils
         {
             try
             {
-                /*
                 if (MapEditorController.Instance.initialState == null)
                 {
-                    MapEditorController.Instance.initialState = MapEditorController.Instance.SimplePlacerState;
+                    MapEditorController.Instance.initialState = Main.controller.grindToolState;
+                    MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Initial state is null", 1f);
                 }
-                */
 
                 await MapEditorController.Instance.ChangeState(Main.controller.grindToolState);
                 GameStateMachine.Instance.StopLoading();
@@ -69,15 +68,15 @@ namespace GrindTools.Utils
                 Main.controller.AllowRespawn(false);
                 Main.controller.ToggleSpeedText(true);
 
-                if (MapEditorController.Instance.CurrentState.GetType() == typeof(GrindSplineToolState)) // now gives null reference excpetion instead of Transition failed error with GetType()
+                if (MapEditorController.Instance.CurrentState != null &&
+                    MapEditorController.Instance.CurrentState.GetType() == typeof(GrindSplineToolState))
                 {
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Grind Tool Active", 1f);
-                }      
+                }
                 else
                 {
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Grind Tool State Transition Failed", 1f);
                 }
-                
             }
             catch (Exception ex)
             {
@@ -85,13 +84,14 @@ namespace GrindTools.Utils
                 MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Grind Tool Error: {ex.Message}", 1f);
             }
         }
-        public void ResetToPlayState()
+        public async Task ResetToPlayState()
         {
             try
             {
                 Main.controller.AllowRespawn(true);
                 MapEditorController.Instance.ExitMapEditor();
-                GameStateMachine.Instance.RequestTransitionBackToPlayState();
+                await GameStateMachine.Instance.RequestTransitionBackToPlayState();
+                GameStateMachine.Instance.StopLoading();
                 Main.controller.ToggleSpeedText(false);
                 Main.controller.DeleteSelectedSpline(2); // delete if <=2 nodes
             }

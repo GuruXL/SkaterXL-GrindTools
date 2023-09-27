@@ -54,7 +54,7 @@ namespace GrindTools
             }
             else if (player.GetButtonDown("B"))
             {
-                StateManager.Instance.ResetToPlayState();
+                await StateManager.Instance.ResetToPlayState();
             }
         }    
         private async void SwapToolStates()
@@ -70,7 +70,7 @@ namespace GrindTools
                     }
                     else if (player.GetButtonDown("B"))
                     {
-                        StateManager.Instance.ResetToPlayState();
+                        await StateManager.Instance.ResetToPlayState();
                     }  
                     break;
                 case WaxToolState waxToolState:
@@ -80,7 +80,7 @@ namespace GrindTools
                     }
                     else if (player.GetButtonDown("B"))
                     {
-                        StateManager.Instance.ResetToPlayState();
+                        await StateManager.Instance.ResetToPlayState();
                     }
                     break;
             }
