@@ -43,7 +43,7 @@ namespace GrindTools.Utils
                 }
                 else
                 {
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"{name} State Transition Failed", 1f);
+                    MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"{name} State Transition Failed", 1f);  
                 }
             }
             catch (Exception ex)
@@ -56,19 +56,28 @@ namespace GrindTools.Utils
         {
             try
             {
+                /*
+                if (MapEditorController.Instance.initialState == null)
+                {
+                    MapEditorController.Instance.initialState = MapEditorController.Instance.SimplePlacerState;
+                }
+                */
+
                 await MapEditorController.Instance.ChangeState(Main.controller.grindToolState);
+                GameStateMachine.Instance.StopLoading();
 
                 Main.controller.AllowRespawn(false);
                 Main.controller.ToggleSpeedText(true);
 
-                if (MapEditorController.Instance.CurrentState == Main.controller.grindToolState)
+                if (MapEditorController.Instance.CurrentState.GetType() == typeof(GrindSplineToolState)) // now gives null reference excpetion instead of Transition failed error with GetType()
                 {
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Grind Tool Active", 1f);
-                }
+                }      
                 else
                 {
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Grind Tool State Transition Failed", 1f);
                 }
+                
             }
             catch (Exception ex)
             {
@@ -92,6 +101,5 @@ namespace GrindTools.Utils
                 MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Reset To PlayState Error: {ex.Message}", 1f);
             }
         }
-
     }
 }
