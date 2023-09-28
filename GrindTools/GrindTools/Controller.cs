@@ -8,7 +8,6 @@ using ModIO.UI;
 using GrindTools.UI;
 using GrindTools.Data;
 using GrindTools.Patches;
-using GrindTools.Listeners;
 using System.Threading.Tasks;
 
 namespace GrindTools

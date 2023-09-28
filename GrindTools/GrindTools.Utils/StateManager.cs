@@ -38,13 +38,13 @@ namespace GrindTools.Utils
 
                 await MapEditorController.Instance.ChangeState(targetState);
 
-                if (MapEditorController.Instance.CurrentState == targetState)
+                if (MapEditorController.Instance.CurrentState != targetState)
                 {
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"{name} Active", 1f);
+                    MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"{name} State Transition Failed", 1f);
                 }
                 else
                 {
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"{name} State Transition Failed", 1f);  
+                    //MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"{name} Active", 1f);
                 }
             }
             catch (Exception ex)

@@ -92,30 +92,33 @@ namespace GrindTools.Patches
         */
         private static void SwapGrindTags(WaxToolState __instance, SplineComputer spline)
         {
+            string concrete = "Grind_Concrete";
+            string metal = "Grind_Metal";
+
             if (Main.inputctrl.player.GetButtonDown(0))
             {
                 if (spline.gameObject.tag == GrindTag.Concrete.GetTagString())
                 {
-                    SetTagRecursively(spline.gameObject, GrindTag.Metal);
+                    SetTagRecursively(spline.gameObject, metal);
                     ShowInfo(__instance, "Metal");
                     return;
                 }
                 else if (spline.gameObject.tag == GrindTag.Metal.GetTagString())
                 {
-                    SetTagRecursively(spline.gameObject, GrindTag.Concrete);
+                    SetTagRecursively(spline.gameObject, concrete);
                     ShowInfo(__instance, "Concrete");
                     return;
                 }
                 else // if tag is unknown or undefined the default is concrete so swap to metal
                 {
-                    SetTagRecursively(spline.gameObject, GrindTag.Metal);
+                    SetTagRecursively(spline.gameObject, metal);
                     ShowInfo(__instance, "Metal");
                 }
             }
         }
-        private static void SetTagRecursively(GameObject obj, GrindTag tag)
+        private static void SetTagRecursively(GameObject obj, string tag)
         {
-            obj.tag = tag.ToString();
+            obj.tag = tag;
 
             if (obj.transform.childCount > 0)
             {
