@@ -7,7 +7,7 @@ using GrindTools.Utils;
 using System;
 using Object = UnityEngine.Object;
 using TMPro;
-using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 namespace GrindTools.Patches
 {
@@ -45,6 +45,7 @@ namespace GrindTools.Patches
                 grindToolsButton.Label.SetText("Grind Tools");
 
                 grindToolsButton.onClick.RemoveAllListeners();  // Remove existing listeners
+                grindToolsButton.onClick.SetPersistentListenerState(0, UnityEventCallState.Off); // removes persistant listeners that are set in unity editor.
                 grindToolsButton.onClick.AddListener(() => GrindToolButtonOnClick());  // Add new listener
                 //CreateNewOnSubmit(grindToolsButton);
             }

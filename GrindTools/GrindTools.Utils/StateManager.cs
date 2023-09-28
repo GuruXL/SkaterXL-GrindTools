@@ -8,6 +8,7 @@ using ModIO.UI;
 using System.Threading.Tasks;
 using MapEditor;
 using GrindTools.Data;
+using GrindTools.Patches;
 
 namespace GrindTools.Utils
 {
@@ -58,7 +59,8 @@ namespace GrindTools.Utils
             {
                 if (MapEditorController.Instance.initialState == null)
                 {
-                    MapEditorController.Instance.initialState = Main.controller.grindToolState;
+                    //MapEditorController.Instance.initialState = Main.controller.grindToolState;
+                    MapEditorController.Instance.initialState = MapEditorController.Instance.SimplePlacerState;
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Initial state is null", 1f);
                 }
 
@@ -68,8 +70,7 @@ namespace GrindTools.Utils
                 Main.controller.AllowRespawn(false);
                 Main.controller.ToggleSpeedText(true);
 
-                if (MapEditorController.Instance.CurrentState != null &&
-                    MapEditorController.Instance.CurrentState.GetType() == typeof(GrindSplineToolState))
+                if (MapEditorController.Instance.CurrentState?.GetType() == typeof(GrindSplineToolState))
                 {
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Grind Tool Active", 1f);
                 }
@@ -93,7 +94,8 @@ namespace GrindTools.Utils
                 await GameStateMachine.Instance.RequestTransitionBackToPlayState();
                 GameStateMachine.Instance.StopLoading();
                 Main.controller.ToggleSpeedText(false);
-                Main.controller.DeleteSelectedSpline(); // delete if < 2 nodes
+                //Main.controller.DeleteSelectedSpline(); // delete if < 2 nodes
+                CheckRaycastsPatch.SetSelectedSplineNull();
             }
             catch (Exception ex)
             {

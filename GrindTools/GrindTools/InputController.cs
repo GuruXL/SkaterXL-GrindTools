@@ -40,7 +40,7 @@ namespace GrindTools
                     SwapToolStates();
                 }
             }
-            else if (!GameStateMachine.Instance.CurrentState.IsGameplay() && MapEditorController.Instance.CurrentState.GetType() == typeof(SimpleMode))
+            else if (!GameStateMachine.Instance.CurrentState.IsGameplay() && MapEditorController.Instance.CurrentState?.GetType() == typeof(SimpleMode))
             {
                 CheckForInput();
             }
@@ -65,7 +65,8 @@ namespace GrindTools
                     if (player.GetButtonDown("Y"))
                     {
                         await StateManager.Instance.ToggleState(ToolStates.Wax);
-                        Main.controller.DeleteSelectedSpline(); // delete if < 2 nodes
+                        //Main.controller.DeleteSelectedSpline(); // delete if < 2 nodes
+                        CheckRaycastsPatch.SetSelectedSplineNull();
                        
                     }
                     else if (player.GetButtonDown("B"))

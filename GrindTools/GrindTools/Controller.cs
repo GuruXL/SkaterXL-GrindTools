@@ -39,11 +39,11 @@ namespace GrindTools
         }
         private void OnGUI()
         {
-            if (MapEditorController.Instance.CurrentState.GetType() == typeof(GrindSplineToolState))
+            if (MapEditorController.Instance.CurrentState?.GetType() == typeof(GrindSplineToolState))
             {
                 ControlsUI.Instance.Show(ToolStates.Grind);
             }
-            else if (MapEditorController.Instance.CurrentState.GetType() == typeof(WaxToolState))
+            else if (MapEditorController.Instance.CurrentState?.GetType() == typeof(WaxToolState))
             {
                 ControlsUI.Instance.Show(ToolStates.Wax);
             }
@@ -96,6 +96,7 @@ namespace GrindTools
             grind_ControlsUI.gameObject.SetActive(false);
             wax_ControlsUI.gameObject.SetActive(false);
         }
+        /*
         public void DeleteSelectedSpline()
         {
             if (CheckRaycastsPatch.GetSelectedSpline() != null && CheckRaycastsPatch.GetSelectedSpline().nodes.Count < 2)
@@ -107,5 +108,6 @@ namespace GrindTools
                 return;
             }
         }
+        */
     }
 }
