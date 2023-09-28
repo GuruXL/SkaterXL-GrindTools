@@ -40,7 +40,7 @@ namespace GrindTools
                     SwapToolStates();
                 }
             }
-            else if (!GameStateMachine.Instance.CurrentState.IsGameplay() && MapEditorController.Instance.CurrentState?.GetType() == typeof(SimpleMode))
+            else if (!GameStateMachine.Instance.CurrentState.IsGameplay() && MapEditorController.Instance.CurrentState is SimpleMode)
             {
                 CheckForInput();
             }

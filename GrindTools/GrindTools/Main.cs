@@ -6,6 +6,7 @@ using ModIO.UI;
 using GameManagement;
 using GrindTools.Utils;
 using GrindTools.Patches;
+using GrindTools.Listeners;
 using GrindTools.UI;
 
 namespace GrindTools
@@ -21,6 +22,7 @@ namespace GrindTools
         public static GameObject ScriptManager;
         public static Controller controller;
         public static InputController inputctrl;
+        public static EventListener eventListener;
 
         public static bool Load(UnityModManager.ModEntry modEntry)
         {
@@ -56,6 +58,7 @@ namespace GrindTools
                     Object.DontDestroyOnLoad(ScriptManager);
                     controller = ScriptManager.AddComponent<Controller>();
                     inputctrl = ScriptManager.AddComponent<InputController>();
+                    eventListener = ScriptManager.AddComponent<EventListener>();
 
                     AssetLoader.LoadBundles();
                 }

@@ -47,7 +47,6 @@ namespace GrindTools.Patches
                 splineComp = hitInfo.collider.GetComponentInParent<SplineComputer>();
             }
             */
-
             /*
             if (HightlightedObj != null)
             {
@@ -93,9 +92,6 @@ namespace GrindTools.Patches
         */
         private static void SwapGrindTags(WaxToolState __instance, SplineComputer spline)
         {
-            //string concrete = "Grind_Concrete";
-            //string metal = "Grind_Metal";
-
             if (Main.inputctrl.player.GetButtonDown(0))
             {
                 if (spline.gameObject.tag == GrindTag.Concrete.GetTagString())

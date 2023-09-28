@@ -9,14 +9,14 @@ namespace GrindTools.Patches
     [HarmonyPatch(typeof(GrindSplineToolState), "Update")]
     public static class GrindSplineToolStatePatch
     {
-        private static int currentCount = 0;
+        //private static int currentCount = 0;
         // used to keep track of newly placed splines
         private static void Postfix(GrindSplineToolState __instance)
         {
-            CheckForNewSplines();
+            //CheckForNewSplines();
             RemoveNodes();
         }
-
+        /*
         private static void CheckForNewSplines()
         {
             var parent = MapEditorController.Instance.placedObjectsParent;
@@ -48,7 +48,7 @@ namespace GrindTools.Patches
                 MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Spline Creation Failed", 2f);
             }
         }
-
+        */
         private static void RemoveNodes()
         {
             if (Main.inputctrl.player.GetButton("LB"))
