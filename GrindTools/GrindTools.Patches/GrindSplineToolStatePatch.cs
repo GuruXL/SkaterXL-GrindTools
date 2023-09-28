@@ -6,6 +6,7 @@ using ModIO.UI;
 
 namespace GrindTools.Patches
 {
+    
     [HarmonyPatch(typeof(GrindSplineToolState), "Update")]
     public static class GrindSplineToolStatePatch
     {
@@ -13,8 +14,10 @@ namespace GrindTools.Patches
         // used to keep track of newly placed splines
         private static void Postfix(GrindSplineToolState __instance)
         {
-            //CheckForNewSplines();
-            RemoveNodes();
+            if (MapEditorController.Instance.CurrentState.GetType() != typeof(GrindSplineToolState))
+                return;
+
+            CheckForRemoveInput();
         }
         /*
         private static void CheckForNewSplines()
@@ -26,38 +29,48 @@ namespace GrindTools.Patches
             int childCount = parent.childCount;
             if (childCount == 0)
             {
-                currentCount = 0;
+                Main.eventListener.activeSplineCount = 0;
                 return;
             }
 
-            if (childCount == currentCount)
+            if (childCount == Main.eventListener.activeSplineCount)
                 return;
 
-            if (childCount > currentCount)
+            if (childCount > Main.eventListener.activeSplineCount)
             {
                 Transform lastChild = parent.GetChild(childCount - 1);
                 if (lastChild.GetComponent<MapEditorSplineObject>() != null)
                 {
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Success, $"New Spline Created", 2f);
                 }
-                currentCount = childCount;
+                Main.eventListener.activeSplineCount = childCount;
             }
             else
             {
-                currentCount = childCount;
+                Main.eventListener.activeSplineCount = childCount;
                 MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Spline Creation Failed", 2f);
             }
         }
         */
-        private static void RemoveNodes()
+        private static void CheckForRemoveInput()
         {
-            if (Main.inputctrl.player.GetButton("LB"))
+            bool LBpressed = Main.inputctrl.player.GetButton("LB");
+            if (LBpressed)
             {
                 if (Main.inputctrl.player.GetButtonUp(13))
                 {
                     if (CheckRaycastsPatch.GetSelectedSpline() != null)
                     {
                         CheckRaycastsPatch.SetSelectedSplineNull();
+
+                        if (CheckRaycastsPatch.GetSelectedSpline() == null)
+                        {
+                            MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Active Spline Removed", 1f);
+                        }
+                        else
+                        {
+                            MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Failed To Remove Active Spline", 1f);
+                        }
                     }
                     else
                     {
@@ -68,4 +81,5 @@ namespace GrindTools.Patches
          
         }
     }
+    
 }

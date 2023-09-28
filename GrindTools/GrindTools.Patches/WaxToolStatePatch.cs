@@ -68,7 +68,7 @@ namespace GrindTools.Patches
 
                 if (Main.inputctrl.player.GetButtonUp(13))
                 {
-                    Object.Destroy(spline.gameObject);
+                    Object.Destroy(spline.gameObject);        
                     ShowInfo(__instance, "Spline Deleted");
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Spline Deleted", 1f);
                 }

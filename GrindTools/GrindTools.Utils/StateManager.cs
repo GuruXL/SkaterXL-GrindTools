@@ -95,7 +95,7 @@ namespace GrindTools.Utils
                 GameStateMachine.Instance.StopLoading();
                 Main.controller.ToggleSpeedText(false);
                 //Main.controller.DeleteSelectedSpline(); // delete if < 2 nodes
-                CheckRaycastsPatch.SetSelectedSplineNull();
+                //CheckRaycastsPatch.SetSelectedSplineNull(); // this is not working, find a better way to reset selected spline one state changes.
             }
             catch (Exception ex)
             {

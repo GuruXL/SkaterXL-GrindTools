@@ -66,7 +66,7 @@ namespace GrindTools
                     {
                         await StateManager.Instance.ToggleState(ToolStates.Wax);
                         //Main.controller.DeleteSelectedSpline(); // delete if < 2 nodes
-                        CheckRaycastsPatch.SetSelectedSplineNull();
+                        //CheckRaycastsPatch.SetSelectedSplineNull(); // this is not working, find a better way to reset selected spline one state changes.
                        
                     }
                     else if (player.GetButtonDown("B"))
@@ -86,6 +86,7 @@ namespace GrindTools
                     break;
             }
         }
+    
         private float changeSpeed = 20.0f;
         private void UpdateFOV()
         {

@@ -38,6 +38,10 @@ namespace GrindTools
             GetComponents();
             DisableDefaultUI();
         }
+        private void Update()
+        {
+            CheckForNewSplines();
+        }
         private void OnGUI()
         {
             if (MapEditorController.Instance.CurrentState?.GetType() == typeof(GrindSplineToolState))
@@ -97,6 +101,41 @@ namespace GrindTools
             grind_ControlsUI.gameObject.SetActive(false);
             wax_ControlsUI.gameObject.SetActive(false);
         }
+        private void CheckForNewSplines()
+        {
+            var parent = MapEditorController.Instance.placedObjectsParent;
+            if (parent == null)
+                return;
+
+            int childCount = parent.childCount;
+            if (childCount == 0)
+            {
+                Main.eventListener.activeSplineCount = 0;
+                return;
+            }
+
+            if (childCount == Main.eventListener.activeSplineCount)
+                return;
+
+            if (childCount > Main.eventListener.activeSplineCount)
+            {
+                Transform lastChild = parent.GetChild(childCount - 1);
+                if (lastChild.GetComponent<MapEditorSplineObject>() != null)
+                {
+                    MessageSystem.QueueMessage(MessageDisplayData.Type.Success, $"New Spline Created", 2f);
+                }
+                else
+                {
+                    Main.eventListener.activeSplineCount = childCount;
+                    MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Spline Creation Failed", 2f);
+                }
+            }
+            else
+            {
+                Main.eventListener.activeSplineCount = childCount;
+            }
+        }
+
         /*
         public void DeleteSelectedSpline()
         {

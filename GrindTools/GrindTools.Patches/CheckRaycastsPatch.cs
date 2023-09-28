@@ -59,6 +59,7 @@ namespace GrindTools.Patches
                 Object.Destroy(selectedSpline.gameObject);
                 selectedSpline = null;
 
+                /*
                 if (selectedSpline = null)
                 {
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Active Spline Removed", 1f);
@@ -67,6 +68,7 @@ namespace GrindTools.Patches
                 {
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Failed To Remove Active Spline", 1f);
                 }
+                */
             }
         }
     }
