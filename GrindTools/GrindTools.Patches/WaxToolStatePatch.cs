@@ -48,17 +48,35 @@ namespace GrindTools.Patches
             }
             */
 
+            /*
             if (HightlightedObj != null)
             {
                 CheckForDeleteInput(__instance, HightlightedObj);
             }
+            */
 
             if (splineComp != null)
             {
+                CheckForDeleteInput(__instance, splineComp);
                 SwapGrindTags(__instance, splineComp);
             }
         }
-        private static void CheckForDeleteInput(WaxToolState __instance, IMapEditorSelectable HightlightedObj)
+        private static void CheckForDeleteInput(WaxToolState __instance, SplineComputer spline)
+        {
+            if (Main.inputctrl.player.GetButton("LB"))
+            {
+                ShowInfo(__instance, "Warning: Spline Deletion is Permanent");
+
+                if (Main.inputctrl.player.GetButtonUp(13))
+                {
+                    Object.Destroy(spline.gameObject);
+                    ShowInfo(__instance, "Spline Deleted");
+                    MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Spline Deleted", 1f);
+                }
+            }
+        }
+        /*
+        private static void CheckForDeleteInput(WaxToolState __instance, IMapEditorSelectable HightlightedObj) 
         {
             if (Main.inputctrl.player.GetButton("LB"))
             {
@@ -72,6 +90,7 @@ namespace GrindTools.Patches
                 }
             }
         }
+        */
         private static void SwapGrindTags(WaxToolState __instance, SplineComputer spline)
         {
             //string concrete = "Grind_Concrete";
