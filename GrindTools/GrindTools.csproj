@@ -147,7 +147,6 @@
     <Compile Include="GrindTools.UI\XboxButtons.cs" />
     <Compile Include="GrindTools.UI\PlaystationButtons.cs" />
     <Compile Include="GrindTools.UI\UIAssetLoader.cs" />
-    <Compile Include="GrindTools.Listeners\EventListener.cs" />
     <Compile Include="GrindTools.Utils\StateManager.cs" />
     <Compile Include="GrindTools.Utils\MatUtil.cs" />
     <Compile Include="GrindTools.Utils\AssetLoader.cs" />

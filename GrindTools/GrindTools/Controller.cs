@@ -32,6 +32,8 @@ namespace GrindTools
         public CinemachineVirtualCamera waxToolCam;
         public OutlineManager outline;
 
+        private int activeSplineCount = 0;
+
         public void Awake()
         {
             GetObjects();
@@ -110,14 +112,14 @@ namespace GrindTools
             int childCount = parent.childCount;
             if (childCount == 0)
             {
-                Main.eventListener.activeSplineCount = 0;
+                activeSplineCount = 0;
                 return;
             }
 
-            if (childCount == Main.eventListener.activeSplineCount)
+            if (childCount == activeSplineCount)
                 return;
 
-            if (childCount > Main.eventListener.activeSplineCount)
+            if (childCount > activeSplineCount)
             {
                 Transform lastChild = parent.GetChild(childCount - 1);
                 if (lastChild.GetComponent<MapEditorSplineObject>() != null)
@@ -126,13 +128,13 @@ namespace GrindTools
                 }
                 else
                 {
-                    Main.eventListener.activeSplineCount = childCount;
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Spline Creation Failed", 2f);
                 }
+                activeSplineCount = childCount;
             }
             else
             {
-                Main.eventListener.activeSplineCount = childCount;
+                activeSplineCount = childCount;
             }
         }
 
