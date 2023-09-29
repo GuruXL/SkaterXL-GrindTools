@@ -70,6 +70,7 @@ namespace GrindTools.Patches
                 {
                     Object.Destroy(spline.gameObject);        
                     ShowInfo(__instance, "Spline Deleted");
+                    UISounds.Instance.PlayOneShotSelectionChange();
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Spline Deleted", 1f);
                 }
             }

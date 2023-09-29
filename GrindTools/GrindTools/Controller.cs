@@ -124,6 +124,7 @@ namespace GrindTools
                 Transform lastChild = parent.GetChild(childCount - 1);
                 if (lastChild.GetComponent<MapEditorSplineObject>() != null)
                 {
+                    UISounds.Instance.PlayOneShotSelectMajor();
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Success, $"New Spline Created", 2f);
                 }
                 else if (lastChild.GetComponent<MapEditorMovable>() != null)

@@ -6,7 +6,7 @@ using ModIO.UI;
 
 namespace GrindTools.Patches
 {
-    
+
     [HarmonyPatch(typeof(GrindSplineToolState), "Update")]
     public static class GrindSplineToolStatePatch
     {
@@ -17,7 +17,7 @@ namespace GrindTools.Patches
             if (MapEditorController.Instance.CurrentState.GetType() != typeof(GrindSplineToolState))
                 return;
 
-            CheckForRemoveInput();
+            CheckForInput();
         }
         /*
         private static void CheckForNewSplines()
@@ -52,34 +52,33 @@ namespace GrindTools.Patches
             }
         }
         */
-        private static void CheckForRemoveInput()
+        private static void CheckForInput()
         {
             bool LBpressed = Main.inputctrl.player.GetButton("LB");
-            if (LBpressed)
-            {
-                if (Main.inputctrl.player.GetButtonUp(13))
-                {
-                    if (CheckRaycastsPatch.GetSelectedSpline() != null)
-                    {
-                        CheckRaycastsPatch.SetSelectedSplineNull();
+            if (!LBpressed)
+                return;
 
-                        if (CheckRaycastsPatch.GetSelectedSpline() == null)
-                        {
-                            MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Active Spline Removed", 1f);
-                        }
-                        else
-                        {
-                            MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Failed To Remove Active Spline", 1f);
-                        }
+            if (Main.inputctrl.player.GetButtonUp(13))
+            {
+                if (CheckRaycastsPatch.GetSelectedSpline() != null)
+                {
+                    CheckRaycastsPatch.SetSelectedSplineNull();
+
+                    if (CheckRaycastsPatch.GetSelectedSpline() == null)
+                    {
+                        UISounds.Instance.PlayOneShotSelectionChange();
+                        MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Active Spline Removed", 1f);
                     }
                     else
                     {
-                        MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"No Active Spline", 1f);
+                        MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Failed To Remove Active Spline", 1f);
                     }
                 }
+                else
+                {
+                    MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"No Active Spline", 1f);
+                }
             }
-         
         }
-    }
-    
+    }   
 }
