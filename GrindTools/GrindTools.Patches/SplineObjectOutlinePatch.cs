@@ -5,7 +5,7 @@ using MapEditor;
 namespace GrindTools.Patches
 {
     [HarmonyPatch(typeof(MapEditorSplineObject))]
-    [HarmonyPatch("outlineColliders")]
+    [HarmonyPatch("get_outlineColliders")]
     public class SplineObjectOutlinePatch
     {
         private static void Postfix(ref bool __result) => __result = true;
