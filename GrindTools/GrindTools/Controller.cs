@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using MapEditor;
+using SkaterXL.Map;
 using GameManagement;
 using Cinemachine;
 using System.Collections.Generic;
@@ -124,6 +125,11 @@ namespace GrindTools
                 if (lastChild.GetComponent<MapEditorSplineObject>() != null)
                 {
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Success, $"New Spline Created", 2f);
+                }
+                else if (lastChild.GetComponent<MapEditorMovable>() != null)
+                {
+                    activeSplineCount = childCount;
+                    return;
                 }
                 else
                 {
