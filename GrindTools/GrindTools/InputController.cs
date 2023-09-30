@@ -28,7 +28,7 @@ namespace GrindTools
         public void Update()
         {
             var currentState = MapEditorController.Instance.CurrentState;
-            if (currentState.GetType() == typeof(GrindSplineToolState) || currentState.GetType() == typeof(WaxToolState))
+            if (currentState?.GetType() == typeof(GrindSplineToolState) || currentState?.GetType() == typeof(WaxToolState))
             {
                 bool RBPressed = player.GetButton(7);
                 if (RBPressed)
@@ -40,7 +40,7 @@ namespace GrindTools
                     SwapToolStates();
                 }
             }
-            else if (!GameStateMachine.Instance.CurrentState.IsGameplay() && MapEditorController.Instance.CurrentState is SimpleMode)
+            else if (!GameStateMachine.Instance.CurrentState.IsGameplay() && MapEditorController.Instance.CurrentState?.GetType() == typeof(SimpleMode))
             {
                 CheckForInput();
             }

@@ -54,29 +54,28 @@ namespace GrindTools.Patches
         */
         private static void CheckForInput()
         {
-            bool LBpressed = Main.inputctrl.player.GetButton("LB");
-            if (!LBpressed)
-                return;
-
-            if (Main.inputctrl.player.GetButtonUp(13))
+            if (Main.inputctrl.player.GetButton("LB"))
             {
-                if (CheckRaycastsPatch.GetSelectedSpline() != null)
+                if (Main.inputctrl.player.GetButtonUp(13))
                 {
-                    CheckRaycastsPatch.SetSelectedSplineNull();
-
-                    if (CheckRaycastsPatch.GetSelectedSpline() == null)
+                    if (CheckRaycastsPatch.GetSelectedSpline() != null)
                     {
-                        UISounds.Instance.PlayOneShotSelectionChange();
-                        MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Active Spline Removed", 1f);
+                        CheckRaycastsPatch.SetSelectedSplineNull();
+
+                        if (CheckRaycastsPatch.GetSelectedSpline() == null)
+                        {
+                            UISounds.Instance.PlayOneShotSelectionChange();
+                            MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Active Spline Removed", 1f);
+                        }
+                        else
+                        {
+                            MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Failed To Remove Active Spline", 1f);
+                        }
                     }
                     else
                     {
-                        MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Failed To Remove Active Spline", 1f);
+                        MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"No Active Spline", 1f);
                     }
-                }
-                else
-                {
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"No Active Spline", 1f);
                 }
             }
         }

@@ -56,10 +56,11 @@ namespace GrindTools.Patches
 
             if (splineComp != null)
             {
-                CheckForDeleteInput(__instance, splineComp);
+                CheckForDeleteInput(__instance, HightlightedObj, hitInfo);
                 SwapGrindTags(__instance, splineComp);
             }
         }
+        /*
         private static void CheckForDeleteInput(WaxToolState __instance, SplineComputer spline)
         {
             if (Main.inputctrl.player.GetButton("LB"))
@@ -68,29 +69,35 @@ namespace GrindTools.Patches
 
                 if (Main.inputctrl.player.GetButtonUp(13))
                 {
-                    Object.Destroy(spline.gameObject);        
+                    Object.Destroy(spline.gameObject);
                     ShowInfo(__instance, "Spline Deleted");
                     UISounds.Instance.PlayOneShotSelectionChange();
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Spline Deleted", 1f);
                 }
             }
         }
-        /*
-        private static void CheckForDeleteInput(WaxToolState __instance, IMapEditorSelectable HightlightedObj) 
+        */       
+        private static void CheckForDeleteInput(WaxToolState __instance, IMapEditorSelectable HightlightedObj, RaycastHit hitInfo) 
         {
             if (Main.inputctrl.player.GetButton("LB"))
             {
+                if (hitInfo.collider.GetComponentInParent<IMapEditorSelectable>() == null)
+                {
+                    ShowInfo(__instance, "Cannot Delete Map Splines");
+                    return;
+                }
                 ShowInfo(__instance, "Warning: Spline Deletion is Permanent");
 
                 if (Main.inputctrl.player.GetButtonUp(13))
                 {
                     Object.Destroy(HightlightedObj.gameObject);
                     ShowInfo(__instance, "Spline Deleted");
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Spline Deleted", 1f);
+                    UISounds.Instance.PlayOneShotSelectionChange();
+                    MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Spline Deleted", 0.5f);
                 }
             }
         }
-        */
+        
         private static void SwapGrindTags(WaxToolState __instance, SplineComputer spline)
         {
             string concrete = "Grind_Concrete";
@@ -98,13 +105,13 @@ namespace GrindTools.Patches
 
             if (Main.inputctrl.player.GetButtonDown(0))
             {
-                if (spline.gameObject.tag == GrindTag.Concrete.GetTagString())
+                if (spline.gameObject.tag == concrete)
                 {
                     SetTagRecursively(spline.gameObject, metal);
                     ShowInfo(__instance, "Metal");
                     return;
                 }
-                else if (spline.gameObject.tag == GrindTag.Metal.GetTagString())
+                else if (spline.gameObject.tag == metal)
                 {
                     SetTagRecursively(spline.gameObject, concrete);
                     ShowInfo(__instance, "Concrete");

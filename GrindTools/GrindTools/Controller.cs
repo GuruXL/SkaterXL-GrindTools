@@ -30,7 +30,6 @@ namespace GrindTools
 
         public CinemachineVirtualCamera grindToolCam;
         public CinemachineVirtualCamera waxToolCam;
-        public OutlineManager outline;
 
         private int activeSplineCount = 0;
 
@@ -70,7 +69,6 @@ namespace GrindTools
             waxToolState = waxToolObj?.GetComponent<WaxToolState>();
             grindToolCam = grindtoolObj?.GetComponentInChildren<CinemachineVirtualCamera>();
             waxToolCam = waxToolObj?.GetComponentInChildren<CinemachineVirtualCamera>();
-            outline = GameStateMachine.Instance.gameObject.GetComponentInChildren<OutlineManager>();
         }
         public void AllowRespawn(bool state)
         {
