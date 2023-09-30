@@ -41,15 +41,18 @@ namespace GrindTools
         }
         private void Update()
         {
+            if (GameStateMachine.Instance.CurrentState?.GetType() != typeof(MapEditorGameState))
+                return;
             CheckForNewSplines();
         }
         private void OnGUI()
         {
-            if (MapEditorController.Instance.CurrentState?.GetType() == typeof(GrindSplineToolState))
+            Type currentstate = MapEditorController.Instance.CurrentState?.GetType();
+            if (currentstate == typeof(GrindSplineToolState))
             {
                 ControlsUI.Instance.Show(ToolStates.Grind);
             }
-            else if (MapEditorController.Instance.CurrentState?.GetType() == typeof(WaxToolState))
+            else if (currentstate == typeof(WaxToolState))
             {
                 ControlsUI.Instance.Show(ToolStates.Wax);
             }
@@ -119,6 +122,51 @@ namespace GrindTools
 
             if (childCount > activeSplineCount)
             {
+                if (MapEditorController.Instance.CurrentState?.GetType() == typeof(SimpleMode))
+                {
+                    activeSplineCount = childCount;
+                    return;
+                }
+                else
+                {
+                    Transform lastChild = parent.GetChild(childCount - 1);
+                    if (lastChild.GetComponent<MapEditorSplineObject>() == null || !lastChild.gameObject.name.ToLower().Contains("spline"))
+                    {
+                        activeSplineCount = childCount;
+                        return;
+                    }
+                    else
+                    {
+                        UISounds.Instance.PlayOneShotSelectMajor();
+                        MessageSystem.QueueMessage(MessageDisplayData.Type.Success, $"New Spline Created", 2f);
+                    }
+                    activeSplineCount = childCount;
+                }
+            }
+            else
+            {
+                activeSplineCount = childCount;
+            }
+        }
+        /*
+        private void CheckForNewSplines()
+        {
+            var parent = MapEditorController.Instance.placedObjectsParent;
+            if (parent == null)
+                return;
+
+            int childCount = parent.childCount;
+            if (childCount == 0)
+            {
+                activeSplineCount = 0;
+                return;
+            }
+
+            if (childCount == activeSplineCount)
+                return;
+
+            if (childCount > activeSplineCount)
+            {
                 Transform lastChild = parent.GetChild(childCount - 1);
                 if (lastChild.GetComponent<MapEditorSplineObject>() != null)
                 {
@@ -141,7 +189,7 @@ namespace GrindTools
                 activeSplineCount = childCount;
             }
         }
-
+        */
         /*
         public void DeleteSelectedSpline()
         {

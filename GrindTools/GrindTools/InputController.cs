@@ -27,8 +27,8 @@ namespace GrindTools
         }
         public void Update()
         {
-            var currentState = MapEditorController.Instance.CurrentState;
-            if (currentState?.GetType() == typeof(GrindSplineToolState) || currentState?.GetType() == typeof(WaxToolState))
+            var currentState = MapEditorController.Instance.CurrentState?.GetType();
+            if (currentState == typeof(GrindSplineToolState) || currentState == typeof(WaxToolState))
             {
                 bool RBPressed = player.GetButton(7);
                 if (RBPressed)
@@ -40,7 +40,7 @@ namespace GrindTools
                     SwapToolStates();
                 }
             }
-            else if (!GameStateMachine.Instance.CurrentState.IsGameplay() && MapEditorController.Instance.CurrentState?.GetType() == typeof(SimpleMode))
+            else if (!GameStateMachine.Instance.CurrentState.IsGameplay() && currentState == typeof(SimpleMode))
             {
                 CheckForInput();
             }
@@ -54,7 +54,7 @@ namespace GrindTools
             }
             else if (player.GetButtonDown("B"))
             {
-                await StateManager.Instance.ResetToPlayState();
+                StateManager.Instance.ResetToPlayState();
             }
         }    
         private async void SwapToolStates()
@@ -72,7 +72,7 @@ namespace GrindTools
                     }
                     else if (player.GetButtonDown("B"))
                     {
-                        await StateManager.Instance.ResetToPlayState();
+                        StateManager.Instance.ResetToPlayState();
                     }  
                     break;
                 case WaxToolState waxToolState:
@@ -83,7 +83,7 @@ namespace GrindTools
                     }
                     else if (player.GetButtonDown("B"))
                     {
-                        await StateManager.Instance.ResetToPlayState();
+                        StateManager.Instance.ResetToPlayState();
                     }
                     break;
             }

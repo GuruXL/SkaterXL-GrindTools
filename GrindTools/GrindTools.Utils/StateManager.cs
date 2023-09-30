@@ -49,9 +49,25 @@ namespace GrindTools.Utils
             }
             catch (Exception ex)
             {
-                Main.Logger.Error($"Error toggling to state: {ex}");
-                MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Error toggling tool: {ex.Message}", 1f);
+                Main.Logger.Error($"Error Switching Modes: {ex}");
+                MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Error Switching Modes: {ex.Message}", 1f);
             }
+        }
+
+        private async Task LoadGrindToolState()
+        {
+            GameStateMachine.Instance.StartLoading(true, null, "Loading");
+            await MapEditorController.Instance.ChangeState(Main.controller.grindToolState);
+            GameStateMachine.Instance.StopLoading();
+            Main.controller.AllowRespawn(false);
+            Main.controller.ToggleSpeedText(true);
+        }
+        private async Task InitializeMapEditor()
+        {
+            MapEditorController.Instance.initialState = Main.controller.grindToolState;
+            GameStateMachine.Instance.MapEditorObject.SetActive(true);
+            GameStateMachine.Instance.RequestMapEditorState();
+            await MapEditorController.Instance.ChangeState(MapEditorController.Instance.SimplePlacerState);
         }
         public async Task RequestGrindTool()
         {
@@ -59,20 +75,18 @@ namespace GrindTools.Utils
             {
                 if (MapEditorController.Instance.initialState == null)
                 {
-                    //MapEditorController.Instance.initialState = Main.controller.grindToolState;
-                    MapEditorController.Instance.initialState = MapEditorController.Instance.SimplePlacerState;
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Initial state is null", 1f);
+                    await InitializeMapEditor();
+                    await LoadGrindToolState();
+                }
+                else
+                {
+                    await LoadGrindToolState();
                 }
 
-                await MapEditorController.Instance.ChangeState(Main.controller.grindToolState);
-                GameStateMachine.Instance.StopLoading();
-
-                Main.controller.AllowRespawn(false);
-                Main.controller.ToggleSpeedText(true);
-
-                if (MapEditorController.Instance.CurrentState?.GetType() == typeof(GrindSplineToolState))
+                MapEditorState currentstate = MapEditorController.Instance.CurrentState;
+                if (currentstate != null && currentstate is GrindSplineToolState)
                 {
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Grind Tool Active", 1f);
+                    MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Grind Tool Active", 0.5f);
                 }
                 else
                 {
@@ -85,17 +99,13 @@ namespace GrindTools.Utils
                 MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Grind Tool Error: {ex.Message}", 1f);
             }
         }
-        public async Task ResetToPlayState()
+        public void ResetToPlayState()
         {
             try
             {
                 Main.controller.AllowRespawn(true);
-                MapEditorController.Instance.ExitMapEditor();
-                await GameStateMachine.Instance.RequestTransitionBackToPlayState();
-                GameStateMachine.Instance.StopLoading();
+                GameStateMachine.Instance.RequestPlayState();
                 Main.controller.ToggleSpeedText(false);
-                //Main.controller.DeleteSelectedSpline(); // delete if < 2 nodes
-                //CheckRaycastsPatch.SetSelectedSplineNull(); // this is not working, find a better way to reset selected spline one state changes.
             }
             catch (Exception ex)
             {
