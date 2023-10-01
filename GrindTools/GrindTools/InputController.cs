@@ -21,7 +21,7 @@ namespace GrindTools
        
         public void Awake()
         {
-            player = PlayerController.Instance.inputController.player;
+            player = PlayerController.Main.input;
             if(Main.controller.grindToolCam != null ) Main.controller.grindToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
             if (Main.controller.waxToolCam != null) Main.controller.waxToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
         }

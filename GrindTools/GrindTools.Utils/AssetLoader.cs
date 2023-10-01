@@ -21,7 +21,7 @@ namespace GrindTools.Utils
 
             if (unityObjectType != null)
             {
-                PlayerController.Instance.StartCoroutine(LoadAssetBundle());     
+                PlayerController.Main.StartCoroutine(LoadAssetBundle());     
             }
         }   
         private static byte[] ExtractResources(string filename)
@@ -53,7 +53,7 @@ namespace GrindTools.Utils
                 MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Failed to LOAD GrindTools Asset Bundle", 2.5f);
                 yield break;
             }
-            yield return PlayerController.Instance.StartCoroutine(LoadPrefabs());
+            yield return PlayerController.Main.StartCoroutine(LoadPrefabs());
         }
         private static IEnumerator LoadPrefabs()
         {
@@ -62,7 +62,7 @@ namespace GrindTools.Utils
                 MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"GrindTools Asset bundles are not loaded!", 2.5f);
                 yield break;
             }
-            yield return PlayerController.Instance.StartCoroutine(LoadAssetFromBundle());
+            yield return PlayerController.Main.StartCoroutine(LoadAssetFromBundle());
         }
         private static IEnumerator LoadAssetFromBundle()
         {

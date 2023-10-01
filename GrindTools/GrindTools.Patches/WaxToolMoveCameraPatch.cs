@@ -12,7 +12,7 @@ namespace GrindTools.Patches
     {
         private static bool Prefix()
         {
-            bool rbPressed = PlayerController.Instance.inputController.player.GetButton(7);
+            bool rbPressed = PlayerController.Main.input.GetButton(7);
             return !rbPressed;
         }
     }
