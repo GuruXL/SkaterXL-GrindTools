@@ -1,6 +1,7 @@
 ﻿using System;
 using Photon.Pun;
 using UnityEngine;
+using MapEditor;
 using Rewired;
 using System.Collections.Generic;
 using System.Linq;
@@ -148,7 +149,7 @@ namespace GrindTools.UI
 			CreateHeader("Grind Spline Tool");
 			GUILayout.Label("General", sectionStyle, Array.Empty<GUILayoutOption>());
 			CreateLabel("Switch Modes", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.Y });
-			CreateLabel("Increase / Decrease Speed", "/", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.DpadUp, UIAssetLoader.Instance.xboxButtons.DpadDown });
+			CreateLabel("Speed Factor: " + MapEditorController.Instance.SpeedFactor.ToString("") + "x", "/", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.DpadUp, UIAssetLoader.Instance.xboxButtons.DpadDown });
 
 			GUILayout.Label("Camera", sectionStyle, Array.Empty<GUILayoutOption>());
 			CreateLabel("Camera Fov: " + Mathf.RoundToInt(Main.settings.CamFOV).ToString(""), "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RB, UIAssetLoader.Instance.xboxButtons.RightStick });
@@ -201,7 +202,7 @@ namespace GrindTools.UI
 			CreateHeader("Wax Tool");
 			GUILayout.Label("General", sectionStyle, Array.Empty<GUILayoutOption>());
 			CreateLabel("Switch Modes", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.Y });
-			CreateLabel("Increase / Decrease Speed", "/", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.DpadUp, UIAssetLoader.Instance.xboxButtons.DpadDown });
+			CreateLabel("Speed Factor: " + MapEditorController.Instance.SpeedFactor.ToString("") + "x", "/", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.DpadUp, UIAssetLoader.Instance.xboxButtons.DpadDown });
 
 			GUILayout.Label("Camera", sectionStyle, Array.Empty<GUILayoutOption>());
 			CreateLabel("Camera Fov: " + Mathf.RoundToInt(Main.settings.CamFOV).ToString(""), "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RB, UIAssetLoader.Instance.xboxButtons.RightStick });

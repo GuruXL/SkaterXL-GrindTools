@@ -52,7 +52,7 @@ namespace GrindTools
             {
                 await StateManager.Instance.RequestGrindTool();
             }
-            else if (player.GetButtonDown("B"))
+            else if (player.GetButtonDown("B") || player.GetButtonDown("Start"))
             {
                 StateManager.Instance.ResetToPlayState();
             }

@@ -67,7 +67,7 @@ namespace GrindTools.Utils
             await MapEditorController.Instance.ChangeState(state);
             GameStateMachine.Instance.StopLoading();
             Main.controller.AllowRespawn(false);
-            Main.controller.ToggleSpeedText(true);
+            //Main.controller.ToggleSpeedText(true);
             ToggleMenuUI(false);
         }
         public async Task InitializeMapEditor(MapEditorState initialState)
@@ -76,7 +76,7 @@ namespace GrindTools.Utils
             //GameStateMachine.Instance.RequestMapEditorState();
             GameStateMachine.Instance.StartLoading(true, AssetLoader.loadingTexture, "Loading");
             GameStateMachine.Instance.MapEditorObject.SetActive(true);
-            GameStateMachine.Instance.RequestTransitionTo(typeof(MapEditorGameState));
+            //GameStateMachine.Instance.RequestTransitionTo(typeof(MapEditorGameState), true);
             await MapEditorController.Instance.ChangeState(MapEditorController.Instance.SimplePlacerState);
             GameStateMachine.Instance.StopLoading();
             ToggleMenuUI(false);
@@ -138,14 +138,10 @@ namespace GrindTools.Utils
             {
                 Main.controller.AllowRespawn(true);
                 PlayerController.Main.HidePin(false);
-                PlayerController.Main.EnableGameplay();
                 GameStateMachine.Instance.MapEditorObject.SetActive(false);
-                Main.controller.ToggleSpeedText(false);
-                GameStateMachine.Instance.RequestTransitionBackToPlayState();
-                if (GameStateMachine.Instance.CurrentState.GetType() != typeof(PlayState))
-                {
-                    GameStateMachine.Instance.RequestPlayState();
-                }
+                PlayerController.Main.EnableGameplay();
+                //Main.controller.ToggleSpeedText(false);
+                GameStateMachine.Instance.RequestPlayState();
             }
             catch (Exception ex)
             {

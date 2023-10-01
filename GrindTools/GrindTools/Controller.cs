@@ -18,7 +18,7 @@ namespace GrindTools
         private Transform statesObj;
         private Transform grindtoolObj;
         private Transform waxToolObj;
-        private Transform speedFactorText;
+        //private Transform speedFactorText;
         private Transform grind_ControlsUI;
         private Transform wax_ControlsUI;
 
@@ -41,18 +41,20 @@ namespace GrindTools
         }
         private void Update()
         {
-            if (GameStateMachine.Instance.CurrentState?.GetType() != typeof(MapEditorGameState))
-                return;
-            CheckForNewSplines();
+            MapEditorState currentstate = MapEditorController.Instance.CurrentState;
+            if (currentstate != null && (currentstate is GrindSplineToolState || currentstate is WaxToolState))
+            {
+                CheckForNewSplines();
+            }
         }
         private void OnGUI()
         {
-            Type currentstate = MapEditorController.Instance.CurrentState?.GetType();
-            if (currentstate == typeof(GrindSplineToolState))
+            MapEditorState currentstate = MapEditorController.Instance.CurrentState;
+            if (currentstate != null && currentstate is GrindSplineToolState)
             {
                 ControlsUI.Instance.Show(ToolStates.Grind);
             }
-            else if (currentstate == typeof(WaxToolState))
+            else if (currentstate != null && currentstate is WaxToolState)
             {
                 ControlsUI.Instance.Show(ToolStates.Wax);
             }
@@ -64,7 +66,7 @@ namespace GrindTools
             waxToolObj = statesObj?.Find("Wax Tool");
             grind_ControlsUI = grindtoolObj?.Find("Controls UI");
             wax_ControlsUI = waxToolObj?.Find("Controls UI");
-            speedFactorText = MapEditorController.Instance.speedFactorText.transform.parent;
+            //speedFactorText = MapEditorController.Instance.speedFactorText.transform.parent;
         }      
         private void GetComponents()
         {
@@ -87,11 +89,12 @@ namespace GrindTools
                     break;
             }
         }
-       
+        /*
         public void ToggleSpeedText(bool state)
         {
             speedFactorText.gameObject.SetActive(state);
         }
+        */
         public void SetCamFov()
         {
             if (Main.settings.CamFOV == grindToolCam.m_Lens.FieldOfView)
@@ -148,60 +151,5 @@ namespace GrindTools
                 activeSplineCount = childCount;
             }
         }
-        /*
-        private void CheckForNewSplines()
-        {
-            var parent = MapEditorController.Instance.placedObjectsParent;
-            if (parent == null)
-                return;
-
-            int childCount = parent.childCount;
-            if (childCount == 0)
-            {
-                activeSplineCount = 0;
-                return;
-            }
-
-            if (childCount == activeSplineCount)
-                return;
-
-            if (childCount > activeSplineCount)
-            {
-                Transform lastChild = parent.GetChild(childCount - 1);
-                if (lastChild.GetComponent<MapEditorSplineObject>() != null)
-                {
-                    UISounds.Instance.PlayOneShotSelectMajor();
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Success, $"New Spline Created", 2f);
-                }
-                else if (lastChild.GetComponent<MapEditorMovable>() != null)
-                {
-                    activeSplineCount = childCount;
-                    return;
-                }
-                else
-                {
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Spline Creation Failed", 2f);
-                }
-                activeSplineCount = childCount;
-            }
-            else
-            {
-                activeSplineCount = childCount;
-            }
-        }
-        */
-        /*
-        public void DeleteSelectedSpline()
-        {
-            if (CheckRaycastsPatch.GetSelectedSpline() != null && CheckRaycastsPatch.GetSelectedSpline().nodes.Count < 2)
-            {
-                Destroy(CheckRaycastsPatch.GetSelectedSpline().gameObject);
-            }
-            else
-            {
-                return;
-            }
-        }
-        */
     }
 }

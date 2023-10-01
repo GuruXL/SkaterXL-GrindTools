@@ -36,8 +36,6 @@ namespace GrindTools.Patches
             if (splineComp == null && Physics.SphereCast(ray, 0.2f, out hitInfo, maxDistance, LayerUtility.GrindableMask))
             {
                 splineComp = hitInfo.collider.GetComponentInParent<SplineComputer>();
-                if (splineComp == null)
-                    Main.Logger.Log(string.Format("Hit on Grindable/Coping layer but no SplineComputer in parent. layer: {0}", hitInfo.collider.gameObject.layer));
             }
 
             /*
