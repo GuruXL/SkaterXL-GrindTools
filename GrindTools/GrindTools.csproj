@@ -192,6 +192,7 @@
     <Compile Include="GrindTools.UI\XboxButtons.cs" />
     <Compile Include="GrindTools.UI\PlaystationButtons.cs" />
     <Compile Include="GrindTools.UI\UIAssetLoader.cs" />
+    <Compile Include="GrindTools.Utils\ResourceExtractor.cs" />
     <Compile Include="GrindTools.Utils\StateManager.cs" />
     <Compile Include="GrindTools.Utils\MatUtil.cs" />
     <Compile Include="GrindTools.Utils\AssetLoader.cs" />
@@ -250,6 +251,9 @@
     <EmbeddedResource Include="Resources\ButtonIcons\Xbox\X.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\Xbox\xbox.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\Xbox\Y.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\LoadingTexture.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

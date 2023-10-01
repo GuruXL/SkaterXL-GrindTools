@@ -8,6 +8,7 @@ using System;
 using Object = UnityEngine.Object;
 using TMPro;
 using UnityEngine.Events;
+using System.Threading.Tasks;
 
 namespace GrindTools.Patches
 {
@@ -32,6 +33,8 @@ namespace GrindTools.Patches
             if (grindToolsButton == null)
             {
                 // Add new listener to the original MapEditorButton -- Fix for issue with MapEditor Initial state being grindtool
+                __instance.MapEditorButton.onClick.RemoveAllListeners();
+                __instance.MapEditorButton.onClick.SetPersistentListenerState(0, UnityEventCallState.Off);
                 __instance.MapEditorButton.onClick.AddListener(() => MapEditorButtonOnClick());
 
                 GameObject originalButton = __instance.MapEditorButton.gameObject;
@@ -60,14 +63,9 @@ namespace GrindTools.Patches
         {
             await StateManager.Instance.RequestGrindTool();
         }
-        public static void MapEditorButtonOnClick()
+        public static async void MapEditorButtonOnClick()
         {
-            if (MapEditorController.Instance.initialState != MapEditorController.Instance.SimplePlacerState)
-            {
-                MapEditorController.Instance.initialState = MapEditorController.Instance.SimplePlacerState;
-            }
-            GameStateMachine.Instance.RequestMapEditorState();
-            MapEditorController.Instance.ChangeState(MapEditorController.Instance.SimplePlacerState);
+            await StateManager.Instance.RequestSimpleState();
         }
         public static void DestroyGrindToolButton()
         {

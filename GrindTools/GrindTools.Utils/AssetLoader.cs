@@ -13,6 +13,7 @@ namespace GrindTools.Utils
         public static Material BlueMat;
         public static Material GreenMat;
         public static AssetBundle assetBundle;
+        public static Texture2D loadingTexture = new Texture2D(128, 128);
 
         public static void LoadBundles()
         {
@@ -24,21 +25,9 @@ namespace GrindTools.Utils
                 PlayerController.Main.StartCoroutine(LoadAssetBundle());     
             }
         }   
-        private static byte[] ExtractResources(string filename)
-        {
-            using (Stream manifestResourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(filename))
-            {
-                if (manifestResourceStream == null)
-                    return null;
-
-                byte[] buffer = new byte[manifestResourceStream.Length];
-                manifestResourceStream.Read(buffer, 0, buffer.Length);
-                return buffer;
-            }
-        }
         private static IEnumerator LoadAssetBundle()
         {
-            byte[] assetBundleData = ExtractResources("GrindTools.Resources.mats");
+            byte[] assetBundleData = ResourceExtractor.ExtractResources("GrindTools.Resources.mats");
             if (assetBundleData == null)
             {
                 MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Failed to EXTRACT GrindTools Asset Bundle", 2.5f);
@@ -69,6 +58,7 @@ namespace GrindTools.Utils
             RedMat = assetBundle.LoadAsset<Material>("RedMat");
             BlueMat = assetBundle.LoadAsset<Material>("BlueMat");
             GreenMat = assetBundle.LoadAsset<Material>("GreenMat");
+            loadTexture();
             yield return null;
         }
         public static void UnloadAssetBundle()
@@ -79,6 +69,20 @@ namespace GrindTools.Utils
                 assetBundle = null;
             }
         }
+        private static void loadTexture()
+        {
+            try
+            {
+                byte[] Data = ResourceExtractor.ExtractResources("GrindTools.Resources.LoadingTexture.png");
+                if (Data != null) ImageConversion.LoadImage(loadingTexture, Data);
+               
+            }
+            catch (Exception ex)  // Catch any exception
+            {
+                Main.Logger.Log($"An error occurred while loading texture: {ex.Message}");
+            }
+        }
+
         private static void OnDestroy()
         {
             UnloadAssetBundle();

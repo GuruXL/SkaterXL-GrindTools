@@ -17,14 +17,10 @@ namespace GrindTools.Patches
             List<MapEditorState> availableMapEditorStates = (List<MapEditorState>)field.GetValue(__instance);
 
             // Modifys the list
-            if (!availableMapEditorStates.Contains(Main.controller.grindToolState))
-            {
-                availableMapEditorStates.Add(Main.controller.grindToolState);
-            }
-            if (!availableMapEditorStates.Contains(Main.controller.waxToolState))
-            {
-                availableMapEditorStates.Add(Main.controller.waxToolState);
-            }
+            if (!availableMapEditorStates.Contains(Main.controller.grindToolState)) { availableMapEditorStates.Add(Main.controller.grindToolState); }
+            if (!availableMapEditorStates.Contains(Main.controller.waxToolState)) { availableMapEditorStates.Add(Main.controller.waxToolState); }
+            if (!availableMapEditorStates.Contains(MapEditorController.Instance.SimplePlacerState)) { availableMapEditorStates.Add(MapEditorController.Instance.SimplePlacerState); }
+            if (!availableMapEditorStates.Contains(MapEditorController.Instance.FineMovementState)) { availableMapEditorStates.Add(MapEditorController.Instance.FineMovementState); }
 
             // sets the modified list back to the private field
             field.SetValue(__instance, availableMapEditorStates);

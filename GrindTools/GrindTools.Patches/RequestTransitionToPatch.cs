@@ -8,25 +8,26 @@ using System.Collections.Generic;
 namespace GrindTools.Patches
 {
     [HarmonyPatch(typeof(GameStateMachine), "RequestTransitionTo")]
-    [HarmonyPatch(new Type[] { typeof(GameState), typeof(bool), typeof(Action<GameState>) })]  // Method signature
+    //[HarmonyPatch(new Type[] { typeof(GameState), typeof(bool), typeof(Action<GameState>) })]  // Method signature
     public static class RequestTransitionToPatch
     {
         [HarmonyPrefix]
-        public static void Prefix(GameStateMachine __instance, GameState requestedState, bool alwaysAddToNavStack, Action<GameState> transitionAction)
+        //public static void Prefix(GameStateMachine __instance, GameState requestedState, bool alwaysAddToNavStack, Action<GameState> transitionAction)
+        public static void Prefix(GameStateMachine __instance, GameState requestedState)
         {
             if (requestedState is MapEditorGameState)
             {
                 var TraversedCurrentState = Traverse.Create(__instance).Field("CurrentState");
                 var TraversedLastState = Traverse.Create(__instance).Field("LastState");
-                //var TraversedStateNavStack = Traverse.Create(__instance).Field("stateNavigationStack");
-                //var TraversedExcludedFromNav = Traverse.Create(__instance).Field("statesExcludedFromNavigationStack");
+                var TraversedStateNavStack = Traverse.Create(__instance).Field("stateNavigationStack");
+                var TraversedExcludedFromNav = Traverse.Create(__instance).Field("statesExcludedFromNavigationStack");
                 var traversedOnGameStateChanged = Traverse.Create(__instance).Field("OnGameStateChanged");
                 var traversedOnGameStateChangedRefs = Traverse.Create(__instance).Field("OnGameStateChangedRefs");
 
                 GameState currentState = TraversedCurrentState.GetValue<GameState>();
                 __instance.CurrentState.OnExit(requestedState);
 
-                /*
+                
                 if (requestedState.ClearNavStackOnEnter)
                     TraversedStateNavStack.GetValue<Stack<GameState>>().Clear();
                 else if (__instance.CurrentState == requestedState)
@@ -38,7 +39,7 @@ namespace GrindTools.Patches
                 }
                 else if (!TraversedExcludedFromNav.GetValue<List<Type>>().Contains(currentState.GetType()))
                     TraversedStateNavStack.GetValue<Stack<GameState>>().Push(currentState);
-                */
+                /*
                 if (transitionAction != null)
                 {
                     try
@@ -50,6 +51,7 @@ namespace GrindTools.Patches
                         Main.Logger.Error(string.Format("Error in transition Action: {0}", ex));
                     }
                 }
+                */
 
                 TraversedLastState.SetValue(__instance.CurrentState);
                 TraversedCurrentState.SetValue(requestedState);

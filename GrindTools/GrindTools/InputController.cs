@@ -66,11 +66,8 @@ namespace GrindTools
                     {
                         await StateManager.Instance.ToggleState(ToolStates.Wax);
                         UISounds.Instance.PlayOneShotSelectMinor();
-                        //Main.controller.DeleteSelectedSpline(); // delete if < 2 nodes
-                        //CheckRaycastsPatch.SetSelectedSplineNull(); // this is not working, find a better way to reset selected spline one state changes.
-
                     }
-                    else if (player.GetButtonDown("B"))
+                    else if (player.GetButtonDown("B") || player.GetButtonDown("Start"))
                     {
                         StateManager.Instance.ResetToPlayState();
                     }  
@@ -81,7 +78,7 @@ namespace GrindTools
                         await StateManager.Instance.ToggleState(ToolStates.Grind);
                         UISounds.Instance.PlayOneShotSelectMinor();
                     }
-                    else if (player.GetButtonDown("B"))
+                    else if (player.GetButtonDown("B") || player.GetButtonDown("Start"))
                     {
                         StateManager.Instance.ResetToPlayState();
                     }
