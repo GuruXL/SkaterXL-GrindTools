@@ -50,7 +50,7 @@ namespace GrindTools.Patches
                 //CreateNewOnSubmit(grindToolsButton);
             }
 
-            RemoveDLCButton();
+            //RemoveDLCButton();
 
             __instance.StateMachine.PauseObject.SetActive(false);
             __instance.StateMachine.PauseObject.SetActive(true);
@@ -80,6 +80,7 @@ namespace GrindTools.Patches
             }
         }
 
+        /*
         private static void RemoveDLCButton()
         {
             // remove DLC button :)
@@ -92,5 +93,6 @@ namespace GrindTools.Patches
                 }
             }
         }
+        */
     }
 }
