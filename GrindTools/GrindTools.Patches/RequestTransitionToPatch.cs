@@ -30,10 +30,10 @@ namespace GrindTools.Patches
                 if (requestedState.ClearNavStackOnEnter)
                     TraversedStateNavStack.GetValue<Stack<GameState>>().Clear();
                 else if (__instance.CurrentState == requestedState)
-                    Debug.Log(("Transition from GameState to itself: " + requestedState.name));
+                    Main.Logger.Log("Transition from GameState to itself: " + requestedState.name);
                 else if (TraversedStateNavStack.GetValue<Stack<GameState>>().Count > 0 && TraversedStateNavStack.GetValue<Stack<GameState>>().Peek() == requestedState && !alwaysAddToNavStack)
                 {
-                    Debug.Log("Going back a state");
+                    Main.Logger.Log("Going back a state");
                     TraversedStateNavStack.GetValue<Stack<GameState>>().Pop();
                 }
                 else if (!TraversedExcludedFromNav.GetValue<List<Type>>().Contains(currentState.GetType()))

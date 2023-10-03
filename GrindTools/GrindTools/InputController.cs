@@ -3,7 +3,7 @@ using MapEditor;
 using GameManagement;
 using ModIO.UI;
 using Rewired;
-using Dreamteck.Splines;
+using Dreamteck.Spline;
 using System;
 using System.Collections.Generic;
 using GrindTools.Patches;
@@ -11,13 +11,15 @@ using GrindTools.Data;
 using GrindTools.Utils;
 using System.Collections;
 using System.Threading.Tasks;
+using HarmonyLib;
+using SkaterXL.Map;
 
 namespace GrindTools
 {
     public class InputController : MonoBehaviour
     {
         public Player player { get; private set; }
-        Transform placedParent = MapEditorController.Instance.placedObjectsParent;
+        //Transform placedParent = MapEditorController.Instance.placedObjectsParent;
        
         public void Awake()
         {
@@ -27,20 +29,45 @@ namespace GrindTools
         }
         public void Update()
         {
+            if (GameStateMachine.Instance.CurrentState.IsGameplay())
+                return;
+
             var currentState = MapEditorController.Instance.CurrentState?.GetType();
-            if (currentState == typeof(GrindSplineToolState) || currentState == typeof(WaxToolState))
+            if (currentState == typeof(GrindSplineToolState))
             {
-                bool RBPressed = player.GetButton(7);
-                if (RBPressed)
+                if (player.GetButton("LB")) // LB pressed
+                {
+                    CheckActiveSplineDeleteInput();
+                }
+                else if (player.GetButton(7)) // RB pressed
                 {
                     UpdateFOV();
                 }
                 else
                 {
-                    SwapToolStates();
+                    ToolStateInput();
                 }
             }
-            else if (!GameStateMachine.Instance.CurrentState.IsGameplay() && currentState == typeof(SimpleMode))
+            else if (currentState == typeof(WaxToolState))
+            {
+                if (player.GetButton("LB")) // LB pressed
+                {
+                    CheckDeleteInput(Main.controller.waxToolState, WaxToolStatePatch.GetHighlightedObj(), WaxToolStatePatch.GetRayHitInfo());
+                }
+                else if (player.GetButton(7)) // RB pressed
+                {
+                    UpdateFOV();
+                }
+                else if (player.GetButtonDown(0)) // A button
+                {
+                    SwapGrindTags(Main.controller.waxToolState, WaxToolStatePatch.GetSplineComp());
+                }
+                else
+                {
+                    ToolStateInput();
+                }
+            }
+            else if (currentState == typeof(SimpleMode))
             {
                 CheckForInput();
             }
@@ -57,7 +84,7 @@ namespace GrindTools
                 StateManager.Instance.ResetToPlayState();
             }
         }    
-        private async void SwapToolStates()
+        private async void ToolStateInput()
         {
             switch (MapEditorController.Instance.CurrentState)
             {
@@ -98,6 +125,88 @@ namespace GrindTools
                 return;
             Main.controller.grindToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
             Main.controller.waxToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
+        }
+
+        private void CheckDeleteInput(WaxToolState __instance, IMapEditorSelectable HightlightedObj, RaycastHit hitInfo)
+        {
+            if (hitInfo.collider.GetComponentInParent<IMapEditorSelectable>() == null)
+            {
+                ShowInfo(__instance, "Cannot Delete Map Splines");
+                return;
+            }
+            ShowInfo(__instance, "Warning: Spline Deletion is Permanent");
+
+            if (player.GetButtonUp(13))
+            {
+                Destroy(HightlightedObj.gameObject);
+                ShowInfo(__instance, "Spline Deleted");
+                UISounds.Instance.PlayOneShotSelectionChange();
+                MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Spline Deleted", 0.5f);
+            }
+        }
+
+        private void CheckActiveSplineDeleteInput()
+        {
+            if (player.GetButtonUp(13))
+            {
+                if (CheckRaycastsPatch.GetSelectedSpline() != null)
+                {
+                    CheckRaycastsPatch.SetSelectedSplineNull();
+
+                    if (CheckRaycastsPatch.GetSelectedSpline() == null)
+                    {
+                        UISounds.Instance.PlayOneShotSelectionChange();
+                        MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Active Spline Removed", 1f);
+                    }
+                    else
+                    {
+                        MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Failed To Remove Active Spline", 1f);
+                    }
+                }
+                else
+                {
+                    MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"No Active Spline", 1f);
+                }
+            }
+        }
+        public void SwapGrindTags(WaxToolState __instance, SplineComputer spline)
+        {
+            string concrete = "Grind_Concrete";
+            string metal = "Grind_Metal";
+
+            if (spline.gameObject.tag == concrete)
+            {
+                SetTagRecursively(spline.gameObject, metal);
+                ShowInfo(__instance, "Metal");
+                return;
+            }
+            else if (spline.gameObject.tag == metal)
+            {
+                SetTagRecursively(spline.gameObject, concrete);
+                ShowInfo(__instance, "Concrete");
+                return;
+            }
+            else // if tag is unknown or undefined the default is concrete so swap to metal
+            {
+                SetTagRecursively(spline.gameObject, metal);
+                ShowInfo(__instance, "Metal");
+            }
+        }
+        public void SetTagRecursively(GameObject obj, string tag)
+        {
+            obj.tag = tag;
+
+            if (obj.transform.childCount > 0)
+            {
+                foreach (Transform child in obj.transform)
+                {
+                    SetTagRecursively(child.gameObject, tag);
+                }
+            }
+        }
+        public void ShowInfo(WaxToolState __instance, string text)
+        {
+            AccessTools.Method(typeof(WaxToolState), "ShowInfo").Invoke(__instance, new object[] { text });
         }
     }
 }

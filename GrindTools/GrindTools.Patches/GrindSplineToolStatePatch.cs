@@ -6,7 +6,7 @@ using ModIO.UI;
 
 namespace GrindTools.Patches
 {
-
+    
     [HarmonyPatch(typeof(GrindSplineToolState), "Update")]
     public static class GrindSplineToolStatePatch
     {
@@ -14,10 +14,12 @@ namespace GrindTools.Patches
         // used to keep track of newly placed splines
         private static void Postfix(GrindSplineToolState __instance)
         {
+            /*
             if (MapEditorController.Instance.CurrentState.GetType() != typeof(GrindSplineToolState))
                 return;
 
             CheckForInput();
+            */
         }
         /*
         private static void CheckForNewSplines()
@@ -52,6 +54,7 @@ namespace GrindTools.Patches
             }
         }
         */
+        /*
         private static void CheckForInput()
         {
             if (Main.inputctrl.player.GetButton("LB"))
@@ -79,5 +82,6 @@ namespace GrindTools.Patches
                 }
             }
         }
-    }   
+        */
+    }
 }

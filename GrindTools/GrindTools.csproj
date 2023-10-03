@@ -58,9 +58,6 @@
     <Reference Include="Dreamteck.Spline">
       <HintPath>D:\SteamLibrary\steamapps\common\Skater XL\SkaterXL_Data\Managed\Dreamteck.Spline.dll</HintPath>
     </Reference>
-    <Reference Include="Dreamteck.Utilities">
-      <HintPath>D:\SteamLibrary\steamapps\common\Skater XL\SkaterXL_Data\Managed\Dreamteck.Utilities.dll</HintPath>
-    </Reference>
     <Reference Include="modio.UnityPlugin, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\SteamLibrary\steamapps\common\Skater XL\SkaterXL_Data\Managed\modio.UnityPlugin.dll</HintPath>
