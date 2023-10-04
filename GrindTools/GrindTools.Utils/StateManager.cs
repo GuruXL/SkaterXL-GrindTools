@@ -62,7 +62,7 @@ namespace GrindTools.Utils
         {
             PlayerController.Main.DisableGameplay();
             PlayerController.Main.HidePin(true);
-            GameStateMachine.Instance.StartLoading(true, AssetLoader.loadingTexture, "Loading");
+            GameStateMachine.Instance.StartLoading(false, AssetLoader.loadingTexture, "Loading");
             GameStateMachine.Instance.MapEditorObject.SetActive(true);
             await MapEditorController.Instance.ChangeState(state);
             GameStateMachine.Instance.StopLoading();
@@ -74,7 +74,7 @@ namespace GrindTools.Utils
         {
             MapEditorController.Instance.initialState = initialState;
             //GameStateMachine.Instance.RequestMapEditorState();
-            GameStateMachine.Instance.StartLoading(true, AssetLoader.loadingTexture, "Loading");
+            GameStateMachine.Instance.StartLoading(false, AssetLoader.loadingTexture, "Loading");
             GameStateMachine.Instance.MapEditorObject.SetActive(true);
             //GameStateMachine.Instance.RequestTransitionTo(typeof(MapEditorGameState)); // disable this line if transtions not function properly.
             await MapEditorController.Instance.ChangeState(MapEditorController.Instance.SimplePlacerState);
