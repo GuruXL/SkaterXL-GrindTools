@@ -41,18 +41,20 @@ namespace GrindTools
         }
         private void Update()
         {
-            if (GameStateMachine.Instance.CurrentState?.GetType() != typeof(MapEditorGameState))
+            MapEditorState editorState = MapEditorController.Instance.CurrentState;
+            if (editorState == null || !(editorState is MapEditorState))
                 return;
+
             CheckForNewSplines();
         }
         private void OnGUI()
         {
-            Type currentstate = MapEditorController.Instance.CurrentState?.GetType();
-            if (currentstate == typeof(GrindSplineToolState))
+            Type currentState = MapEditorController.Instance.CurrentState?.GetType();
+            if (currentState == typeof(GrindSplineToolState))
             {
                 ControlsUI.Instance.Show(ToolStates.Grind);
             }
-            else if (currentstate == typeof(WaxToolState))
+            else if (currentState == typeof(WaxToolState))
             {
                 ControlsUI.Instance.Show(ToolStates.Wax);
             }
@@ -87,7 +89,6 @@ namespace GrindTools
                     break;
             }
         }
-       
         public void ToggleSpeedText(bool state)
         {
             speedFactorText.gameObject.SetActive(state);

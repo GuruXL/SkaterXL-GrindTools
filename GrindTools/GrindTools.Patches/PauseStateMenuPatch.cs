@@ -57,8 +57,8 @@ namespace GrindTools.Patches
 
             __instance.StateMachine.PauseObject.SetActive(false);
             __instance.StateMachine.PauseObject.SetActive(true);
-        }
 
+        }
         public static async void GrindToolButtonOnClick()
         {
             await StateManager.Instance.RequestGrindTool();

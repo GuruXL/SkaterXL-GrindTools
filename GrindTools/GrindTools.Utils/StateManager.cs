@@ -55,8 +55,7 @@ namespace GrindTools.Utils
         }
         public async Task LoadMapEditorState(MapEditorState state)
         {
-            PlayerController.Main.DisableGameplay();
-            PlayerController.Main.HidePin(true);
+            PlayerController.Instance.DisableGameplay();
             GameStateMachine.Instance.StartLoading(false, null, "Loading");
             //GameStateMachine.Instance.MapEditorObject.SetActive(true);
             await MapEditorController.Instance.ChangeState(state);
@@ -68,7 +67,7 @@ namespace GrindTools.Utils
         {
             MapEditorController.Instance.initialState = initialState;
             GameStateMachine.Instance.StartLoading(false, null, "Loading");
-            //GameStateMachine.Instance.MapEditorObject.SetActive(true);
+            GameStateMachine.Instance.MapEditorObject.SetActive(true);
             GameStateMachine.Instance.RequestMapEditorState();
             await MapEditorController.Instance.ChangeState(MapEditorController.Instance.SimplePlacerState);
             GameStateMachine.Instance.StopLoading();
@@ -129,10 +128,8 @@ namespace GrindTools.Utils
             try
             {
                 Main.controller.AllowRespawn(true);
-                PlayerController.Main.HidePin(false);
-                GameStateMachine.Instance.MapEditorObject.SetActive(false);
-                PlayerController.Main.EnableGameplay();
-                //Main.controller.ToggleSpeedText(false);
+                //GameStateMachine.Instance.MapEditorObject.SetActive(false);
+                PlayerController.Instance.EnableGameplay();
                 GameStateMachine.Instance.RequestPlayState();
             }
             catch (Exception ex)
