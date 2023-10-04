@@ -47,20 +47,20 @@ namespace GrindTools
         }
         private void Update()
         {
-            MapEditorState currentstate = MapEditorController.Instance.CurrentState;
-            if (currentstate != null && (currentstate is GrindSplineToolState || currentstate is WaxToolState))
-            {
-                CheckForNewSplines();
-            }
+            MapEditorState editorState = MapEditorController.Instance.CurrentState;
+            if (editorState == null || !(editorState is MapEditorState))
+                return;
+
+            CheckForNewSplines();
         }
         private void OnGUI()
         {
-            MapEditorState currentstate = MapEditorController.Instance.CurrentState;
-            if (currentstate != null && currentstate is GrindSplineToolState)
+            Type currentstate = MapEditorController.Instance.CurrentState?.GetType();
+            if (currentstate == typeof(GrindSplineToolState))
             {
                 ControlsUI.Instance.Show(ToolStates.Grind);
             }
-            else if (currentstate != null && currentstate is WaxToolState)
+            else if (currentstate == typeof(WaxToolState))
             {
                 ControlsUI.Instance.Show(ToolStates.Wax);
             }
