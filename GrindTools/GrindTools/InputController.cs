@@ -29,11 +29,11 @@ namespace GrindTools
         }
         public void Update()
         {
-            if (GameStateMachine.Instance.CurrentState.IsGameplay())
+            if (GameStateMachine.Instance.CurrentState == null || GameStateMachine.Instance.CurrentState.IsGameplay())
                 return;
 
-            var currentState = MapEditorController.Instance.CurrentState?.GetType();
-            if (currentState == typeof(GrindSplineToolState))
+            var currentState = MapEditorController.Instance.CurrentState.GetType();
+            if (currentState != null && currentState == typeof(GrindSplineToolState))
             {
                 if (player.GetButton("LB")) // LB pressed
                 {
@@ -48,7 +48,7 @@ namespace GrindTools
                     ToolStateInput();
                 }
             }
-            else if (currentState == typeof(WaxToolState))
+            else if (currentState != null && currentState == typeof(WaxToolState))
             {
                 if (player.GetButton("LB")) // LB pressed
                 {
@@ -67,7 +67,7 @@ namespace GrindTools
                     ToolStateInput();
                 }
             }
-            else if (currentState == typeof(SimpleMode))
+            else if (currentState != null && currentState == typeof(SimpleMode))
             {
                 CheckForInput();
             }

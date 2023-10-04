@@ -13,7 +13,7 @@ namespace GrindTools.Utils
         public static Material BlueMat;
         public static Material GreenMat;
         public static AssetBundle assetBundle;
-        public static Texture2D loadingTexture = new Texture2D(1028, 1028);
+        public static Texture2D loadingTexture = new Texture2D(512, 512);
 
         public static void LoadBundles()
         {
