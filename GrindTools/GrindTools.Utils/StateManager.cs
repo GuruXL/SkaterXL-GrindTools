@@ -76,7 +76,7 @@ namespace GrindTools.Utils
             //GameStateMachine.Instance.RequestMapEditorState();
             GameStateMachine.Instance.StartLoading(true, AssetLoader.loadingTexture, "Loading");
             GameStateMachine.Instance.MapEditorObject.SetActive(true);
-            //GameStateMachine.Instance.RequestTransitionTo(typeof(MapEditorGameState), true);
+            //GameStateMachine.Instance.RequestTransitionTo(typeof(MapEditorGameState)); // disable this line if transtions not function properly.
             await MapEditorController.Instance.ChangeState(MapEditorController.Instance.SimplePlacerState);
             GameStateMachine.Instance.StopLoading();
             ToggleMenuUI(false);

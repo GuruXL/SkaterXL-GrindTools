@@ -25,6 +25,32 @@ namespace GrindTools.UI
 		public bool isUISetup { get; private set; } = false;
 		public void GetControllerType()
 		{
+
+			isPS4 = false;
+			string str = RewiredInput.PrimaryPlayer.controllers.Joysticks.FirstOrDefault()?.name ?? "unknown";
+			if (str.ToLower().Contains("dual") || str.ToLower().Contains("dual shock") || str.ToLower().Contains("dualshock"))
+			{
+				isPS4 = true;
+			}
+			Main.Logger.Log($"Joystick Name: " + str);
+
+			/*
+			string[] joystickNames = Input.GetJoystickNames();
+			isPS4 = true; // Assume it's a PS4 controller by default
+
+			for (int i = 0; i < joystickNames.Length; i++)
+			{
+				if (joystickNames[i].ToLower().Contains("xbox"))
+				{
+					isPS4 = false; // If any joystick is Xbox, set isPS4 to false
+					break; // Exit the loop, as we already found an Xbox joystick
+				}
+				Main.Logger.Log($"Joystick{i} Name: " + joystickNames[i]);
+			}
+			Main.Logger.Log("Is PS4: " + isPS4);
+			*/
+
+			/*
 			string[] joystickNames = Input.GetJoystickNames();
 			for (int i = 0; i < joystickNames.Length; i++)
 			{
@@ -37,17 +63,6 @@ namespace GrindTools.UI
 					isPS4 = true;
 				}
 			}	
-			
-			/*
-			string str = RewiredInput.PrimaryPlayer.controllers.Joysticks.FirstOrDefault()?.name ?? "unknown";
-			if (str.ToLower().Contains("dual shock") || str.ToLower().Contains("dualshock"))
-			{
-				isPS4 = true;
-			}
-            else
-            {
-				isPS4 = false;
-			}
 			*/
 		}
 		public void Show(ToolStates state)

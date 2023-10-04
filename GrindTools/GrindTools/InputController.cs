@@ -131,15 +131,15 @@ namespace GrindTools
         {
             if (hitInfo.collider.GetComponentInParent<IMapEditorSelectable>() == null)
             {
-                ShowInfo(__instance, "Cannot Delete Map Splines");
+                ShowWaxInfo(__instance, "Cannot Delete Map Splines");
                 return;
             }
-            ShowInfo(__instance, "Warning: Spline Deletion is Permanent");
+            ShowWaxInfo(__instance, "Warning: Spline Deletion is Permanent");
 
             if (player.GetButtonUp(13))
             {
                 Destroy(HightlightedObj.gameObject);
-                ShowInfo(__instance, "Spline Deleted");
+                ShowWaxInfo(__instance, "Spline Deleted");
                 UISounds.Instance.PlayOneShotSelectionChange();
                 MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Spline Deleted", 0.5f);
             }
@@ -177,19 +177,19 @@ namespace GrindTools
             if (spline.gameObject.tag == concrete)
             {
                 SetTagRecursively(spline.gameObject, metal);
-                ShowInfo(__instance, "Metal");
+                ShowWaxInfo(__instance, "Metal"); 
                 return;
             }
             else if (spline.gameObject.tag == metal)
             {
                 SetTagRecursively(spline.gameObject, concrete);
-                ShowInfo(__instance, "Concrete");
+                ShowWaxInfo(__instance, "Concrete");
                 return;
             }
             else // if tag is unknown or undefined the default is concrete so swap to metal
             {
                 SetTagRecursively(spline.gameObject, metal);
-                ShowInfo(__instance, "Metal");
+                ShowWaxInfo(__instance, "Metal");
             }
         }
         public void SetTagRecursively(GameObject obj, string tag)
@@ -204,7 +204,7 @@ namespace GrindTools
                 }
             }
         }
-        public void ShowInfo(WaxToolState __instance, string text)
+        public void ShowWaxInfo(WaxToolState __instance, string text)
         {
             AccessTools.Method(typeof(WaxToolState), "ShowInfo").Invoke(__instance, new object[] { text });
         }
