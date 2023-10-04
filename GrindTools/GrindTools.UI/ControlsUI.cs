@@ -24,6 +24,15 @@ namespace GrindTools.UI
 		public bool isUISetup { get; private set; } = false;
 		public void GetControllerType()
 		{
+			isPS4 = false;
+			string str = RewiredInput.PrimaryPlayer.controllers.Joysticks.FirstOrDefault()?.name ?? "unknown";
+			if (str.ToLower().Contains("dual") || str.ToLower().Contains("dual shock") || str.ToLower().Contains("dualshock"))
+			{
+				isPS4 = true;
+			}
+			Main.Logger.Log($"Joystick Name: " + str);
+
+			/*
 			string[] joystickNames = Input.GetJoystickNames();
 			for (int i = 0; i < joystickNames.Length; i++)
 			{
@@ -36,7 +45,7 @@ namespace GrindTools.UI
 					isPS4 = true;
 				}
 			}	
-			
+			*/
 			/*
 			string str = RewiredInput.PrimaryPlayer.controllers.Joysticks.FirstOrDefault()?.name ?? "unknown";
 			if (str.ToLower().Contains("dual shock") || str.ToLower().Contains("dualshock"))

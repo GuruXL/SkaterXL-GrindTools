@@ -53,34 +53,39 @@ namespace GrindTools.Utils
                 MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Error Switching Modes: {ex.Message}", 1f);
             }
         }
-
-        private async Task LoadGrindToolState()
+        public async Task LoadMapEditorState(MapEditorState state)
         {
-            GameStateMachine.Instance.StartLoading(true, null, "Loading");
-            await MapEditorController.Instance.ChangeState(Main.controller.grindToolState);
+            PlayerController.Main.DisableGameplay();
+            PlayerController.Main.HidePin(true);
+            GameStateMachine.Instance.StartLoading(false, null, "Loading");
+            //GameStateMachine.Instance.MapEditorObject.SetActive(true);
+            await MapEditorController.Instance.ChangeState(state);
             GameStateMachine.Instance.StopLoading();
             Main.controller.AllowRespawn(false);
-            Main.controller.ToggleSpeedText(true);
+            //Main.controller.ToggleSpeedText(true);
         }
-        private async Task InitializeMapEditor()
+        public async Task InitializeMapEditor(MapEditorState initialState)
         {
-            MapEditorController.Instance.initialState = Main.controller.grindToolState;
-            GameStateMachine.Instance.MapEditorObject.SetActive(true);
+            MapEditorController.Instance.initialState = initialState;
+            GameStateMachine.Instance.StartLoading(false, null, "Loading");
+            //GameStateMachine.Instance.MapEditorObject.SetActive(true);
             GameStateMachine.Instance.RequestMapEditorState();
             await MapEditorController.Instance.ChangeState(MapEditorController.Instance.SimplePlacerState);
+            GameStateMachine.Instance.StopLoading();
         }
+
         public async Task RequestGrindTool()
         {
             try
             {
                 if (MapEditorController.Instance.initialState == null)
                 {
-                    await InitializeMapEditor();
-                    await LoadGrindToolState();
+                    await InitializeMapEditor(Main.controller.grindToolState);
+                    await LoadMapEditorState(Main.controller.grindToolState);
                 }
                 else
                 {
-                    await LoadGrindToolState();
+                    await LoadMapEditorState(Main.controller.grindToolState);
                 }
 
                 MapEditorState currentstate = MapEditorController.Instance.CurrentState;
@@ -99,13 +104,36 @@ namespace GrindTools.Utils
                 MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Grind Tool Error: {ex.Message}", 1f);
             }
         }
+        public async Task RequestSimpleState()
+        {
+            try
+            {
+                if (MapEditorController.Instance.initialState == null)
+                {
+                    await InitializeMapEditor(MapEditorController.Instance.SimplePlacerState);
+                    await LoadMapEditorState(MapEditorController.Instance.SimplePlacerState);
+                }
+                else
+                {
+                    await LoadMapEditorState(MapEditorController.Instance.SimplePlacerState);
+                }
+            }
+            catch (Exception ex)
+            {
+                Main.Logger.Error($"An error occurred while requesting Simple Mode: {ex.Message}");
+                MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Map Editor Error: {ex.Message}", 1f);
+            }
+        }
         public void ResetToPlayState()
         {
             try
             {
                 Main.controller.AllowRespawn(true);
+                PlayerController.Main.HidePin(false);
+                GameStateMachine.Instance.MapEditorObject.SetActive(false);
+                PlayerController.Main.EnableGameplay();
+                //Main.controller.ToggleSpeedText(false);
                 GameStateMachine.Instance.RequestPlayState();
-                Main.controller.ToggleSpeedText(false);
             }
             catch (Exception ex)
             {
@@ -115,3 +143,61 @@ namespace GrindTools.Utils
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

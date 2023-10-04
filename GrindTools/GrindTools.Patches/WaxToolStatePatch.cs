@@ -12,18 +12,21 @@ using Object = UnityEngine.Object;
 
 namespace GrindTools.Patches
 {
-    
+
     [HarmonyPatch(typeof(WaxToolState), "Update")]
     public static class WaxToolStatePatch
     {
+        private static IMapEditorSelectable HightlightedObj;
+        private static SplineComputer splineComp;
+        private static RaycastHit hitInfo;
+
         [HarmonyPostfix]
         public static void Postfix(WaxToolState __instance)
         {
             CinemachineVirtualCamera cam = Main.controller.waxToolCam;
-            IMapEditorSelectable HightlightedObj = null;
-            SplineComputer splineComp = null;
+            HightlightedObj = null;
+            splineComp = null;
             Ray ray = new Ray(cam.transform.position, cam.transform.forward);
-            RaycastHit hitInfo;
             float maxDistance = 100f;
 
             if (Physics.Raycast(ray, out hitInfo, maxDistance))
@@ -36,8 +39,6 @@ namespace GrindTools.Patches
             if (splineComp == null && Physics.SphereCast(ray, 0.2f, out hitInfo, maxDistance, LayerUtility.GrindableMask))
             {
                 splineComp = hitInfo.collider.GetComponentInParent<SplineComputer>();
-                if (splineComp == null)
-                    Main.Logger.Log(string.Format("Hit on Grindable/Coping layer but no SplineComputer in parent. layer: {0}", hitInfo.collider.gameObject.layer));
             }
 
             /*
@@ -53,12 +54,13 @@ namespace GrindTools.Patches
                 CheckForDeleteInput(__instance, HightlightedObj);
             }
             */
-
+            /*
             if (splineComp != null)
             {
                 CheckForDeleteInput(__instance, HightlightedObj, hitInfo);
                 SwapGrindTags(__instance, splineComp);
             }
+            */
         }
         /*
         private static void CheckForDeleteInput(WaxToolState __instance, SplineComputer spline)
@@ -76,10 +78,23 @@ namespace GrindTools.Patches
                 }
             }
         }
-        */       
+        */
+        public static SplineComputer GetSplineComp()
+        {
+            return splineComp;
+        }
+        public static IMapEditorSelectable GetHighlightedObj()
+        {
+            return HightlightedObj;
+        }
+        public static RaycastHit GetRayHitInfo()
+        {
+            return hitInfo;
+        }
+        /*
         private static void CheckForDeleteInput(WaxToolState __instance, IMapEditorSelectable HightlightedObj, RaycastHit hitInfo) 
         {
-            if (Main.inputctrl.player.GetButton("LB"))
+            if (RewiredInput.PrimaryPlayer.GetButton("LB"))
             {
                 if (hitInfo.collider.GetComponentInParent<IMapEditorSelectable>() == null)
                 {
@@ -88,7 +103,7 @@ namespace GrindTools.Patches
                 }
                 ShowInfo(__instance, "Warning: Spline Deletion is Permanent");
 
-                if (Main.inputctrl.player.GetButtonUp(13))
+                if (RewiredInput.PrimaryPlayer.GetButtonUp(13))
                 {
                     Object.Destroy(HightlightedObj.gameObject);
                     ShowInfo(__instance, "Spline Deleted");
@@ -103,7 +118,7 @@ namespace GrindTools.Patches
             string concrete = "Grind_Concrete";
             string metal = "Grind_Metal";
 
-            if (Main.inputctrl.player.GetButtonDown(0))
+            if (RewiredInput.PrimaryPlayer.GetButtonDown(0))
             {
                 if (spline.gameObject.tag == concrete)
                 {
@@ -140,5 +155,57 @@ namespace GrindTools.Patches
         {
             AccessTools.Method(typeof(WaxToolState), "ShowInfo").Invoke(__instance, new object[] { text });
         }
+        */
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

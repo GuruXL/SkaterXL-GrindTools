@@ -23,7 +23,8 @@ namespace GrindTools.Utils
             {
                 PlayerController.Instance.StartCoroutine(LoadAssetBundle());     
             }
-        }   
+        }  
+        /*
         private static byte[] ExtractResources(string filename)
         {
             using (Stream manifestResourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(filename))
@@ -36,9 +37,10 @@ namespace GrindTools.Utils
                 return buffer;
             }
         }
+        */
         private static IEnumerator LoadAssetBundle()
         {
-            byte[] assetBundleData = ExtractResources("GrindTools.Resources.mats");
+            byte[] assetBundleData = ResourceExtractor.ExtractResources("GrindTools.Resources.mats");
             if (assetBundleData == null)
             {
                 MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Failed to EXTRACT GrindTools Asset Bundle", 2.5f);
