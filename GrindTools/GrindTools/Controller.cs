@@ -18,7 +18,7 @@ namespace GrindTools
         private Transform statesObj;
         private Transform grindtoolObj;
         private Transform waxToolObj;
-        private Transform speedFactorText;
+        //private Transform speedFactorText;
         private Transform grind_ControlsUI;
         private Transform wax_ControlsUI;
 
@@ -66,7 +66,7 @@ namespace GrindTools
             waxToolObj = statesObj?.Find("Wax Tool");
             grind_ControlsUI = grindtoolObj?.Find("Controls UI");
             wax_ControlsUI = waxToolObj?.Find("Controls UI");
-            speedFactorText = MapEditorController.Instance.speedFactorText.transform.parent;
+            //speedFactorText = MapEditorController.Instance.speedFactorText.transform.parent;
         }      
         private void GetComponents()
         {
@@ -88,10 +88,6 @@ namespace GrindTools
                     GameStateMachine.Instance.allowPinMovement = false;
                     break;
             }
-        }
-        public void ToggleSpeedText(bool state)
-        {
-            speedFactorText.gameObject.SetActive(state);
         }
         public void SetCamFov()
         {
