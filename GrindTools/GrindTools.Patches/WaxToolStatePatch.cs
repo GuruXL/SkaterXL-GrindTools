@@ -23,6 +23,8 @@ namespace GrindTools.Patches
         [HarmonyPostfix]
         public static void Postfix(WaxToolState __instance)
         {
+            var waxwholespline = Traverse.Create(__instance).Field("waxWholeSpline");
+
             CinemachineVirtualCamera cam = Main.controller.waxToolCam;
             HightlightedObj = null;
             splineComp = null;
@@ -41,6 +43,10 @@ namespace GrindTools.Patches
                 splineComp = hitInfo.collider.GetComponentInParent<SplineComputer>();
             }
 
+            if (waxwholespline.GetValue<bool>())
+            {
+                waxwholespline.SetValue(false);
+            }
             /*
             if (Physics.Raycast(ray, out RaycastHit hitInfo, -cam.transform.localPosition.z, LayerUtility.MapEditorSelectionMask))
             {

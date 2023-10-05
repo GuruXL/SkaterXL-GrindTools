@@ -58,7 +58,7 @@ namespace GrindTools.Utils
             BlueMat = assetBundle.LoadAsset<Material>("BlueMat");
             GreenMat = assetBundle.LoadAsset<Material>("GreenMat");
             yield return null;
-        }
+        }       
         public static void UnloadAssetBundle()
         {
             if (assetBundle != null)

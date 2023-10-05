@@ -29,6 +29,11 @@ namespace GrindTools
         }
         public void Update()
         {
+            if (GameStateMachine.Instance.CurrentState != null && GameStateMachine.Instance.CurrentState.IsGameplay())
+            {
+                CheckForPlayStateInput();
+            }
+
             MapEditorState editorState = MapEditorController.Instance.CurrentState;
             if (editorState == null || !(editorState is MapEditorState))
                 return;
@@ -68,12 +73,18 @@ namespace GrindTools
                     }
                     break;
                 case SimpleMode simplemodestate:
-                    CheckForInput();
+                    CheckForMEStateInput();
                     break;
             }
         }
-
-        private async void CheckForInput()
+        private async void CheckForPlayStateInput()
+        {
+            if (player.GetButtonTimedPressDown("Y", 0.2f))
+            {
+                await StateManager.Instance.RequestSimpleState();
+            }
+        }
+        private async void CheckForMEStateInput()
         {
             if (player.GetButtonUp(13))
             {
