@@ -72,12 +72,11 @@ namespace GrindTools
                     break;
             }
         }
-
         private async void CheckForMEStateInput()
         {
             if (player.GetButtonUp(13))
             {
-                await StateManager.Instance.RequestGrindTool();
+                await StateManager.Instance.RequestMEState(Main.controller.grindToolState);
             }
             else if (player.GetButtonDown("B") || player.GetButtonDown("Start"))
             {

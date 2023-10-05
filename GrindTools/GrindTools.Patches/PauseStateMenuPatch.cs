@@ -61,11 +61,11 @@ namespace GrindTools.Patches
         }
         public static async void GrindToolButtonOnClick()
         {
-            await StateManager.Instance.RequestGrindTool();
+            await StateManager.Instance.RequestMEState(Main.controller.grindToolState);
         }
         public static async void MapEditorButtonOnClick()
         {
-            await StateManager.Instance.RequestSimpleState();
+            await StateManager.Instance.RequestMEState(MapEditorController.Instance.SimplePlacerState);
         }
         public static void DestroyGrindToolButton()
         {

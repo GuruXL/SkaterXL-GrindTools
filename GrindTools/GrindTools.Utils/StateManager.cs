@@ -73,6 +73,52 @@ namespace GrindTools.Utils
             GameStateMachine.Instance.StopLoading();
         }
 
+        public async Task RequestMEState(MapEditorState state)
+        {
+            try
+            {
+                if (MapEditorController.Instance.initialState == null)
+                {
+                    await InitializeMapEditor(state);
+                    await LoadMapEditorState(state);
+                }
+                else
+                {
+                    await LoadMapEditorState(state);
+                }
+
+                MapEditorState currentstate = MapEditorController.Instance.CurrentState;
+                if (currentstate != null && currentstate == state)
+                {
+                    MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"{state.name} Active", 0.5f);
+                }
+                else
+                {
+                    MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"{state.name} Transition Failed", 1f);
+                }
+            }
+            catch (Exception ex)
+            {
+                Main.Logger.Error($"An error occurred while requesting{state.name}: {ex.Message}");
+                MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"{state.name} Error: {ex.Message}", 1f);
+            }
+        }
+        public void ResetToPlayState()
+        {
+            try
+            {
+                Main.controller.AllowRespawn(true);
+                //GameStateMachine.Instance.MapEditorObject.SetActive(false);
+                PlayerController.Instance.EnableGameplay();
+                GameStateMachine.Instance.RequestPlayState();
+            }
+            catch (Exception ex)
+            {
+                Main.Logger.Error($"An error occurred while Reseting to PlayState: {ex.Message}");
+                MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Reset To PlayState Error: {ex.Message}", 1f);
+            }
+        }
+        /*
         public async Task RequestGrindTool()
         {
             try
@@ -123,21 +169,7 @@ namespace GrindTools.Utils
                 MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Map Editor Error: {ex.Message}", 1f);
             }
         }
-        public void ResetToPlayState()
-        {
-            try
-            {
-                Main.controller.AllowRespawn(true);
-                //GameStateMachine.Instance.MapEditorObject.SetActive(false);
-                PlayerController.Instance.EnableGameplay();
-                GameStateMachine.Instance.RequestPlayState();
-            }
-            catch (Exception ex)
-            {
-                Main.Logger.Error($"An error occurred while Reseting to PlayState: {ex.Message}");
-                MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Reset To PlayState Error: {ex.Message}", 1f);
-            }
-        }
+        */
     }
 }
 
