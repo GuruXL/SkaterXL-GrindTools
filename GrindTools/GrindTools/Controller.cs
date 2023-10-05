@@ -55,14 +55,14 @@ namespace GrindTools
         }
         private void OnGUI()
         {
-            Type currentstate = MapEditorController.Instance.CurrentState?.GetType();
-            if (currentstate == typeof(GrindSplineToolState))
+            switch (MapEditorController.Instance.CurrentState)
             {
-                ControlsUI.Instance.Show(ToolStates.Grind);
-            }
-            else if (currentstate == typeof(WaxToolState))
-            {
-                ControlsUI.Instance.Show(ToolStates.Wax);
+                case GrindSplineToolState grindtoolstate:
+                    ControlsUI.Instance.Show(ToolStates.Grind);
+                    break;
+                case WaxToolState waxtoolstate:
+                    ControlsUI.Instance.Show(ToolStates.Wax);
+                    break;
             }
         }
         private void GetObjects()
@@ -160,11 +160,6 @@ namespace GrindTools
             {
                 activeSplineCount = childCount;
             }
-        }
-
-        public void LoadingTest()
-        {
-            GameStateMachine.Instance.StartLoading(true, AssetLoader.loadingTexture, "Loading");
         }
     }
 }

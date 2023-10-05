@@ -25,7 +25,6 @@ namespace GrindTools.UI
 		public bool isUISetup { get; private set; } = false;
 		public void GetControllerType()
 		{
-
 			isPS4 = false;
 			string str = RewiredInput.PrimaryPlayer.controllers.Joysticks.FirstOrDefault()?.name ?? "unknown";
 			if (str.ToLower().Contains("dual") || str.ToLower().Contains("dual shock") || str.ToLower().Contains("dualshock"))
@@ -69,6 +68,7 @@ namespace GrindTools.UI
 		{
 			if (!isUISetup)
 			{
+				GetControllerType();
 				SetupUIlayout();
 				return;
 			}
@@ -85,7 +85,6 @@ namespace GrindTools.UI
 		
 		private void SetupUIlayout()
 		{
-			GetControllerType();
 			backgroundTex = new Texture2D(1, 1);
 			backgroundTex.wrapMode = TextureWrapMode.Repeat;
 			backgroundTex.SetPixel(0, 0, new Color(0.24f, 0.24f, 0.24f, 0.90f));

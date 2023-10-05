@@ -33,44 +33,43 @@ namespace GrindTools
             if (editorState == null || !(editorState is MapEditorState))
                 return;
 
-            var currentState = editorState.GetType();
-            if (currentState == typeof(GrindSplineToolState))
+            switch (MapEditorController.Instance.CurrentState)
             {
-                if (player.GetButton("LB")) // LB pressed
-                {
-                    CheckActiveSplineDeleteInput();
-                }
-                else if (player.GetButton(7)) // RB pressed
-                {
-                    UpdateFOV();
-                }
-                else
-                {
-                    ToolStateInput();
-                }
-            }
-            else if (currentState == typeof(WaxToolState))
-            {
-                if (player.GetButton("LB")) // LB pressed
-                {
-                    CheckDeleteInput(Main.controller.waxToolState, WaxToolStatePatch.GetHighlightedObj(), WaxToolStatePatch.GetRayHitInfo());
-                }
-                else if (player.GetButton(7)) // RB pressed
-                {
-                    UpdateFOV();
-                }
-                else if (player.GetButtonDown(0)) // A button
-                {
-                    SwapGrindTags(Main.controller.waxToolState, WaxToolStatePatch.GetSplineComp());
-                }
-                else
-                {
-                    ToolStateInput();
-                }
-            }
-            else if (currentState == typeof(SimpleMode))
-            {
-                CheckForInput();
+                case GrindSplineToolState grindtoolstate:
+                    if (player.GetButton("LB")) // LB pressed
+                    {
+                        CheckActiveSplineDeleteInput();
+                    }
+                    else if (player.GetButton(7)) // RB pressed
+                    {
+                        UpdateFOV();
+                    }
+                    else
+                    {
+                        SwapToolStates(ToolStates.Wax);
+                    }
+                    break;
+                case WaxToolState waxtoolstate:
+                    if (player.GetButton("LB")) // LB pressed
+                    {
+                        CheckDeleteInput(Main.controller.waxToolState, WaxToolStatePatch.GetHighlightedObj(), WaxToolStatePatch.GetRayHitInfo());
+                    }
+                    else if (player.GetButton(7)) // RB pressed
+                    {
+                        UpdateFOV();
+                    }
+                    else if (player.GetButtonDown(0)) // A button
+                    {
+                        SwapGrindTags(Main.controller.waxToolState, WaxToolStatePatch.GetSplineComp());
+                    }
+                    else
+                    {
+                        SwapToolStates(ToolStates.Grind);
+                    }
+                    break;
+                case SimpleMode simplemodestate:
+                    CheckForInput();
+                    break;
             }
         }
 
@@ -85,32 +84,16 @@ namespace GrindTools
                 StateManager.Instance.ResetToPlayState();
             }
         }    
-        private async void ToolStateInput()
+        private async void SwapToolStates(ToolStates toolstate)
         {
-            switch (MapEditorController.Instance.CurrentState)
+            if (player.GetButtonDown("Y"))
             {
-                case GrindSplineToolState grindToolState:
-                    if (player.GetButtonDown("Y"))
-                    {
-                        await StateManager.Instance.ToggleState(ToolStates.Wax);
-                        UISounds.Instance.PlayOneShotSelectMinor();
-                    }
-                    else if (player.GetButtonDown("B") || player.GetButtonDown("Start"))
-                    {
-                        StateManager.Instance.ResetToPlayState();
-                    }  
-                    break;
-                case WaxToolState waxToolState:
-                    if (player.GetButtonDown("Y"))
-                    {
-                        await StateManager.Instance.ToggleState(ToolStates.Grind);
-                        UISounds.Instance.PlayOneShotSelectMinor();
-                    }
-                    else if (player.GetButtonDown("B") || player.GetButtonDown("Start"))
-                    {
-                        StateManager.Instance.ResetToPlayState();
-                    }
-                    break;
+                await StateManager.Instance.ToggleState(toolstate);
+                UISounds.Instance.PlayOneShotSelectMinor();
+            }
+            else if (player.GetButtonDown("B") || player.GetButtonDown("Start"))
+            {
+                StateManager.Instance.ResetToPlayState();
             }
         }
     
