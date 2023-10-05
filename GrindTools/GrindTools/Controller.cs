@@ -49,14 +49,14 @@ namespace GrindTools
         }
         private void OnGUI()
         {
-            Type currentState = MapEditorController.Instance.CurrentState?.GetType();
-            if (currentState == typeof(GrindSplineToolState))
+            switch (MapEditorController.Instance.CurrentState)
             {
-                ControlsUI.Instance.Show(ToolStates.Grind);
-            }
-            else if (currentState == typeof(WaxToolState))
-            {
-                ControlsUI.Instance.Show(ToolStates.Wax);
+                case GrindSplineToolState grindtoolstate:
+                    ControlsUI.Instance.Show(ToolStates.Grind);
+                    break;
+                case WaxToolState waxtoolstate:
+                    ControlsUI.Instance.Show(ToolStates.Wax);
+                    break;
             }
         }
         private void GetObjects()
