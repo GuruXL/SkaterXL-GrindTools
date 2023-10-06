@@ -84,7 +84,7 @@ namespace GrindTools.UI
                         if (iconData18 != null) ImageConversion.LoadImage(icon18, iconData18);
                         if (iconData19 != null) ImageConversion.LoadImage(icon19, iconData19);
                     }
-                    catch (Exception ex)  // Catch any exception
+                    catch (Exception ex)
                     {
                         Main.Logger.Log($"An error occurred while loading textures: {ex.Message}");
                     }
@@ -164,7 +164,7 @@ namespace GrindTools.UI
                         if (iconData17 != null) ImageConversion.LoadImage(icon17, iconData17);
                         if (iconData18 != null) ImageConversion.LoadImage(icon18, iconData18);
                     }
-                    catch (Exception ex)  // Catch any exception
+                    catch (Exception ex)
                     {
                         Main.Logger.Log($"An error occurred while loading textures: {ex.Message}");
                     }

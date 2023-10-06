@@ -6,6 +6,7 @@ using Rewired;
 using System.Collections.Generic;
 using System.Linq;
 using GrindTools.Data;
+using GrindTools.Patches;
 
 namespace GrindTools.UI
 {
@@ -47,22 +48,12 @@ namespace GrindTools.UI
 				}
 			}	
 			*/
-			/*
-			string str = RewiredInput.PrimaryPlayer.controllers.Joysticks.FirstOrDefault()?.name ?? "unknown";
-			if (str.ToLower().Contains("dual shock") || str.ToLower().Contains("dualshock"))
-			{
-				isPS4 = true;
-			}
-            else
-            {
-				isPS4 = false;
-			}
-			*/
 		}
 		public void Show(ToolStates state)
 		{
 			if (!isUISetup)
 			{
+				GetControllerType();
 				SetupUIlayout();
 				return;
 			}
@@ -79,7 +70,6 @@ namespace GrindTools.UI
 		
 		private void SetupUIlayout()
 		{
-			GetControllerType();
 			backgroundTex = new Texture2D(1, 1);
 			backgroundTex.wrapMode = TextureWrapMode.Repeat;
 			backgroundTex.SetPixel(0, 0, new Color(0.24f, 0.24f, 0.24f, 0.90f));
@@ -185,23 +175,23 @@ namespace GrindTools.UI
 			scale.x = scale.y;
 			scale.z = 1f;
 			GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, scale);
-			float edgepadding = 25f;
-			float bottomPadding = 3.25f;
+			float edgePadding = 25f;
+			float bottomPadding = 3.75f;
 			float leftPadding = 3.8f;
-			float width = (Screen.width / leftPadding) - (edgepadding * 2);
-			float height = (Screen.height - (Screen.height / bottomPadding)) - (edgepadding * 2);
-			float x = Screen.width - width - edgepadding;
-			float y = edgepadding;
+			float width = (Screen.width / leftPadding) - (edgePadding * 2);
+			float height = (Screen.height - (Screen.height / bottomPadding)) - (edgePadding * 2);
+			float x = Screen.width - width - edgePadding;
+			float y = edgePadding;
 
 			// Calculate the total number of labels and sections
-			int totalLabels = 14;  // Adjust this based on how many Labels
-			int totalSections = 3; // Adjust this based on how many sectionStyle
+			int totalLabels = 15; // Adjust this based on how many Labels
+			int totalSections = 3; // Adjust this based on how many CreateLabels and GUILayout.Label
 
 			// Calculate available space
 			float availableHeight = height / scale.y;
-			float labelHeight = availableHeight / (totalLabels + totalSections); // Dividing by the total number of elements (labels + sections)
+			float labelHeight = availableHeight / (totalLabels + totalSections);
 
-			// Modify styles based on calculated height
+			// Modify styles based on calculated height 
 			fontStyle.fixedHeight = labelHeight * 0.85f; // can adjust as needed
 			sectionStyle.fixedHeight = labelHeight * 1.2f; // can adjust as needed
 
@@ -220,6 +210,7 @@ namespace GrindTools.UI
 			CreateLabel("Rotate", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RightStick });
 
 			GUILayout.Label("Splines", sectionStyle, Array.Empty<GUILayoutOption>());
+			CreateLabel($"Wax Whole Spline: {WaxToolStatePatch.GetWaxWholeSpline()}", " Hold", new Texture2D[] {null, UIAssetLoader.Instance.xboxButtons.RightStickClick });
 			CreateLabel("Delete Custom Splines", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.LB, UIAssetLoader.Instance.xboxButtons.RightStickClick });
 			CreateLabel("Change Friction", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RB, UIAssetLoader.Instance.xboxButtons.LeftStick });
 			CreateLabel("Toggle Concrete / Metal", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.A });
