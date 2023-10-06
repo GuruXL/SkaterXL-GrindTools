@@ -24,20 +24,6 @@ namespace GrindTools.Utils
                 PlayerController.Instance.StartCoroutine(LoadAssetBundle());     
             }
         }  
-        /*
-        private static byte[] ExtractResources(string filename)
-        {
-            using (Stream manifestResourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(filename))
-            {
-                if (manifestResourceStream == null)
-                    return null;
-
-                byte[] buffer = new byte[manifestResourceStream.Length];
-                manifestResourceStream.Read(buffer, 0, buffer.Length);
-                return buffer;
-            }
-        }
-        */
         private static IEnumerator LoadAssetBundle()
         {
             byte[] assetBundleData = ResourceExtractor.ExtractResources("GrindTools.Resources.mats");
