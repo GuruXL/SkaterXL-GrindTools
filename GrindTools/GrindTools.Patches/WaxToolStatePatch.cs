@@ -40,45 +40,7 @@ namespace GrindTools.Patches
             {
                 splineComp = hitInfo.collider.GetComponentInParent<SplineComputer>();
             }
-
-            /*
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, -cam.transform.localPosition.z, LayerUtility.MapEditorSelectionMask))
-            {
-                HightlightedObj = hitInfo.collider.GetComponentInParent<IMapEditorSelectable>();
-                splineComp = hitInfo.collider.GetComponentInParent<SplineComputer>();
-            }
-            */
-            /*
-            if (HightlightedObj != null)
-            {
-                CheckForDeleteInput(__instance, HightlightedObj);
-            }
-            */
-            /*
-            if (splineComp != null)
-            {
-                CheckForDeleteInput(__instance, HightlightedObj, hitInfo);
-                SwapGrindTags(__instance, splineComp);
-            }
-            */
         }
-        /*
-        private static void CheckForDeleteInput(WaxToolState __instance, SplineComputer spline)
-        {
-            if (Main.inputctrl.player.GetButton("LB"))
-            {
-                ShowInfo(__instance, "Warning: Spline Deletion is Permanent");
-
-                if (Main.inputctrl.player.GetButtonUp(13))
-                {
-                    Object.Destroy(spline.gameObject);
-                    ShowInfo(__instance, "Spline Deleted");
-                    UISounds.Instance.PlayOneShotSelectionChange();
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Spline Deleted", 1f);
-                }
-            }
-        }
-        */
         public static SplineComputer GetSplineComp()
         {
             return splineComp;
@@ -91,71 +53,6 @@ namespace GrindTools.Patches
         {
             return hitInfo;
         }
-        /*
-        private static void CheckForDeleteInput(WaxToolState __instance, IMapEditorSelectable HightlightedObj, RaycastHit hitInfo) 
-        {
-            if (RewiredInput.PrimaryPlayer.GetButton("LB"))
-            {
-                if (hitInfo.collider.GetComponentInParent<IMapEditorSelectable>() == null)
-                {
-                    ShowInfo(__instance, "Cannot Delete Map Splines");
-                    return;
-                }
-                ShowInfo(__instance, "Warning: Spline Deletion is Permanent");
-
-                if (RewiredInput.PrimaryPlayer.GetButtonUp(13))
-                {
-                    Object.Destroy(HightlightedObj.gameObject);
-                    ShowInfo(__instance, "Spline Deleted");
-                    UISounds.Instance.PlayOneShotSelectionChange();
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Spline Deleted", 0.5f);
-                }
-            }
-        }
-        
-        private static void SwapGrindTags(WaxToolState __instance, SplineComputer spline)
-        {
-            string concrete = "Grind_Concrete";
-            string metal = "Grind_Metal";
-
-            if (RewiredInput.PrimaryPlayer.GetButtonDown(0))
-            {
-                if (spline.gameObject.tag == concrete)
-                {
-                    SetTagRecursively(spline.gameObject, metal);
-                    ShowInfo(__instance, "Metal");
-                    return;
-                }
-                else if (spline.gameObject.tag == metal)
-                {
-                    SetTagRecursively(spline.gameObject, concrete);
-                    ShowInfo(__instance, "Concrete");
-                    return;
-                }
-                else // if tag is unknown or undefined the default is concrete so swap to metal
-                {
-                    SetTagRecursively(spline.gameObject, metal);
-                    ShowInfo(__instance, "Metal");
-                }
-            }
-        }
-        private static void SetTagRecursively(GameObject obj, string tag)
-        {
-            obj.tag = tag;
-
-            if (obj.transform.childCount > 0)
-            {
-                foreach (Transform child in obj.transform)
-                {
-                    SetTagRecursively(child.gameObject, tag);
-                }
-            }
-        }
-        private static void ShowInfo(WaxToolState __instance, string text)
-        {
-            AccessTools.Method(typeof(WaxToolState), "ShowInfo").Invoke(__instance, new object[] { text });
-        }
-        */
     }
 }
 

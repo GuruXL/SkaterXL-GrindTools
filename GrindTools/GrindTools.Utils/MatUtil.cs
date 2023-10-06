@@ -24,34 +24,5 @@ namespace GrindTools.Utils
                 ApplyMaterials(Main.controller.grindToolState.visualisationMR, mat);
             }
         }
-        /*
-        public void ApplyRedMat()
-        {
-            if (AssetLoader.RedMat != null)
-            {
-                if (Main.controller.grindToolState.visualisationMR.material = AssetLoader.RedMat)
-                    return;
-                ApplyMaterials(Main.controller.grindToolState.visualisationMR, AssetLoader.RedMat);
-            }
-        }
-        public void ApplyBlueMat()
-        {
-            if (AssetLoader.BlueMat != null)
-            {
-                if (Main.controller.grindToolState.visualisationMR.material = AssetLoader.BlueMat)
-                    return;
-                ApplyMaterials(Main.controller.grindToolState.visualisationMR, AssetLoader.BlueMat);
-            }
-        }
-        public void ApplyGreenMat()
-        {
-            if (AssetLoader.GreenMat != null)
-            {
-                if (Main.controller.grindToolState.visualisationMR.material = AssetLoader.GreenMat)
-                    return;
-                ApplyMaterials(Main.controller.grindToolState.visualisationMR, AssetLoader.GreenMat);
-            }
-        }
-        */
     }
 }

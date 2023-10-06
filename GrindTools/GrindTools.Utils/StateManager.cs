@@ -90,11 +90,13 @@ namespace GrindTools.Utils
                 MapEditorState currentstate = MapEditorController.Instance.CurrentState;
                 if (currentstate != null && currentstate == state)
                 {
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"{state.name} Active", 0.5f);
+                    //MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"{state.name} Active", 0.5f);
+                    Main.Logger.Log($"{state.name} Active");
                 }
                 else
                 {
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"{state.name} Transition Failed", 1f);
+                    //MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"{state.name} Transition Failed", 1f);
+                    Main.Logger.Log($"{state.name} Transition Failed");
                 }
             }
             catch (Exception ex)
