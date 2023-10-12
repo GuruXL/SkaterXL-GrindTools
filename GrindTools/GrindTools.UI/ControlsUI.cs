@@ -103,7 +103,8 @@ namespace GrindTools.UI
 				fixedWidth = Screen.width / 3f / scale.y, 
 				fontSize = 30,
 				normal = { textColor = new Color(1f, 1f, 1f, 1f), background = backgroundTex },
-				alignment = TextAnchor.MiddleLeft,fixedHeight = 60f,
+				alignment = TextAnchor.MiddleLeft,
+				fixedHeight = 60f,
 				padding = new RectOffset(30, 30, 30, 0)
 			};
 
@@ -210,7 +211,7 @@ namespace GrindTools.UI
 			CreateLabel("Rotate", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RightStick });
 
 			GUILayout.Label("Splines", sectionStyle, Array.Empty<GUILayoutOption>());
-			CreateLabel($"Wax Whole Spline: {WaxToolStatePatch.GetWaxWholeSpline()}", " Hold", new Texture2D[] {null, UIAssetLoader.Instance.xboxButtons.RightStickClick });
+			CreateLabel($"Wax Whole Spline: {WaxToolStatePatch.GetWaxWholeSpline()}", "( Hold )", new Texture2D[] {null, UIAssetLoader.Instance.xboxButtons.RightStickClick });
 			CreateLabel("Delete Custom Splines", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.LB, UIAssetLoader.Instance.xboxButtons.RightStickClick });
 			CreateLabel("Change Friction", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RB, UIAssetLoader.Instance.xboxButtons.LeftStick });
 			CreateLabel("Toggle Concrete / Metal", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.A });
