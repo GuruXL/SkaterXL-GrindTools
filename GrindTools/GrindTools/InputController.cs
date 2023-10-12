@@ -44,11 +44,6 @@ namespace GrindTools
                     {
                         UpdateFOV();
                     }
-                    else if (player.GetButtonTimedPressDown(13, 0.5f)) // Hold RightStickClick for 0.5 sec
-                    {
-                        MakeGrindablePatch.useCapsuleCollider = true;
-                        MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Use Capsule: {MakeGrindablePatch.useCapsuleCollider}", 1f);
-                    }
                     else
                     {
                         SwapToolStates(ToolStates.Wax);
