@@ -62,7 +62,7 @@ namespace GrindTools.Patches
                         capCollider.direction = 2;
                         capCollider.radius = width / 2f;
                         capCollider.height = length.magnitude;
-                        capCollider.center = new Vector3(width / 2f, height / 2f, 0.0f);
+                        capCollider.center = new Vector3(width / 2f, -height / 2f, 0f);
                     }
                     for (int j = __instance.transform.childCount - 1; j > __instance.nodes.Count - 2; j--)
                     {

@@ -44,6 +44,11 @@ namespace GrindTools
                     {
                         UpdateFOV();
                     }
+                    else if (player.GetButtonTimedPressDown(13, 0.5f)) // Right Stick Click
+                    {
+                        Main.settings.capColliders = !Main.settings.capColliders;
+                        MessageSystem.QueueMessage(MessageDisplayData.Type.Success, $"{(Main.settings.capColliders ? "Capsule Colliders" : "Box Colliders")}", 2f);
+                    }
                     else
                     {
                         SwapToolStates(ToolStates.Wax);

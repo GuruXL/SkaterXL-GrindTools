@@ -124,7 +124,7 @@ namespace GrindTools.UI
 			scale.z = 1f;
 			GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, scale);
 			float edgePadding = 25f;
-			float bottomPadding = 3.75f;
+			float bottomPadding = 4.5f;
 			float leftPadding = 3.8f;
 			float width = (Screen.width / leftPadding) - (edgePadding * 2);
 			float height = (Screen.height - (Screen.height / bottomPadding)) - (edgePadding * 2);
@@ -132,7 +132,7 @@ namespace GrindTools.UI
 			float y = edgePadding;
 
 			// Calculate the total number of labels and sections
-			int totalLabels = 15; // Adjust this based on how many Labels
+			int totalLabels = 16; // Adjust this based on how many Labels
 			int totalSections = 3; // Adjust this based on how many CreateLabels and GUILayout.Label
 
 			// Calculate available space
@@ -158,6 +158,7 @@ namespace GrindTools.UI
 			CreateLabel("Rotate", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RightStick });
 
 			GUILayout.Label("Splines", sectionStyle, Array.Empty<GUILayoutOption>());
+			CreateLabel($"Colider Type: {(Main.settings.capColliders ? "Capsule" : "Box")}", "( Hold )", new Texture2D[] { null, UIAssetLoader.Instance.xboxButtons.RightStickClick });
 			CreateLabel("Undo / Redo", "/", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.DpadLeft, UIAssetLoader.Instance.xboxButtons.DpadRight });
 			CreateLabel("Remove Active Spline", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.LB, UIAssetLoader.Instance.xboxButtons.RightStickClick });
 			CreateLabel("Scale Splines", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RB,UIAssetLoader.Instance.xboxButtons.LeftStick });		
