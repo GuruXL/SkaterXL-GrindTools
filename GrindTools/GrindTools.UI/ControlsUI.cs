@@ -150,7 +150,7 @@ namespace GrindTools.UI
 			CreateHeader("Grind Spline Tool");
 			GUILayout.Label("General", sectionStyle, Array.Empty<GUILayoutOption>());
 			CreateLabel("Switch Modes", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.Y });
-			CreateLabel("Speed Factor: " + $"<color=cyan><b>{MapEditorController.Instance.SpeedFactor}</b></color>" + "x", "/", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.DpadUp, UIAssetLoader.Instance.xboxButtons.DpadDown });
+			CreateLabel("Speed Factor: " + $"<color=cyan><b>{MapEditorController.Instance.SpeedFactor}x </b></color>", "/", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.DpadUp, UIAssetLoader.Instance.xboxButtons.DpadDown });
 
 			GUILayout.Label("Camera", sectionStyle, Array.Empty<GUILayoutOption>());
 			CreateLabel("Camera Fov: " + $"<color=cyan><b>{Mathf.RoundToInt(Main.settings.CamFOV)}</b></color>", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RB, UIAssetLoader.Instance.xboxButtons.RightStick });
@@ -159,7 +159,7 @@ namespace GrindTools.UI
 			CreateLabel("Rotate", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RightStick });
 
 			GUILayout.Label("Splines", sectionStyle, Array.Empty<GUILayoutOption>());
-			CreateLabel($"Colider Type: {(Main.settings.capColliders ? "<color=cyan><b>Capsule</b></color>" : "<color=cyan><b>Box</b></color>")}", "( Hold )", new Texture2D[] { null, UIAssetLoader.Instance.xboxButtons.RightStickClick });
+			CreateLabel($"Colider Type: {(Main.settings.capColliders ? "<color=cyan><b>Capsule</b></color>" : "<color=cyan><b>Box</b></color>")}", "( Hold )", new Texture2D[] { null, UIAssetLoader.Instance.xboxButtons.LeftStickClick });
 			CreateLabel("Undo / Redo", "/", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.DpadLeft, UIAssetLoader.Instance.xboxButtons.DpadRight });
 			CreateLabel("Remove Active Spline", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.LB, UIAssetLoader.Instance.xboxButtons.RightStickClick });
 			CreateLabel("Scale Splines", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RB,UIAssetLoader.Instance.xboxButtons.LeftStick });		
@@ -205,7 +205,7 @@ namespace GrindTools.UI
 			CreateHeader("Wax Tool");
 			GUILayout.Label("General", sectionStyle, Array.Empty<GUILayoutOption>());
 			CreateLabel("Switch Modes", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.Y });
-			CreateLabel("Speed Factor: " + $"<color=cyan><b>{MapEditorController.Instance.SpeedFactor}</b></color>" + "x", "/", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.DpadUp, UIAssetLoader.Instance.xboxButtons.DpadDown });
+			CreateLabel("Speed Factor: " + $"<color=cyan><b>{MapEditorController.Instance.SpeedFactor}x </b></color>", "/", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.DpadUp, UIAssetLoader.Instance.xboxButtons.DpadDown });
 
 			GUILayout.Label("Camera", sectionStyle, Array.Empty<GUILayoutOption>());
 			CreateLabel("Camera Fov: " + $"<color=cyan><b>{Mathf.RoundToInt(Main.settings.CamFOV)}</b></color>", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RB, UIAssetLoader.Instance.xboxButtons.RightStick });

@@ -31,7 +31,7 @@ namespace GrindTools
         public CinemachineVirtualCamera grindToolCam;
         public CinemachineVirtualCamera waxToolCam;
 
-        private int activeSplineCount = 0;
+        private int currentCount = 0;
 
         public void Awake()
         {
@@ -110,18 +110,18 @@ namespace GrindTools
             int childCount = parent.childCount;
             if (childCount == 0)
             {
-                activeSplineCount = 0;
+                currentCount = 0;
                 return;
             }
 
-            if (childCount == activeSplineCount)
+            if (childCount == currentCount)
                 return;
 
-            if (childCount > activeSplineCount)
+            if (childCount > currentCount)
             {
-                if (MapEditorController.Instance.CurrentState?.GetType() == typeof(SimpleMode))
+                if (MapEditorController.Instance.CurrentState is SimpleMode)
                 {
-                    activeSplineCount = childCount;
+                    currentCount = childCount;
                     return;
                 }
                 else
@@ -129,7 +129,7 @@ namespace GrindTools
                     Transform lastChild = parent.GetChild(childCount - 1);
                     if (lastChild.GetComponent<MapEditorSplineObject>() == null || !lastChild.gameObject.name.ToLower().Contains("spline"))
                     {
-                        activeSplineCount = childCount;
+                        currentCount = childCount;
                         return;
                     }
                     else
@@ -137,12 +137,12 @@ namespace GrindTools
                         UISounds.Instance.PlayOneShotSelectMajor();
                         MessageSystem.QueueMessage(MessageDisplayData.Type.Success, $"New Spline Created", 2f);
                     }
-                    activeSplineCount = childCount;
+                    currentCount = childCount;
                 }
             }
             else
             {
-                activeSplineCount = childCount;
+                currentCount = childCount;
             }
         }
     }

@@ -44,7 +44,7 @@ namespace GrindTools
                     {
                         UpdateFOV();
                     }
-                    else if (player.GetButtonTimedPressDown(13, 0.25f)) // Right Stick Click
+                    else if (player.GetButtonTimedPressDown("Left Stick Button", 0.25f)) // left stick Click
                     {
                         SwapColliders();
                     }
@@ -135,7 +135,7 @@ namespace GrindTools
         {
             Main.settings.capColliders = !Main.settings.capColliders;
             UISounds.Instance.PlayOneShotSelectionChange();
-            MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"{(Main.settings.capColliders ? "Capsule Colliders" : "Box Colliders")}", 2f);
+            MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"{(Main.settings.capColliders ? "Capsule Colliders" : "Box Colliders")}", 0.5f);
         }
         private void CheckActiveSplineDeleteInput()
         {
