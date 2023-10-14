@@ -44,10 +44,9 @@ namespace GrindTools
                     {
                         UpdateFOV();
                     }
-                    else if (player.GetButtonTimedPressDown(13, 0.5f)) // Right Stick Click
+                    else if (player.GetButtonTimedPressDown(13, 0.25f)) // Right Stick Click
                     {
-                        Main.settings.capColliders = !Main.settings.capColliders;
-                        MessageSystem.QueueMessage(MessageDisplayData.Type.Success, $"{(Main.settings.capColliders ? "Capsule Colliders" : "Box Colliders")}", 2f);
+                        SwapColliders();
                     }
                     else
                     {
@@ -132,7 +131,12 @@ namespace GrindTools
                 MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Spline Deleted", 0.5f);
             }
         }
-
+        private void SwapColliders()
+        {
+            Main.settings.capColliders = !Main.settings.capColliders;
+            UISounds.Instance.PlayOneShotSelectionChange();
+            MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"{(Main.settings.capColliders ? "Capsule Colliders" : "Box Colliders")}", 2f);
+        }
         private void CheckActiveSplineDeleteInput()
         {
             if (player.GetButtonUp(13))
