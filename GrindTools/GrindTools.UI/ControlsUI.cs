@@ -214,7 +214,7 @@ namespace GrindTools.UI
 			CreateLabel("Rotate", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RightStick });
 
 			GUILayout.Label("Splines", sectionStyle, Array.Empty<GUILayoutOption>());
-			CreateLabel($"Wax Whole Spline: {(Main.settings.waxWholeSpline ? "<color=cyan><b>True</b></color>" : "<color=cyan><b>False</b></color>")}", "( Hold )", new Texture2D[] { null, UIAssetLoader.Instance.xboxButtons.LeftStickClick });
+			CreateLabel($"Wax All Colliders: {(Main.settings.waxWholeSpline ? "<color=cyan><b>True</b></color>" : "<color=cyan><b>False</b></color>")}", "( Hold )", new Texture2D[] { null, UIAssetLoader.Instance.xboxButtons.LeftStickClick });
 			CreateLabel("Remove Splines", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.LB, UIAssetLoader.Instance.xboxButtons.RightStickClick });
 			CreateLabel("Change Friction", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RB, UIAssetLoader.Instance.xboxButtons.LeftStick });
 			CreateLabel("Toggle Concrete / Metal", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.A });

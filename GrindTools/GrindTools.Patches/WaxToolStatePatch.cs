@@ -67,6 +67,7 @@ namespace GrindTools.Patches
                 Main.settings.waxWholeSpline = !Main.settings.waxWholeSpline;
                 var waxWholeSpline = Traverse.Create(__instance).Field("waxWholeSpline");
                 waxWholeSpline.SetValue(Main.settings.waxWholeSpline);
+                UISounds.Instance.PlayOneShotSelectionChange();
                 return false;
             }
             return true; // Execute the original method
