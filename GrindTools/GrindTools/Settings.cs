@@ -11,6 +11,7 @@ namespace GrindTools
     {
         public float CamFOV = 70f;
         public bool capColliders = false;
+        public bool waxWholeSpline = true;
         public void OnChange()
         {
             throw new NotImplementedException();

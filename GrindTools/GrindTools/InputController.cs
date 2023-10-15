@@ -113,7 +113,41 @@ namespace GrindTools
             Main.controller.grindToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
             Main.controller.waxToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
         }
-
+        private void CheckDeleteInput(WaxToolState __instance, IMapEditorSelectable HightlightedObj, SplineComputer splineComp, RaycastHit hitInfo)
+        {
+            if (hitInfo.collider != null && HightlightedObj != null)
+            {
+                ShowWaxInfo(__instance, "Warning: Removing Splines Cannot be Undone");
+                if (player.GetButtonUp(13))
+                {
+                    HightlightedObj.gameObject.SetActive(false);
+                    OutlineManager.Instance.RemoveAllOutlines();
+                    Destroy(HightlightedObj.gameObject);
+                    HightlightedObj = null;
+                    splineComp = null;
+                    ShowWaxInfo(__instance, "Spline Removed");
+                    UISounds.Instance.PlayOneShotSelectionChange();
+                    MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Spline Removed", 0.5f);
+                    return;
+                }
+            }
+            else if (hitInfo.collider != null && splineComp != null)
+            {
+                ShowWaxInfo(__instance, "Warning: Removing Splines Cannot be Undone");
+                if (player.GetButtonUp(13))
+                {
+                    OutlineManager.Instance.RemoveAllOutlines();
+                    Destroy(splineComp);
+                    splineComp = null;
+                    ShowWaxInfo(__instance, "Spline Removed");
+                    UISounds.Instance.PlayOneShotSelectionChange();
+                    MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Spline Removed", 0.5f);
+                    return;
+                }
+                return;
+            }
+        }
+        /*
         private void CheckDeleteInput(WaxToolState __instance, IMapEditorSelectable HightlightedObj, SplineComputer splineComp, RaycastHit hitInfo)
         {
             if (hitInfo.collider != null && HightlightedObj != null)
@@ -138,6 +172,7 @@ namespace GrindTools
                 return;
             }
         }
+        */
         private void SwapColliders()
         {
             Main.settings.capColliders = !Main.settings.capColliders;

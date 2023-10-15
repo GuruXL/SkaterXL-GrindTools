@@ -60,12 +60,13 @@ namespace GrindTools.Patches
 
             if (RewiredInput.PrimaryPlayer.GetButtonDown(13)) // sets waxWhole Spline to always true; temp fix for issues with outlines when waxwholespline is false.
             {
+                return false;
+            }
+            else if (RewiredInput.PrimaryPlayer.GetButtonTimedPressDown("Left Stick Button", 0.25f))
+            {
+                Main.settings.waxWholeSpline = !Main.settings.waxWholeSpline;
                 var waxWholeSpline = Traverse.Create(__instance).Field("waxWholeSpline");
-                if (!waxWholeSpline.GetValue<bool>())
-                {
-                    // Setting the value to true
-                    waxWholeSpline.SetValue(true);
-                }
+                waxWholeSpline.SetValue(Main.settings.waxWholeSpline);
                 return false;
             }
             return true; // Execute the original method
