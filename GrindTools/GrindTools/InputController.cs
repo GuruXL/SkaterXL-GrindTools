@@ -56,7 +56,7 @@ namespace GrindTools
                 case WaxToolState waxtoolstate:
                     if (player.GetButton("LB")) // LB pressed
                     {
-                        CheckDeleteInput(Main.controller.waxToolState, WaxToolStatePatch.GetHighlightedObj(), WaxToolStatePatch.GetRayHitInfo());
+                        CheckDeleteInput(Main.controller.waxToolState, WaxToolStatePatch.HightlightedObj, WaxToolStatePatch.splineComp, WaxToolStatePatch.hitInfo);
                     }
                     else if (player.GetButton(7)) // RB pressed
                     {
@@ -64,7 +64,7 @@ namespace GrindTools
                     }
                     else if (player.GetButtonDown(0)) // A button
                     {
-                        SwapGrindTags(Main.controller.waxToolState, WaxToolStatePatch.GetSplineComp());
+                        SwapGrindTags(Main.controller.waxToolState, WaxToolStatePatch.splineComp);
                     }
                     else
                     {
@@ -114,21 +114,28 @@ namespace GrindTools
             Main.controller.waxToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
         }
 
-        private void CheckDeleteInput(WaxToolState __instance, IMapEditorSelectable HightlightedObj, RaycastHit hitInfo)
+        private void CheckDeleteInput(WaxToolState __instance, IMapEditorSelectable HightlightedObj, SplineComputer splineComp, RaycastHit hitInfo)
         {
-            if (hitInfo.collider.GetComponentInParent<IMapEditorSelectable>() == null)
+            if (hitInfo.collider != null && HightlightedObj != null)
+            {
+                ShowWaxInfo(__instance, "Warning: Spline Deletion is Permanent");
+                if (player.GetButtonUp(13))
+                {
+                    HightlightedObj.gameObject.SetActive(false);
+                    OutlineManager.Instance.RemoveAllOutlines();
+                    Destroy(HightlightedObj.gameObject);
+                    HightlightedObj = null;
+                    splineComp = null;
+                    ShowWaxInfo(__instance, "Spline Deleted");
+                    UISounds.Instance.PlayOneShotSelectionChange();
+                    MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Spline Deleted", 0.5f);
+                    return;
+                }
+            }
+            else if (hitInfo.collider != null && splineComp != null)
             {
                 ShowWaxInfo(__instance, "Cannot Delete Map Splines");
                 return;
-            }
-            ShowWaxInfo(__instance, "Warning: Spline Deletion is Permanent");
-
-            if (player.GetButtonUp(13))
-            {
-                Destroy(HightlightedObj.gameObject);
-                ShowWaxInfo(__instance, "Spline Deleted");
-                UISounds.Instance.PlayOneShotSelectionChange();
-                MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Spline Deleted", 0.5f);
             }
         }
         private void SwapColliders()

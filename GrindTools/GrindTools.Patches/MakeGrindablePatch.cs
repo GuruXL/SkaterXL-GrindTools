@@ -24,18 +24,18 @@ namespace GrindTools.Patches
         {
             if (!useBoxCollider && Main.settings.capColliders)
             {
-                // remove existing mesh collider for spline if created from ogiginal method.
+                // remove existing mesh collider for spline if created from original method.
                 MeshCollider meshCollider = __instance.GetComponent<MeshCollider>();
                 if (meshCollider != null)
                 {
                     Object.Destroy(meshCollider);
                 }
 
-                // Access private fields using Traverse
+                // Get private width and height fields
                 float width = Traverse.Create(__instance).Field("width").GetValue<float>();
                 float height = Traverse.Create(__instance).Field("height").GetValue<float>();
 
-                // Your logic to add capsule colliders here
+                // add capsule colliders
                 for (int index = 0; index < __instance.nodes.Count - 1; ++index)
                 {
                     string name = "Capsule Collider Node " + index + " -> " + (index + 1);
@@ -62,7 +62,8 @@ namespace GrindTools.Patches
                         capCollider.direction = 2;
                         capCollider.radius = width / 2f;
                         capCollider.height = length.magnitude;
-                        capCollider.center = new Vector3(width / 2f, -height / 2f, 0f);
+                        float offset = 0.01f;
+                        capCollider.center = new Vector3((width / 2f) - offset, -height / 2f, 0f);
                     }
                     for (int j = __instance.transform.childCount - 1; j > __instance.nodes.Count - 2; j--)
                     {

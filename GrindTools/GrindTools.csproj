@@ -139,6 +139,7 @@
   <ItemGroup>
     <Compile Include="GrindTools.Data\ToolStates.cs" />
     <Compile Include="GrindTools.Patches\MakeGrindablePatch.cs" />
+    <Compile Include="GrindTools.Patches\GrindToolStatePatch.cs" />
     <Compile Include="GrindTools.Patches\WaxToolStatePatch.cs" />
     <Compile Include="GrindTools.Patches\WaxToolMoveCameraPatch.cs" />
     <Compile Include="GrindTools.Patches\CheckRaycastsPatch.cs" />

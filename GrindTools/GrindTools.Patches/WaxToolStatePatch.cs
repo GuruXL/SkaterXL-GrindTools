@@ -10,6 +10,7 @@ using Rewired;
 using GrindTools.Data;
 using Object = UnityEngine.Object;
 using System.Reflection;
+using System;
 
 namespace GrindTools.Patches
 {
@@ -17,33 +18,46 @@ namespace GrindTools.Patches
     [HarmonyPatch(typeof(WaxToolState), "Update")]
     public static class WaxToolStatePatch
     {
-        private static IMapEditorSelectable HightlightedObj;
-        private static SplineComputer splineComp;
-        private static RaycastHit hitInfo;
-        //private static bool IsWaxWholeSpline;
-
+        private static IMapEditorSelectable _HightlightedObj;
+        private static SplineComputer _splineComp;
+        private static RaycastHit _hitInfo;
+        public static IMapEditorSelectable HightlightedObj
+        {
+            get { return _HightlightedObj; }
+            set { _HightlightedObj = value; }
+        }
+        public static SplineComputer splineComp
+        {
+            get { return _splineComp; }
+            set { _splineComp = value; }
+        }
+        public static RaycastHit hitInfo
+        {
+            get { return _hitInfo; }
+        }
         [HarmonyPrefix]
         static bool Prefix(WaxToolState __instance)
         {
             CinemachineVirtualCamera cam = Main.controller.waxToolCam;
-            HightlightedObj = null;
-            splineComp = null;
+            _HightlightedObj = null;
+            _splineComp = null;
             Ray ray = new Ray(cam.transform.position, cam.transform.forward);
             float maxDistance = 100f;
 
-            if (Physics.Raycast(ray, out hitInfo, maxDistance))
+            if (Physics.Raycast(ray, out _hitInfo, maxDistance))
             {
-                HightlightedObj = hitInfo.collider.GetComponentInParent<IMapEditorSelectable>();
-                splineComp = hitInfo.collider.GetComponentInParent<SplineComputer>();
-                if (splineComp == null)
-                    maxDistance = hitInfo.distance + 1f;
+                _HightlightedObj = _hitInfo.collider.GetComponentInParent<IMapEditorSelectable>();
+                _splineComp = _hitInfo.collider.GetComponentInParent<SplineComputer>();
+                if (_splineComp == null)
+                    maxDistance = _hitInfo.distance + 1f;
             }
-            if (splineComp == null && Physics.SphereCast(ray, 0.2f, out hitInfo, maxDistance, LayerUtility.GrindableMask))
+            if (_splineComp == null && Physics.SphereCast(ray, 0.2f, out _hitInfo, maxDistance, LayerUtility.GrindableMask))
             {
-                splineComp = hitInfo.collider.GetComponentInParent<SplineComputer>();
+                _splineComp = _hitInfo.collider.GetComponentInParent<SplineComputer>();
+                if (_HightlightedObj == null)
+                    _HightlightedObj = _hitInfo.collider.GetComponentInParent<IMapEditorSelectable>();
             }
 
-            
             if (RewiredInput.PrimaryPlayer.GetButtonDown(13)) // sets waxWhole Spline to always true; temp fix for issues with outlines when waxwholespline is false.
             {
                 var waxWholeSpline = Traverse.Create(__instance).Field("waxWholeSpline");
@@ -54,36 +68,8 @@ namespace GrindTools.Patches
                 }
                 return false;
             }
-            /*
-            else if (RewiredInput.PrimaryPlayer.GetButtonTimedPressDown(13, 0.5f))
-            {
-                var waxWholeSpline = Traverse.Create(__instance).Field("waxWholeSpline");
-                IsWaxWholeSpline = waxWholeSpline.GetValue<bool>();
-                waxWholeSpline.SetValue(!IsWaxWholeSpline); // toggle the value
-                AccessTools.Method(typeof(WaxToolState), "ShowInfo").Invoke(__instance, new object[] { $"wax whole spline: {IsWaxWholeSpline}" });
-                return false; // Skip the original method
-            }
-            */
             return true; // Execute the original method
         }
-        public static SplineComputer GetSplineComp()
-        {
-            return splineComp;
-        }
-        public static IMapEditorSelectable GetHighlightedObj()
-        {
-            return HightlightedObj;
-        }
-        public static RaycastHit GetRayHitInfo()
-        {
-            return hitInfo;
-        }
-        /*
-        public static bool GetWaxWholeSpline()
-        {
-            return IsWaxWholeSpline;
-        }
-        */
     }
 }
 
