@@ -30,8 +30,8 @@ namespace GrindTools.Patches
             if (grindToolsButton == null)
             {
                 // Add new listener to the original MapEditorButton -- Fix for issue with MapEditor Initial state being grindtool
-                //__instance.MapEditorButton.onClick.RemoveAllListeners();
-                //__instance.MapEditorButton.onClick.SetPersistentListenerState(0, UnityEventCallState.Off);
+                __instance.MapEditorButton.onClick.RemoveAllListeners();
+                __instance.MapEditorButton.onClick.SetPersistentListenerState(0, UnityEventCallState.Off);
                 __instance.MapEditorButton.onClick.AddListener(() => MapEditorButtonOnClick());
 
                 GameObject originalButton = __instance.MapEditorButton.gameObject;
@@ -47,7 +47,6 @@ namespace GrindTools.Patches
                 grindToolsButton.onClick.RemoveAllListeners();  // Remove existing listeners
                 grindToolsButton.onClick.SetPersistentListenerState(0, UnityEventCallState.Off); // removes persistant listeners that are set in unity editor.
                 grindToolsButton.onClick.AddListener(() => GrindToolButtonOnClick());  // Add new listener
-                //CreateNewOnSubmit(grindToolsButton);
             }
 
             __instance.StateMachine.PauseObject.SetActive(false);

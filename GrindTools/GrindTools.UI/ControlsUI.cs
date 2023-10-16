@@ -159,7 +159,7 @@ namespace GrindTools.UI
 			CreateLabel("Rotate", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RightStick });
 
 			GUILayout.Label("Splines", sectionStyle, Array.Empty<GUILayoutOption>());
-			CreateLabel($"Colider Type: {(Main.settings.capColliders ? "<color=cyan><b>Capsule</b></color>" : "<color=cyan><b>Box</b></color>")}", "( Hold )", new Texture2D[] { null, UIAssetLoader.Instance.xboxButtons.LeftStickClick });
+			CreateLabel($"Collider Type: {(Main.settings.capColliders ? "<color=cyan><b>Capsule</b></color>" : "<color=cyan><b>Box</b></color>")}", "( Hold )", new Texture2D[] { null, UIAssetLoader.Instance.xboxButtons.LeftStickClick });
 			CreateLabel("Undo / Redo", "/", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.DpadLeft, UIAssetLoader.Instance.xboxButtons.DpadRight });
 			CreateLabel("Remove Active Spline", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.LB, UIAssetLoader.Instance.xboxButtons.RightStickClick });
 			CreateLabel("Scale Splines", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RB, UIAssetLoader.Instance.xboxButtons.LeftStick });
@@ -214,7 +214,7 @@ namespace GrindTools.UI
 			CreateLabel("Rotate", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RightStick });
 
 			GUILayout.Label("Splines", sectionStyle, Array.Empty<GUILayoutOption>());
-			CreateLabel($"Wax All Colliders: {(Main.settings.waxWholeSpline ? "<color=cyan><b>True</b></color>" : "<color=cyan><b>False</b></color>")}", "( Hold )", new Texture2D[] { null, UIAssetLoader.Instance.xboxButtons.LeftStickClick });
+			CreateLabel($"Wax All Colliders: {(Main.settings.waxWholeSpline ? "<color=cyan><b>On</b></color>" : "<color=cyan><b>Off</b></color>")}", "( Hold )", new Texture2D[] { null, UIAssetLoader.Instance.xboxButtons.LeftStickClick });
 			CreateLabel("Remove Splines", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.LB, UIAssetLoader.Instance.xboxButtons.RightStickClick });
 			CreateLabel("Change Friction", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RB, UIAssetLoader.Instance.xboxButtons.LeftStick });
 			CreateLabel("Toggle Concrete / Metal", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.A });
