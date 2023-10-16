@@ -21,7 +21,14 @@ namespace GrindTools.Patches
             UpdateScale(__instance,ref __instance.width, ref __instance.height);
             //AccessTools.Method(typeof(GrindSplineToolState), "UpdateSizes").Invoke(__instance, new object[] { __instance.width, __instance.height });
         }
-
+        [HarmonyPostfix]
+        static void Postfix(GrindSplineToolState __instance)
+        {
+            if (RewiredInput.PrimaryPlayer.GetButton(0))
+            {
+                UISounds.Instance.PlayOneShotSelectionChange();
+            }
+        }
         private static void UpdateScale(GrindSplineToolState __instance, ref float width, ref float height)  // Parameters by reference
         {
             if (width != height)
