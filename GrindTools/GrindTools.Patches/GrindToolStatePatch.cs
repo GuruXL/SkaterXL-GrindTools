@@ -24,7 +24,7 @@ namespace GrindTools.Patches
         [HarmonyPostfix]
         static void Postfix(GrindSplineToolState __instance)
         {
-            if (RewiredInput.PrimaryPlayer.GetButton(0))
+            if (RewiredInput.PrimaryPlayer.GetButtonDown(0))
             {
                 UISounds.Instance.PlayOneShotSelectionChange();
             }
