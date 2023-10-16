@@ -1,17 +1,10 @@
 ﻿using UnityEngine;
 using MapEditor;
-using SkaterXL.Map;
 using GameManagement;
 using Cinemachine;
-using System.Collections.Generic;
-using System;
 using ModIO.UI;
 using GrindTools.UI;
 using GrindTools.Data;
-using GrindTools.Utils;
-using GrindTools.Patches;
-using System.Threading.Tasks;
-using TMPro;
 
 namespace GrindTools
 {
@@ -24,10 +17,6 @@ namespace GrindTools
         private Transform grind_ControlsUI;
         private Transform wax_ControlsUI;
 
-        //public Transform grind_popupUI;
-        //public CanvasGroup grind_popupcanvas;
-        //public TMP_Text grind_popuptext;
-
         //public MapEditorController editorController;
         //private MapEditorGameState editorGameState;
         public GrindSplineToolState grindToolState;
@@ -37,7 +26,7 @@ namespace GrindTools
         public CinemachineVirtualCamera grindToolCam;
         public CinemachineVirtualCamera waxToolCam;
 
-        private int activeSplineCount = 0;
+        private int currentCount = 0;
 
         public void Awake()
         {
@@ -72,18 +61,14 @@ namespace GrindTools
             waxToolObj = statesObj?.Find("Wax Tool");
             grind_ControlsUI = grindtoolObj?.Find("Controls UI");
             wax_ControlsUI = waxToolObj?.Find("Controls UI");
-            //grind_popupUI = grindtoolObj?.Find("WaxToolUI");
             //speedFactorText = MapEditorController.Instance.speedFactorText.transform.parent;
-        }      
+        }
         private void GetComponents()
         {
             grindToolState = grindtoolObj?.GetComponent<GrindSplineToolState>();
             waxToolState = waxToolObj?.GetComponent<WaxToolState>();
             grindToolCam = grindtoolObj?.GetComponentInChildren<CinemachineVirtualCamera>();
             waxToolCam = waxToolObj?.GetComponentInChildren<CinemachineVirtualCamera>();
-
-            //grind_popupcanvas = grind_popupUI.GetComponent<CanvasGroup>();
-            //grind_popuptext = grind_popupUI.GetComponentInChildren<TMP_Text>();
         }
         public void AllowRespawn(bool state)
         {
@@ -99,12 +84,6 @@ namespace GrindTools
                     break;
             }
         }
-        /*
-        public void ToggleSpeedText(bool state)
-        {
-            speedFactorText.gameObject.SetActive(state);
-        }
-        */
         public void SetCamFov()
         {
             if (Main.settings.CamFOV == grindToolCam.m_Lens.FieldOfView)
@@ -126,18 +105,18 @@ namespace GrindTools
             int childCount = parent.childCount;
             if (childCount == 0)
             {
-                activeSplineCount = 0;
+                currentCount = 0;
                 return;
             }
 
-            if (childCount == activeSplineCount)
+            if (childCount == currentCount)
                 return;
 
-            if (childCount > activeSplineCount)
+            if (childCount > currentCount)
             {
-                if (MapEditorController.Instance.CurrentState?.GetType() == typeof(SimpleMode))
+                if (MapEditorController.Instance.CurrentState is SimpleMode)
                 {
-                    activeSplineCount = childCount;
+                    currentCount = childCount;
                     return;
                 }
                 else
@@ -145,7 +124,7 @@ namespace GrindTools
                     Transform lastChild = parent.GetChild(childCount - 1);
                     if (lastChild.GetComponent<MapEditorSplineObject>() == null || !lastChild.gameObject.name.ToLower().Contains("spline"))
                     {
-                        activeSplineCount = childCount;
+                        currentCount = childCount;
                         return;
                     }
                     else
@@ -153,12 +132,12 @@ namespace GrindTools
                         UISounds.Instance.PlayOneShotSelectMajor();
                         MessageSystem.QueueMessage(MessageDisplayData.Type.Success, $"New Spline Created", 2f);
                     }
-                    activeSplineCount = childCount;
+                    currentCount = childCount;
                 }
             }
             else
             {
-                activeSplineCount = childCount;
+                currentCount = childCount;
             }
         }
     }

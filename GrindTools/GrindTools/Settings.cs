@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityModManagerNet;
 
 namespace GrindTools
@@ -10,6 +7,8 @@ namespace GrindTools
     public class Settings : UnityModManager.ModSettings, IDrawable
     {
         public float CamFOV = 70f;
+        public bool capColliders = false;
+        public bool waxWholeSpline = true;
         public void OnChange()
         {
             throw new NotImplementedException();

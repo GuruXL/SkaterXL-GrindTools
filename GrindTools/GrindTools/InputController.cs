@@ -1,16 +1,12 @@
 ﻿using UnityEngine;
 using MapEditor;
-using GameManagement;
 using ModIO.UI;
 using Rewired;
+using GameManagement;
 using Dreamteck.Spline;
-using System;
-using System.Collections.Generic;
 using GrindTools.Patches;
 using GrindTools.Data;
 using GrindTools.Utils;
-using System.Collections;
-using System.Threading.Tasks;
 using HarmonyLib;
 using SkaterXL.Map;
 
@@ -20,11 +16,11 @@ namespace GrindTools
     {
         public Player player { get; private set; }
         //Transform placedParent = MapEditorController.Instance.placedObjectsParent;
-       
+
         public void Awake()
         {
             player = PlayerController.Main.input;
-            if(Main.controller.grindToolCam != null ) Main.controller.grindToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
+            if (Main.controller.grindToolCam != null) Main.controller.grindToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
             if (Main.controller.waxToolCam != null) Main.controller.waxToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
         }
         public void Update()
@@ -49,6 +45,10 @@ namespace GrindTools
                     {
                         UpdateFOV();
                     }
+                    else if (player.GetButtonTimedPressDown("Left Stick Button", 0.25f)) // left stick Click
+                    {
+                        SwapColliders();
+                    }
                     else
                     {
                         SwapToolStates(ToolStates.Wax);
@@ -57,7 +57,7 @@ namespace GrindTools
                 case WaxToolState waxtoolstate:
                     if (player.GetButton("LB")) // LB pressed
                     {
-                        CheckDeleteInput(Main.controller.waxToolState, WaxToolStatePatch.GetHighlightedObj(), WaxToolStatePatch.GetRayHitInfo());
+                        CheckDeleteInput(Main.controller.waxToolState, WaxToolStatePatch.HightlightedObj, WaxToolStatePatch.splineComp, WaxToolStatePatch.hitInfo);
                     }
                     else if (player.GetButton(7)) // RB pressed
                     {
@@ -65,7 +65,7 @@ namespace GrindTools
                     }
                     else if (player.GetButtonDown(0)) // A button
                     {
-                        SwapGrindTags(Main.controller.waxToolState, WaxToolStatePatch.GetSplineComp());
+                        SwapGrindTags(Main.controller.waxToolState, WaxToolStatePatch.splineComp);
                     }
                     else
                     {
@@ -81,20 +81,20 @@ namespace GrindTools
         {
             if (player.GetButtonTimedPressDown("Y", 0.2f))
             {
-                await StateManager.Instance.RequestSimpleState();
+                await StateManager.Instance.RequestMEState(MapEditorController.Instance.SimplePlacerState);
             }
         }
         private async void CheckForMEStateInput()
         {
             if (player.GetButtonUp(13))
             {
-                await StateManager.Instance.RequestGrindTool();
+                await StateManager.Instance.RequestMEState(Main.controller.grindToolState);
             }
             else if (player.GetButtonDown("B") || player.GetButtonDown("Start"))
             {
                 StateManager.Instance.ResetToPlayState();
             }
-        }    
+        }
         private async void SwapToolStates(ToolStates toolstate)
         {
             if (player.GetButtonDown("Y"))
@@ -107,7 +107,7 @@ namespace GrindTools
                 StateManager.Instance.ResetToPlayState();
             }
         }
-    
+
         private float changeSpeed = 20.0f;
         private void UpdateFOV()
         {
@@ -121,25 +121,46 @@ namespace GrindTools
             Main.controller.grindToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
             Main.controller.waxToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
         }
-
-        private void CheckDeleteInput(WaxToolState __instance, IMapEditorSelectable HightlightedObj, RaycastHit hitInfo)
+        private void CheckDeleteInput(WaxToolState __instance, IMapEditorSelectable HightlightedObj, SplineComputer splineComp, RaycastHit hitInfo)
         {
-            if (hitInfo.collider.GetComponentInParent<IMapEditorSelectable>() == null)
+            if (hitInfo.collider != null && HightlightedObj != null)
             {
-                ShowWaxInfo(__instance, "Cannot Delete Map Splines");
+                ShowWaxInfo(__instance, "Warning: Removing Splines Cannot be Undone");
+                if (player.GetButtonUp(13))
+                {
+                    HightlightedObj.gameObject.SetActive(false);
+                    OutlineManager.Instance.RemoveAllOutlines();
+                    Destroy(HightlightedObj.gameObject);
+                    HightlightedObj = null;
+                    splineComp = null;
+                    ShowWaxInfo(__instance, "Spline Removed");
+                    UISounds.Instance.PlayOneShotSelectionChange();
+                    MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Spline Removed", 0.5f);
+                    return;
+                }
+            }
+            else if (hitInfo.collider != null && splineComp != null)
+            {
+                ShowWaxInfo(__instance, "Warning: Removing Splines Cannot be Undone");
+                if (player.GetButtonUp(13))
+                {
+                    OutlineManager.Instance.RemoveAllOutlines();
+                    Destroy(splineComp);
+                    splineComp = null;
+                    ShowWaxInfo(__instance, "Spline Removed");
+                    UISounds.Instance.PlayOneShotSelectionChange();
+                    MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Spline Removed", 0.5f);
+                    return;
+                }
                 return;
             }
-            ShowWaxInfo(__instance, "Warning: Spline Deletion is Permanent");
-
-            if (player.GetButtonUp(13))
-            {
-                Destroy(HightlightedObj.gameObject);
-                ShowWaxInfo(__instance, "Spline Deleted");
-                UISounds.Instance.PlayOneShotSelectionChange();
-                MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Spline Deleted", 0.5f);
-            }
         }
-
+        private void SwapColliders()
+        {
+            Main.settings.capColliders = !Main.settings.capColliders;
+            UISounds.Instance.PlayOneShotSelectionChange();
+            MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"{(Main.settings.capColliders ? "Capsule Colliders" : "Box Colliders")}", 0.5f);
+        }
         private void CheckActiveSplineDeleteInput()
         {
             if (player.GetButtonUp(13))
@@ -172,7 +193,7 @@ namespace GrindTools
             if (spline.gameObject.tag == concrete)
             {
                 SetTagRecursively(spline.gameObject, metal);
-                ShowWaxInfo(__instance, "Metal"); 
+                ShowWaxInfo(__instance, "Metal");
                 return;
             }
             else if (spline.gameObject.tag == metal)

@@ -1,8 +1,4 @@
-﻿using System.Reflection;
-using UnityEngine;
-using System.IO;
-using GameManagement;
-using System.Collections;
+﻿using GameManagement;
 using System;
 using ModIO.UI;
 using System.Threading.Tasks;
@@ -40,10 +36,12 @@ namespace GrindTools.Utils
 
                 if (MapEditorController.Instance.CurrentState != targetState)
                 {
+                    Main.Logger.Log($"{name} State Transition Failed");
                     MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"{name} State Transition Failed", 1f);
                 }
                 else
                 {
+                    Main.Logger.Log($"{name} Active");
                     //MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"{name} Active", 1f);
                 }
             }
@@ -53,83 +51,81 @@ namespace GrindTools.Utils
                 MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Error Switching Modes: {ex.Message}", 1f);
             }
         }
+        public async Task LoadMapEditorState(MapEditorState state)
+        {
+            try
+            {
+                PlayerController.Main.DisableGameplay();
+                PlayerController.Main.HidePin(true);
+                GameStateMachine.Instance.StartLoading(false, null, $"Loading {state.name}");
+                GameStateMachine.Instance.MapEditorObject.SetActive(true);
+                await MapEditorController.Instance.ChangeState(state);
+                GameStateMachine.Instance.StopLoading();
+                Main.controller.AllowRespawn(false);
+                //Main.controller.ToggleSpeedText(true);
+                ToggleMenuUI(false);
+            }
+            catch (Exception ex)
+            {
+                Main.Logger.Error($"Error Loading {state.name}: {ex.Message}");
+                MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Error Loading {state.name}: {ex.Message}", 1f);
+            }
+        }
         private void ToggleMenuUI(bool state)
         {
             GameStateMachine.Instance.PauseObject.SetActive(state);
             GameStateMachine.Instance.SemiTransparentLayer.SetActive(state);
         }
-        public async Task LoadMapEditorState(MapEditorState state)
-        {
-            PlayerController.Main.DisableGameplay();
-            PlayerController.Main.HidePin(true);
-            GameStateMachine.Instance.StartLoading(false, null, "Loading");
-            GameStateMachine.Instance.MapEditorObject.SetActive(true);
-            await MapEditorController.Instance.ChangeState(state);
-            GameStateMachine.Instance.StopLoading();
-            Main.controller.AllowRespawn(false);
-            //Main.controller.ToggleSpeedText(true);
-            ToggleMenuUI(false);
-        }
         public async Task InitializeMapEditor(MapEditorState initialState)
         {
-            MapEditorController.Instance.initialState = initialState;
-            //GameStateMachine.Instance.RequestMapEditorState();
-            GameStateMachine.Instance.StartLoading(false, null, "Loading");
-            GameStateMachine.Instance.MapEditorObject.SetActive(true);
-            //GameStateMachine.Instance.RequestTransitionTo(typeof(MapEditorGameState)); // disable this line if transtions not function properly.
-            await MapEditorController.Instance.ChangeState(MapEditorController.Instance.SimplePlacerState);
-            GameStateMachine.Instance.StopLoading();
-            ToggleMenuUI(false);
+            try
+            {
+                MapEditorController.Instance.initialState = initialState;
+                GameStateMachine.Instance.StartLoading(false, null, "Loading Map Editor");
+                GameStateMachine.Instance.MapEditorObject.SetActive(true);
+                //GameStateMachine.Instance.RequestMapEditorState();
+                //GameStateMachine.Instance.RequestTransitionTo(typeof(MapEditorGameState)); // disable this line if transtions not function properly.
+                await MapEditorController.Instance.ChangeState(MapEditorController.Instance.SimplePlacerState);
+                GameStateMachine.Instance.StopLoading();
+                ToggleMenuUI(false);
+            }
+            catch (Exception ex)
+            {
+                Main.Logger.Error($"Error Loading Map Editor: {ex.Message}");
+                MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Error Loading Map Editor: {ex.Message}", 1f);
+            }
         }
 
-        public async Task RequestGrindTool()
+        public async Task RequestMEState(MapEditorState state)
         {
             try
             {
                 if (MapEditorController.Instance.initialState == null)
                 {
-                    await InitializeMapEditor(Main.controller.grindToolState);
-                    await LoadMapEditorState(Main.controller.grindToolState);
+                    await InitializeMapEditor(state);
+                    await LoadMapEditorState(state);
                 }
                 else
                 {
-                    await LoadMapEditorState(Main.controller.grindToolState);
+                    await LoadMapEditorState(state);
                 }
 
                 MapEditorState currentstate = MapEditorController.Instance.CurrentState;
-                if (currentstate != null && currentstate is GrindSplineToolState)
+                if (currentstate != null && currentstate == state)
                 {
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"Grind Tool Active", 0.5f);
+                    //MessageSystem.QueueMessage(MessageDisplayData.Type.Info, $"{state.name} Active", 0.5f);
+                    Main.Logger.Log($"{state.name} Active");
                 }
                 else
                 {
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Grind Tool State Transition Failed", 1f);
+                    //MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"{state.name} Transition Failed", 1f);
+                    Main.Logger.Log($"{state.name} Transition Failed");
                 }
             }
             catch (Exception ex)
             {
-                Main.Logger.Error($"An error occurred while requesting Grind Tool: {ex.Message}");
-                MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Grind Tool Error: {ex.Message}", 1f);
-            }
-        }
-        public async Task RequestSimpleState()
-        {
-            try
-            {
-                if (MapEditorController.Instance.initialState == null)
-                {
-                    await InitializeMapEditor(MapEditorController.Instance.SimplePlacerState);
-                    await LoadMapEditorState(MapEditorController.Instance.SimplePlacerState);
-                }
-                else
-                {
-                    await LoadMapEditorState(MapEditorController.Instance.SimplePlacerState);
-                }
-            }
-            catch (Exception ex)
-            {
-                Main.Logger.Error($"An error occurred while requesting Simple Mode: {ex.Message}");
-                MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Map Editor Error: {ex.Message}", 1f);
+                Main.Logger.Error($"error while requesting{state.name}: {ex.Message}");
+                MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"{state.name} Error: {ex.Message}", 1f);
             }
         }
         public void ResetToPlayState()
@@ -145,8 +141,8 @@ namespace GrindTools.Utils
             }
             catch (Exception ex)
             {
-                Main.Logger.Error($"An error occurred while Reseting to PlayState: {ex.Message}");
-                MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Reset To PlayState Error: {ex.Message}", 1f);
+                Main.Logger.Error($"Error Reseting to PlayState: {ex.Message}");
+                MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Error Reseting to PlayState: {ex.Message}", 1f);
             }
         }
     }

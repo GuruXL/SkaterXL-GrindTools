@@ -43,8 +43,7 @@ namespace GrindTools.Patches
                     // Red
                     MatUtil.Instance.UpdateMaterial(AssetLoader.RedMat);
                 }
-            }
-            
+            }    
         }
 
         public static MapEditorSplineObject GetSelectedSpline()
@@ -58,17 +57,6 @@ namespace GrindTools.Patches
             {
                 Object.Destroy(selectedSpline.gameObject);
                 selectedSpline = null;
-
-                /*
-                if (selectedSpline = null)
-                {
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Active Spline Removed", 1f);
-                }
-                else
-                {
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Error, $"Failed To Remove Active Spline", 1f);
-                }
-                */
             }
         }
     }

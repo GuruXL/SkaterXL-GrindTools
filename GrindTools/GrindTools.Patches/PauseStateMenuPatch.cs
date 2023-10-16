@@ -4,11 +4,8 @@ using HarmonyLib;
 using UnityEngine;
 using MapEditor;
 using GrindTools.Utils;
-using System;
 using Object = UnityEngine.Object;
-using TMPro;
 using UnityEngine.Events;
-using System.Threading.Tasks;
 
 namespace GrindTools.Patches
 {
@@ -33,8 +30,8 @@ namespace GrindTools.Patches
             if (grindToolsButton == null)
             {
                 // Add new listener to the original MapEditorButton -- Fix for issue with MapEditor Initial state being grindtool
-                __instance.MapEditorButton.onClick.RemoveAllListeners();
-                __instance.MapEditorButton.onClick.SetPersistentListenerState(0, UnityEventCallState.Off);
+                //__instance.MapEditorButton.onClick.RemoveAllListeners();
+                //__instance.MapEditorButton.onClick.SetPersistentListenerState(0, UnityEventCallState.Off);
                 __instance.MapEditorButton.onClick.AddListener(() => MapEditorButtonOnClick());
 
                 GameObject originalButton = __instance.MapEditorButton.gameObject;
@@ -53,19 +50,17 @@ namespace GrindTools.Patches
                 //CreateNewOnSubmit(grindToolsButton);
             }
 
-            //RemoveDLCButton();
-
             __instance.StateMachine.PauseObject.SetActive(false);
             __instance.StateMachine.PauseObject.SetActive(true);
-        }
 
+        }
         public static async void GrindToolButtonOnClick()
         {
-            await StateManager.Instance.RequestGrindTool();
+            await StateManager.Instance.RequestMEState(Main.controller.grindToolState);
         }
         public static async void MapEditorButtonOnClick()
         {
-            await StateManager.Instance.RequestSimpleState();
+            await StateManager.Instance.RequestMEState(MapEditorController.Instance.SimplePlacerState);
         }
         public static void DestroyGrindToolButton()
         {
@@ -77,20 +72,5 @@ namespace GrindTools.Patches
                 mapEditorButton.onClick.RemoveListener(MapEditorButtonOnClick); // remove so that multiple instances of the customOnClick will not be created if a new GrindToolButton is created.
             }
         }
-
-        /*
-        private static void RemoveDLCButton()
-        {
-            // remove DLC button :)
-            if (PromotionController.Instance != null)
-            {
-                GameObject mainMenuBanner = Traverse.Create(PromotionController.Instance).Field("mainMenuBanner").GetValue<GameObject>();
-                if (mainMenuBanner != null && mainMenuBanner.activeSelf)
-                {
-                    mainMenuBanner.SetActive(false);
-                }
-            }
-        }
-        */
     }
 }

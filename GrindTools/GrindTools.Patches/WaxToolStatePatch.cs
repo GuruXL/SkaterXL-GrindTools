@@ -4,163 +4,66 @@ using SkaterXL.Map;
 using SkaterXL.Core;
 using Dreamteck.Spline;
 using UnityEngine;
-using ModIO.UI;
 using Cinemachine;
-using Rewired;
-using GrindTools.Data;
-using Object = UnityEngine.Object;
 
 namespace GrindTools.Patches
 {
-    
     [HarmonyPatch(typeof(WaxToolState), "Update")]
     public static class WaxToolStatePatch
     {
-        private static IMapEditorSelectable HightlightedObj;
-        private static SplineComputer splineComp;
-        private static RaycastHit hitInfo;
-
-        [HarmonyPostfix]
-        public static void Postfix(WaxToolState __instance)
+        private static IMapEditorSelectable _HightlightedObj;
+        private static SplineComputer _splineComp;
+        private static RaycastHit _hitInfo;
+        public static IMapEditorSelectable HightlightedObj
         {
-            var waxwholespline = Traverse.Create(__instance).Field("waxWholeSpline");
-
+            get { return _HightlightedObj; }
+            set { _HightlightedObj = value; }
+        }
+        public static SplineComputer splineComp
+        {
+            get { return _splineComp; }
+            set { _splineComp = value; }
+        }
+        public static RaycastHit hitInfo
+        {
+            get { return _hitInfo; }
+        }
+        [HarmonyPrefix]
+        static bool Prefix(WaxToolState __instance)
+        {
             CinemachineVirtualCamera cam = Main.controller.waxToolCam;
-            HightlightedObj = null;
-            splineComp = null;
+            _HightlightedObj = null;
+            _splineComp = null;
             Ray ray = new Ray(cam.transform.position, cam.transform.forward);
             float maxDistance = 100f;
 
-            if (Physics.Raycast(ray, out hitInfo, maxDistance))
+            if (Physics.Raycast(ray, out _hitInfo, maxDistance))
             {
-                HightlightedObj = hitInfo.collider.GetComponentInParent<IMapEditorSelectable>();
-                splineComp = hitInfo.collider.GetComponentInParent<SplineComputer>();
-                if (splineComp == null)
-                    maxDistance = hitInfo.distance + 1f;
+                _HightlightedObj = _hitInfo.collider.GetComponentInParent<IMapEditorSelectable>();
+                _splineComp = _hitInfo.collider.GetComponentInParent<SplineComputer>();
+                if (_splineComp == null)
+                    maxDistance = _hitInfo.distance + 1f;
             }
-            if (splineComp == null && Physics.SphereCast(ray, 0.2f, out hitInfo, maxDistance, LayerUtility.GrindableMask))
+            if (_splineComp == null && Physics.SphereCast(ray, 0.2f, out _hitInfo, maxDistance, LayerUtility.GrindableMask))
             {
-                splineComp = hitInfo.collider.GetComponentInParent<SplineComputer>();
+                _splineComp = _hitInfo.collider.GetComponentInParent<SplineComputer>();
+                if (_HightlightedObj == null)
+                    _HightlightedObj = _hitInfo.collider.GetComponentInParent<IMapEditorSelectable>();
             }
 
-            if (waxwholespline.GetValue<bool>())
+            if (RewiredInput.PrimaryPlayer.GetButtonDown(13)) // sets waxWhole Spline to always true; temp fix for issues with outlines when waxwholespline is false.
             {
-                waxwholespline.SetValue(false);
+                return false;
             }
-            /*
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, -cam.transform.localPosition.z, LayerUtility.MapEditorSelectionMask))
+            else if (RewiredInput.PrimaryPlayer.GetButtonTimedPressDown("Left Stick Button", 0.25f))
             {
-                HightlightedObj = hitInfo.collider.GetComponentInParent<IMapEditorSelectable>();
-                splineComp = hitInfo.collider.GetComponentInParent<SplineComputer>();
+                Main.settings.waxWholeSpline = !Main.settings.waxWholeSpline;
+                var waxWholeSpline = Traverse.Create(__instance).Field("waxWholeSpline");
+                waxWholeSpline.SetValue(Main.settings.waxWholeSpline);
+                UISounds.Instance.PlayOneShotSelectionChange();
+                return false;
             }
-            */
-            /*
-            if (HightlightedObj != null)
-            {
-                CheckForDeleteInput(__instance, HightlightedObj);
-            }
-            */
-            /*
-            if (splineComp != null)
-            {
-                CheckForDeleteInput(__instance, HightlightedObj, hitInfo);
-                SwapGrindTags(__instance, splineComp);
-            }
-            */
+            return true; // Execute the original method
         }
-        /*
-        private static void CheckForDeleteInput(WaxToolState __instance, SplineComputer spline)
-        {
-            if (Main.inputctrl.player.GetButton("LB"))
-            {
-                ShowInfo(__instance, "Warning: Spline Deletion is Permanent");
-
-                if (Main.inputctrl.player.GetButtonUp(13))
-                {
-                    Object.Destroy(spline.gameObject);
-                    ShowInfo(__instance, "Spline Deleted");
-                    UISounds.Instance.PlayOneShotSelectionChange();
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Spline Deleted", 1f);
-                }
-            }
-        }
-        */    
-        public static SplineComputer GetSplineComp()
-        {
-            return splineComp;
-        }
-        public static IMapEditorSelectable GetHighlightedObj()
-        {
-            return HightlightedObj;
-        }
-        public static RaycastHit GetRayHitInfo()
-        {
-            return hitInfo;
-        }
-        /*
-        private static void CheckForDeleteInput(WaxToolState __instance, IMapEditorSelectable HightlightedObj, RaycastHit hitInfo) 
-        {
-            if (RewiredInput.PrimaryPlayer.GetButton("LB"))
-            {
-                if (hitInfo.collider.GetComponentInParent<IMapEditorSelectable>() == null)
-                {
-                    ShowInfo(__instance, "Cannot Delete Map Splines");
-                    return;
-                }
-                ShowInfo(__instance, "Warning: Spline Deletion is Permanent");
-
-                if (RewiredInput.PrimaryPlayer.GetButtonUp(13))
-                {
-                    Object.Destroy(HightlightedObj.gameObject);
-                    ShowInfo(__instance, "Spline Deleted");
-                    UISounds.Instance.PlayOneShotSelectionChange();
-                    MessageSystem.QueueMessage(MessageDisplayData.Type.Warning, $"Spline Deleted", 0.5f);
-                }
-            }
-        }
-        
-        private static void SwapGrindTags(WaxToolState __instance, SplineComputer spline)
-        {
-            string concrete = "Grind_Concrete";
-            string metal = "Grind_Metal";
-
-            if (RewiredInput.PrimaryPlayer.GetButtonDown(0))
-            {
-                if (spline.gameObject.tag == concrete)
-                {
-                    SetTagRecursively(spline.gameObject, metal);
-                    ShowInfo(__instance, "Metal");
-                    return;
-                }
-                else if (spline.gameObject.tag == metal)
-                {
-                    SetTagRecursively(spline.gameObject, concrete);
-                    ShowInfo(__instance, "Concrete");
-                    return;
-                }
-                else // if tag is unknown or undefined the default is concrete so swap to metal
-                {
-                    SetTagRecursively(spline.gameObject, metal);
-                    ShowInfo(__instance, "Metal");
-                }
-            }
-        }
-        private static void SetTagRecursively(GameObject obj, string tag)
-        {
-            obj.tag = tag;
-
-            if (obj.transform.childCount > 0)
-            {
-                foreach (Transform child in obj.transform)
-                {
-                    SetTagRecursively(child.gameObject, tag);
-                }
-            }
-        }
-        private static void ShowInfo(WaxToolState __instance, string text)
-        {
-            AccessTools.Method(typeof(WaxToolState), "ShowInfo").Invoke(__instance, new object[] { text });
-        }
-        */
     }
 }
