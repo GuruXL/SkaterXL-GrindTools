@@ -10,21 +10,20 @@ namespace GrindTools.Patches
     [HarmonyPatch(typeof(GrindSplineToolState), "Update")]
     public static class GrindToolStatePatch
     {
-        private static bool hasUpdated;
-
-        [HarmonyPrefix]
-        static void Prefix(GrindSplineToolState __instance)
-        {
-            if (!Main.settings.capColliders)
-                return;
-
-            UpdateScale(__instance, ref __instance.width, ref __instance.height);
-            //AccessTools.Method(typeof(GrindSplineToolState), "UpdateSizes").Invoke(__instance, new object[] { __instance.width, __instance.height });
-        }
-
+        private static bool hasUpdated = true;
+       
         [HarmonyPostfix]
         static void Postfix(GrindSplineToolState __instance)
         {
+            if (Main.settings.capColliders)
+            {
+                UpdateScale(__instance, ref __instance.width, ref __instance.height);
+                //var didMove = Traverse.Create(__instance).Field("didMove");
+                //didMove.SetValue(true);
+                //__instance.MoveCamera();
+                //AccessTools.Method(typeof(GrindSplineToolState), "UpdateSizes").Invoke(__instance, new object[] { __instance.width, __instance.height });
+            }
+
             if (RewiredInput.PrimaryPlayer.GetButtonDown(0))
             {
                 UISounds.Instance.PlayOneShotSelectionChange();
