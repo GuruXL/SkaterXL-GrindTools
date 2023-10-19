@@ -73,7 +73,7 @@ namespace GrindTools
                     break;
                 case SimpleMode simplemodestate:
                     CheckForMEStateInput();
-                    break;
+                   break;
             }
         }
         private async void CheckForMEStateInput()
@@ -82,10 +82,10 @@ namespace GrindTools
             {
                 await StateManager.Instance.RequestMEState(Main.controller.grindToolState);
             }
-            else if (player.GetButtonDown("B") || player.GetButtonDown("Start"))
-            {
-                StateManager.Instance.ResetToPlayState();
-            }
+            //else if (player.GetButtonDown("B") || player.GetButtonDown("Start"))
+            //{
+            //    StateManager.Instance.ResetToPlayState();
+            //}
         }
         private async void SwapToolStates(ToolStates toolstate)
         {
@@ -94,7 +94,7 @@ namespace GrindTools
                 await StateManager.Instance.ToggleState(toolstate);
                 UISounds.Instance.PlayOneShotSelectMinor();
             }
-            else if (player.GetButtonDown("B") || player.GetButtonDown("Start"))
+            else if (player.GetButtonDown("B"))
             {
                 StateManager.Instance.ResetToPlayState();
             }

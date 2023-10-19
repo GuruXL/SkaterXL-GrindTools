@@ -16,7 +16,7 @@ namespace GrindTools.Patches
 {
 
     [HarmonyPatch(typeof(WaxToolState), "Update")]
-    public static class WaxToolStatePatch
+    public class WaxToolStatePatch
     {
         private static IMapEditorSelectable _HightlightedObj;
         private static SplineComputer _splineComp;
@@ -38,6 +38,23 @@ namespace GrindTools.Patches
         [HarmonyPrefix]
         static bool Prefix(WaxToolState __instance)
         {
+            if (RewiredInput.PrimaryPlayer.GetButtonDown(13)) // sets waxWhole Spline to always true; temp fix for issues with outlines when waxwholespline is false.
+            {
+                return false;
+            }
+            else if (RewiredInput.PrimaryPlayer.GetButtonTimedPressDown("Left Stick Button", 0.25f))
+            {
+                Main.settings.waxWholeSpline = !Main.settings.waxWholeSpline;
+                var waxWholeSpline = Traverse.Create(__instance).Field("waxWholeSpline");
+                waxWholeSpline.SetValue(Main.settings.waxWholeSpline);
+                UISounds.Instance.PlayOneShotSelectionChange();
+                return false;
+            }
+            return true; // Execute the original method
+        }
+        [HarmonyPostfix]
+        static void Postfix(WaxToolState __instance)
+        {
             CinemachineVirtualCamera cam = Main.controller.waxToolCam;
             _HightlightedObj = null;
             _splineComp = null;
@@ -57,20 +74,6 @@ namespace GrindTools.Patches
                 if (_HightlightedObj == null)
                     _HightlightedObj = _hitInfo.collider.GetComponentInParent<IMapEditorSelectable>();
             }
-
-            if (RewiredInput.PrimaryPlayer.GetButtonDown(13)) // sets waxWhole Spline to always true; temp fix for issues with outlines when waxwholespline is false.
-            {
-                return false;
-            }
-            else if (RewiredInput.PrimaryPlayer.GetButtonTimedPressDown("Left Stick Button", 0.25f))
-            {
-                Main.settings.waxWholeSpline = !Main.settings.waxWholeSpline;
-                var waxWholeSpline = Traverse.Create(__instance).Field("waxWholeSpline");
-                waxWholeSpline.SetValue(Main.settings.waxWholeSpline);
-                UISounds.Instance.PlayOneShotSelectionChange();
-                return false;
-            }
-            return true; // Execute the original method
         }
     }
 }

@@ -53,8 +53,8 @@ namespace GrindTools.UI
 		{
 			if (!isUISetup)
 			{
-				GetControllerType();
 				SetupUIlayout();
+				Main.Logger.Log($"UI Setup: {isUISetup}");
 				return;
 			}
 			switch (state)
@@ -70,6 +70,7 @@ namespace GrindTools.UI
 		
 		private void SetupUIlayout()
 		{
+			GetControllerType();
 			backgroundTex = new Texture2D(1, 1);
 			backgroundTex.wrapMode = TextureWrapMode.Repeat;
 			backgroundTex.SetPixel(0, 0, new Color(0.24f, 0.24f, 0.24f, 0.90f));

@@ -49,6 +49,8 @@ namespace GrindTools
         }
         private void OnGUI()
         {
+            if (MapEditorController.Instance.CurrentState == null) return;
+
             switch (MapEditorController.Instance.CurrentState)
             {
                 case GrindSplineToolState grindtoolstate:
