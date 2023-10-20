@@ -20,37 +20,22 @@ namespace GrindTools.UI
 		private Vector3 scale = Vector3.one;
 		private Texture2D backgroundTex;
 		private bool isPS4;
-		public bool isUISetup { get; private set; } = false;
+		public bool isUISetup = false;
 		public void GetControllerType()
 		{
 			isPS4 = false;
 			string str = RewiredInput.PrimaryPlayer.controllers.Joysticks.FirstOrDefault()?.name ?? "unknown";
-			if (str.ToLower().Contains("dual") || str.ToLower().Contains("dual shock") || str.ToLower().Contains("dualshock"))
+			if (str.ToLower().Contains("dual") || str.ToLower().Contains("sony") || str.ToLower().Contains("dualshock"))
 			{
 				isPS4 = true;
 			}
-			Main.Logger.Log($"Joystick Name: " + str);
+			Main.Logger.Log($"Controller Name: " + str);
 
-			/*
-			string[] joystickNames = Input.GetJoystickNames();
-			for (int i = 0; i < joystickNames.Length; i++)
-			{
-				if (joystickNames[i].ToLower().Contains("xbox"))
-				{
-					isPS4 = false;
-				}
-				else
-				{
-					isPS4 = true;
-				}
-			}	
-			*/
 		}
 		public void Show(ToolStates state)
 		{
 			if (!isUISetup)
-			{
-				GetControllerType();
+			{	
 				SetupUIlayout();
 				return;
 			}
@@ -67,6 +52,7 @@ namespace GrindTools.UI
 
 		private void SetupUIlayout()
 		{
+			GetControllerType();
 			backgroundTex = new Texture2D(1, 1);
 			backgroundTex.wrapMode = TextureWrapMode.Repeat;
 			backgroundTex.SetPixel(0, 0, new Color(0.24f, 0.24f, 0.24f, 0.90f));
@@ -159,7 +145,7 @@ namespace GrindTools.UI
 			CreateLabel("Rotate", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RightStick });
 
 			GUILayout.Label("Splines", sectionStyle, Array.Empty<GUILayoutOption>());
-			CreateLabel($"Collider Type: {(Main.settings.capColliders ? "<color=cyan><b>Capsule</b></color>" : "<color=cyan><b>Box</b></color>")}", "( Hold )", new Texture2D[] { null, UIAssetLoader.Instance.xboxButtons.LeftStickClick });
+			CreateLabel($"Collider Type: {(Main.settings.capColliders ? "<color=cyan><b>Capsule</b></color>" : "<color=cyan><b>Box</b></color>")}", "( Hold )", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.Blank, UIAssetLoader.Instance.xboxButtons.LeftStickClick });
 			CreateLabel("Undo / Redo", "/", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.DpadLeft, UIAssetLoader.Instance.xboxButtons.DpadRight });
 			CreateLabel("Remove Active Spline", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.LB, UIAssetLoader.Instance.xboxButtons.RightStickClick });
 			CreateLabel("Scale Splines", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RB, UIAssetLoader.Instance.xboxButtons.LeftStick });
@@ -214,7 +200,7 @@ namespace GrindTools.UI
 			CreateLabel("Rotate", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RightStick });
 
 			GUILayout.Label("Splines", sectionStyle, Array.Empty<GUILayoutOption>());
-			CreateLabel($"Wax All Colliders: {(Main.settings.waxWholeSpline ? "<color=cyan><b>On</b></color>" : "<color=cyan><b>Off</b></color>")}", "( Hold )", new Texture2D[] { null, UIAssetLoader.Instance.xboxButtons.LeftStickClick });
+			CreateLabel($"Wax All Colliders: {(Main.settings.waxWholeSpline ? "<color=cyan><b>On</b></color>" : "<color=cyan><b>Off</b></color>")}", "( Hold )", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.Blank, UIAssetLoader.Instance.xboxButtons.LeftStickClick });
 			CreateLabel("Remove Splines", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.LB, UIAssetLoader.Instance.xboxButtons.RightStickClick });
 			CreateLabel("Change Friction", "+", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.RB, UIAssetLoader.Instance.xboxButtons.LeftStick });
 			CreateLabel("Toggle Concrete / Metal", new Texture2D[] { UIAssetLoader.Instance.xboxButtons.A });

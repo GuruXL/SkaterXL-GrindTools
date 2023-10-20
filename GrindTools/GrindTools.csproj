@@ -250,5 +250,8 @@
     <EmbeddedResource Include="Resources\ButtonIcons\Xbox\xbox.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\Xbox\Y.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ButtonIcons\Xbox\Blank.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

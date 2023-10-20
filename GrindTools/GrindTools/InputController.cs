@@ -7,6 +7,7 @@ using Dreamteck.Spline;
 using GrindTools.Patches;
 using GrindTools.Data;
 using GrindTools.Utils;
+using GrindTools.UI;
 using HarmonyLib;
 using SkaterXL.Map;
 
@@ -22,6 +23,8 @@ namespace GrindTools
             player = PlayerController.Main.input;
             if (Main.controller.grindToolCam != null) Main.controller.grindToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
             if (Main.controller.waxToolCam != null) Main.controller.waxToolCam.m_Lens.FieldOfView = Main.settings.CamFOV;
+
+            ReInput.ControllerDisconnectedEvent += OnDeviceChange;
         }
         public void Update()
         {
@@ -76,6 +79,22 @@ namespace GrindTools
                     CheckForMEStateInput();
                     break;
             }
+        }
+        private void OnDestroy()
+        {
+            // Unsubscribe from ControllerDisconnectedEvent
+            ReInput.ControllerDisconnectedEvent -= OnDeviceChange;
+        }
+        private void OnDeviceChange(ControllerStatusChangedEventArgs args)
+        {
+            MapEditorState editorState = MapEditorController.Instance.CurrentState;
+            if (editorState != null || (editorState is MapEditorState))
+            {
+                StateManager.Instance.ResetToPlayState();
+            }
+            ControlsUI.Instance.isUISetup = false;
+            Main.Logger.Log("Controller Removed: " + args.name + $"UI Setup: {ControlsUI.Instance.isUISetup}");
+            // Your custom logic here
         }
         private async void CheckForPlayStateInput()
         {

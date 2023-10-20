@@ -121,6 +121,7 @@ namespace GrindTools.UI
                     Texture2D icon16 = new Texture2D(100, 100);
                     Texture2D icon17 = new Texture2D(100, 100);
                     Texture2D icon18 = new Texture2D(100, 100);
+                    Texture2D icon19 = new Texture2D(100, 100);
 
                     // Extract resources first
                     byte[] iconData = ResourceExtractor.ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.A.png");
@@ -141,6 +142,7 @@ namespace GrindTools.UI
                     byte[] iconData16 = ResourceExtractor.ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.LeftStick.png");     
                     byte[] iconData17 = ResourceExtractor.ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.RightStick.png");
                     byte[] iconData18 = ResourceExtractor.ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.RightStickClick.png");
+                    byte[] iconData19 = ResourceExtractor.ExtractResources("GrindTools.Resources.ButtonIcons.Xbox.Blank.png");
 
                     try
                     {
@@ -163,6 +165,7 @@ namespace GrindTools.UI
                         if (iconData16 != null) ImageConversion.LoadImage(icon16, iconData16);
                         if (iconData17 != null) ImageConversion.LoadImage(icon17, iconData17);
                         if (iconData18 != null) ImageConversion.LoadImage(icon18, iconData18);
+                        if (iconData19 != null) ImageConversion.LoadImage(icon19, iconData19);
                     }
                     catch (Exception ex)  // Catch any exception
                     {
@@ -170,7 +173,7 @@ namespace GrindTools.UI
                     }
                     finally
                     {
-                        _xboxButtons = new XboxButtons(icon, icon2, icon3, icon4, icon5, icon6, icon7, icon8, icon9, icon10, icon11, icon12, icon13, icon14, icon15, icon16, icon17, icon18);
+                        _xboxButtons = new XboxButtons(icon, icon2, icon3, icon4, icon5, icon6, icon7, icon8, icon9, icon10, icon11, icon12, icon13, icon14, icon15, icon16, icon17, icon18, icon19);
                     }
                 }
                 return _xboxButtons;

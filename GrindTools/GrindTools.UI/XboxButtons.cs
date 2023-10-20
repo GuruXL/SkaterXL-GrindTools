@@ -24,8 +24,9 @@ namespace GrindTools.UI
 		public Texture2D LeftStick;
 		public Texture2D RightStick;
 		public Texture2D RightStickClick;
+		public Texture2D Blank;
 
-		public XboxButtons(Texture2D a, Texture2D x, Texture2D b, Texture2D y, Texture2D lb, Texture2D lt, Texture2D rb, Texture2D rt, Texture2D menu, Texture2D view, Texture2D dpadUp, Texture2D dpadRight, Texture2D dpadLeft, Texture2D dpadDown, Texture2D leftStickClick, Texture2D leftStick, Texture2D rightStick, Texture2D rightStickClick)
+		public XboxButtons(Texture2D a, Texture2D x, Texture2D b, Texture2D y, Texture2D lb, Texture2D lt, Texture2D rb, Texture2D rt, Texture2D menu, Texture2D view, Texture2D dpadUp, Texture2D dpadRight, Texture2D dpadLeft, Texture2D dpadDown, Texture2D leftStickClick, Texture2D leftStick, Texture2D rightStick, Texture2D rightStickClick, Texture2D blank)
 		{
 			A = a;
 			X = x;
@@ -45,7 +46,7 @@ namespace GrindTools.UI
 			LeftStick = leftStick;
 			RightStick = rightStick;
 			RightStickClick = rightStickClick;
-
+			Blank = blank;
 		}
 
 		public static Texture2D SwapToPlaystationUI(Texture2D tex, bool isPS4)
@@ -79,7 +80,8 @@ namespace GrindTools.UI
 				{ RightStick, psButtons.RightStick },
 				{ RightStickClick, psButtons.RightStickClick },
 				{ Menu, psButtons.Options },
-				{ View, psButtons.Share}
+				{ View, psButtons.Share},
+				{ Blank, Blank}
 			};
 		}
 	}
