@@ -101,10 +101,11 @@ namespace GrindTools
             {
                 await StateManager.Instance.RequestMEState(Main.controller.grindToolState);
             }
-            //else if (player.GetButtonDown("B") || player.GetButtonDown("Start"))
-            //{
-            //    StateManager.Instance.ResetToPlayState();
-            //}
+            else if (player.GetButtonDown("B"))
+            {
+                Main.controller.AllowRespawn(true);
+                //StateManager.Instance.ResetToPlayState();
+            }
         }
         private async void SwapToolStates(ToolStates toolstate)
         {
